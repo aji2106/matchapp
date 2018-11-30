@@ -1,6 +1,7 @@
 from django import forms
 import re
-from django.core.validators import RegexValidator
+from django.forms import ModelChoiceField
+from django.db import models
 
 
 
@@ -36,6 +37,12 @@ class UserProfile(forms.Form):
         password = forms.CharField(max_length=32, widget=forms.PasswordInput)
         re_password = forms.CharField(max_length=32, widget=forms.PasswordInput)
         email=forms.EmailField()
-        hobbies=forms.CharField(widget=forms.Textarea)
 
-
+        SOURCE_CHOICES = [
+        ('Football', 'Football'),
+        ('Gym', 'Gym'),
+        ('Painting', 'Painting'),
+        ('Music', 'Music'),
+         ]
+        hobbies=models.CharField(max_length=10,choices=SOURCE_CHOICES,)
+        #hobbies=forms.CharField(widget=forms.Textarea)

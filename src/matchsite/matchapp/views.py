@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from django.http import QueryDict
 from django.views.decorators.csrf import csrf_exempt
 from .forms import *
+from django.db import IntegrityError
+from django.shortcuts import render_to_response
 
 # REST imports
 from rest_framework import viewsets
@@ -33,21 +35,27 @@ appname = 'matchapp'
 
 def index(request):
 	# Render the index page
-	form = UserLogInForm()
-	return render(request, 'matchapp/index.html', {'form': form})
+    form = UserLogInForm()
+    """if 'username' in request.session:
+        return redirect('displayProfile')"""
+    """else:"""
+    return render(request, 'matchapp/index.html', {'form': form})
+    
+
 
 # user logged in
 
 
 def loggedin(view):
     def mod_view(request):
+        form = UserLogInForm()
         if 'username' in request.session:
             username = request.session['username']
             try: user = Member.objects.get(username=username)
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user)
         else:
-            return render(request, 'mainapp/not-logged-in.html', {})
+            return render(request, 'matchapp/index.html', {'form': form})
     return mod_view
 
 # terms and conditions
@@ -72,34 +80,43 @@ def register(request):
 
 	# form = UserRegForm()
 
-	if request.method == "POST":
+     if request.method == "POST":
 		# form_class is class of form name NEED TO CHANGE
-		form = UserRegForm(request.POST)
+        form = UserRegForm(request.POST)
 
-		if form.is_valid():
+        if form.is_valid():
 
 			# user = form.save(commit=False)
 			# normalized data
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
 
-			user = Member(username=username)
-			user.set_password(password)
+            user = Member(username=username)
+            user.set_password(password)
 
-			try: user.save()
-			except IntegrityError: raise Http404('Username '+user+' already taken: Usernames must be unique')
+            try:user.save()     
+            except IntegrityError: raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
-			return redirect('index')
+			#return redirect('index')
+            context = {
+                 'appname':appname,
+                 'form': form,
+                 'error':'Username '+ str(user) +' already taken: Usernames must be unique',
+                 }
+            # login(request,user)
+            return render(request, 'matchapp/register.html', context)
 
-	else:
-		form = UserRegForm()
-		return render(request, 'matchapp/register.html', {'form': form})
+
+     else:
+        form = UserRegForm()
+        return render(request, 'matchapp/register.html', {'form': form})
 
 # this occurs when user presses login button from index
 
 
 def login(request):
-
+    if "username" in request.session:
+        return redirect('displayProfile')
     if request.method == "POST":
         form = UserLogInForm(request.POST)
         if 'username' in request.POST and 'password' in request.POST:
@@ -126,15 +143,31 @@ def login(request):
                             'loggedIn': True
                         }
 						# login(request,user)
+
+                        #where should it go after user logged in?
                         return render(request, 'matchapp/displayProfile.html', context)
 
                 # return HttpResponse("<span> User or password is wrong </span")
-
+                
                 else:
-                    raise Http404('User or password is incorrect')
-                    # return render(request,'matchapp/index.html', {'message':'Invalid Password','form': form})
+                    #raise Http404('User or password is incorrect')
+                    context = {
+                        'appname':appname,
+                        'form': form,
+                        'error':'User or password entered is incorrect'
+                    }
+                    # login(request,user)
+                    return render(request, 'matchapp/index.html', context)
+    
     else:
-        return render(request, 'matchapp/index.html')
+        #return displayProfile(request,)
+        form = UserLogInForm()
+        context = {
+        'appname':appname,
+        'form': form,
+        'loggedIn': True
+        }
+        return render(request, 'matchapp/index.html', context)
 
 # render logout page
 
@@ -158,13 +191,17 @@ def similarHobbies(request, user):
     hobbies = common.annotate(hob_count=Count('hobbies'))
     # Process the matches in decending
     # Note to self do not need the gt thing check first
-    match = hobbies.filter(hob_count__gt=1).order_by('-hob_count')
+    match = hobbies.order_by('-hob_count')
 
     context = {
         'appname': appname,
         'matches': match,
+        'numberOfhobbies': hobbies.count(),
         'loggedIn': True
         }
+
+    #print(str(match.profile))
+    print("users with similar hobbies" + str(match))
     return render(request, 'matchapp/matches.html', context)
 
 # filter button on similarHobbies page which generates
@@ -177,7 +214,6 @@ def filter(request, user):
 @loggedin
 def displayProfile(request, user):
 	# query users login
-
     if request.method == "GET":
         form = UserProfile()
         person = Member.objects.get(id=user.id)
@@ -219,13 +255,13 @@ def editProfile(request, user):
         profile = Profile.objects.get(user=member.id)
 
         data = QueryDict(request.body)
-
-        #debugging to see if there's anything in request.files but is empty
         
-
         profile.gender = data['gender']
         profile.email = data['email']
         profile.dob = data['dob']
+       
+        # Need to make sure to save the hobbies
+        # to the user
 
         profile.save()
 
@@ -237,35 +273,19 @@ def editProfile(request, user):
         }
         return JsonResponse(response)
 
-
-
-
-        hobbies = data['hobbies']
-        hobbies = hobbies.split(" ")
-
-
-        #if hobbies not ''
-        #   for hobby in hobbies:
-        #       member.hobbies.add(Hobby.objects.get(hobby=hobby))
-        #       member.save()
-
-
-
-        #return JsonResponse(response)
-
     else:
         raise Http404("PUT request was not used")
 
+@csrf_exempt
 @loggedin
 def upload_image(request, user):
-    print("out here")
     member = Member.objects.get(id=user.id)
     profile = Profile.objects.get(user = member.id)
-    if 'profile-image-upload' in request.FILES:
-        image_file = request.FILES['profile-image-upload']
+    if 'img_file' in request.FILES:
+        image_file = request.FILES['img_file']
         profile.image = image_file
         profile.save()
-        return HttpResponse(user.profile.image.url)
+        return HttpResponse(profile.image.url)
     else:
-        raise Http404('Image file not received')
+        return HttpResponse("test")
     

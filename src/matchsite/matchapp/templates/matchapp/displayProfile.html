@@ -3,99 +3,109 @@
 
 {% block content %}
 
-<div id="mySidenav" class="sidenav">
-    <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
-    <br><br><br><br><br><br>
-
-
-    <a class = "profile" href="{% url 'displayProfile' %}" name = "displayProfile">Profile</a>
-    <a href="{% url 'similarHobbies' %}">Matches</a>
-    <a href="{% url 'logout' %}">Log out</a>
-</div>
 
 <div class="container_register">
-    <div class="container">
-        <div class="row">
+  <div class="container">
+    <div class="row">
 
 
-            <div class="col-md-7 ">
+      <div class="col-md-7 ">
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>User Profile</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div class="box box-info">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4>User Profile</h4>
+          </div>
+          <div class="panel-body">
+            <div class="box box-info">
 
-                            <div class="box-body">
-                                <div class="col-sm-6">
-                                    <div align="center"> <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                                            id="profile-image1" class="img-circle img-responsive">
-                                        <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
-                                        <input id="profile-image-upload" class="hidden" type="file" name="file">
-                                        <div style="color:#999;">click here to change profile image</div>
-                                        <!--Upload Image Js And Css-->
-                                    </div>
-
-                                    <br>
-                                    {% csrf_token %}
-                                    <!-- /input-group -->
-                                </div>
-                                <div class="col-sm-6">
-                                    <h4 style="color:#00b1b1;">{{user.username}}</h4></span>
-                                    <span>
-                                        <p>Welcome to {{appname}}</p>
-                                    </span>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr style="margin:5px 0 5px 0;">
+              <div class="box-body">
+                <div class="col-sm-6">
 
 
 
-                                <div id="{{user.profile.id}}">
-                                    <div class="col-sm-5 col-xs-6 tital "><b>Username:</b></div>
-                                    <div class="col-sm-7 col-xs-6 " contenteditable='true' id = "username">{{ user.username }}</div>
-                                    <div class="col-sm-5 col-xs-6 tital "><b>Email:</b></div>
-                                    <div class="col-sm-7" contenteditable='true' id = "email">{{ user.profile.email }}</div>
-                                    <div class="col-sm-5 col-xs-6 tital "><b>Date of Birth:</b></div>
-                                    <div class="col-sm-7" contenteditable='true' id = "dob"> {{ user.profile.dob }}</div>
-                                    <div class="col-sm-5 col-xs-6 tital "><b>Gender:</b></div>
-                                    <div class="col-sm-7" contenteditable='true' id = "gender">{{ user.profile.gender }}</div>
-                                    <div class="col-sm-5 col-xs-6 tital "><b>Hobbies:</b></div>
-                                    <div class="col-sm-7" contenteditable='true' id = "hobbies">#</div>
-                                </div>
+                  <div align="center">
+                    <img alt="User Pic" src="{{user.profile.image.url}}" id="profile-image" class="img-circle img-responsive">
+                    <input id="profile-image-upload" class="hidden">
+                    <progress id="progressBar" value="0" max="100" style="width:150px;display:none;">
+                    </progress>
 
-
-                                <br><br>
-
-                                <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
-                        </form>
-
-                                <!-- /.box-body -->
-                            </div>
-
-                            <!-- /.box -->
-
-                        </div>
-
-
-                    </div>
+                    <div style="color:#999;">click here to change profile image</div>
+                  </form>
+                  <!--Upload Image Js And Css-->
                 </div>
-            </div>
-            <script>
 
-            </script>
+                <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
+                  {% csrf_token %}
+                  <input type="file" id="img_file" style="display:none;">
+                </form>
+                <br>
+
+                <!-- /input-group -->
+              </div>
+              <div class="col-sm-6">
+                <h4 style="color:#00b1b1;">{{user.username}}</h4></span>
+                <span>
+                  <p>Welcome to {{appname}}</p>
+                </span>
+              </div>
+              <div class="clearfix"></div>
+              <hr style="margin:5px 0 5px 0;">
+
+              <form>
+                <div id="username"/><b>Username :</b> <input contenteditable='true' size="25" id="username" value={{user.username}}>
+
+                <div id="email"/><b>E-mail : </b> <input contenteditable='true' size="29"
+                type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                id="username" value= {{user.profile.email}}>
+
+                <div id="dob"/><b>Date of Birth : </b> <input contenteditable='true'
+                type="date" id="username" value={{user.profile.dob}}>
+
+                <div id="gender"/><b>Gender : </b> <input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} >
+                  <input type="radio" id="male" name="gender" value="male"
+                  checked>
+                  <label for="male">Male</label>
+                  <input type="radio" id="female" name="gender" value="female">
+                  <label for="female">Female</label>
+                </div>
+
+                <div id="hobbies"/><b>Hobbies : </b> <input contenteditable='true' size="27" id="username" value="">
+
+                <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
+
+
+              </div>
+            </form>
+
+            <br><br>
 
 
 
 
+            <!-- /.box-body -->
+          </div>
 
-
-
-
+          <!-- /.box -->
 
         </div>
+
+
+      </div>
     </div>
+  </div>
+  <script>
+  </script>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
 
 </div>
 </form>

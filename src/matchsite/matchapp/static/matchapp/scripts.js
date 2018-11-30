@@ -8,12 +8,6 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-$(function () {
-    $('#profile-image1').on('click', function () {
-        $('#profile-image-upload').click();
-    });
-});
-
 ///password regesxvalidation ends
 
 //when user logs in the profile page displays
@@ -66,36 +60,6 @@ $(document).ready(function () {
     });
 
 })
-
-//Save image file via ajax request
-/*$(document).ready(function () {
-    formdata = new FormData();
-    $("#profile-image-upload").on("change", function(){
-        //event.preventDefault();
-
-        //get file from form
-        var file = $('#profile-image-upload')[0].files[0];
-        //var image = new FormData($('#profile-image-upload')[0]);
-
-        //if(formdata){
-            //formdata.append("image", file);
-            $.ajax({
-                url: "/editProfile/",
-                type: "PUT",
-                data: file,
-                // Tell jQuery not to process data or worry about content-type
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log(data)
-                },
-                error: console.log($('#profile-image-upload'))
-            })
-
-
-    
-    });
-
-});*/
-
+$('#profile-image-upload').click(function () {
+    $("#img_file").click();
+});
