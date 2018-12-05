@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'crispy_forms',
     'matchapp',
 ]
 
@@ -68,6 +69,9 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 WSGI_APPLICATION = 'matchsite.wsgi.application'
 

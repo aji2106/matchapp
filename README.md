@@ -1,13 +1,14 @@
 Web Programming coursework 
 
-<Post admin credintial when done>
+admin : admin
+pass : useruser
 
 
 Group: Four students
 Mark: 15%
 Deadline: Friday 14 December
 
-: 2 WEEKS REMAINING 
+: 1 WEEKS REMAINING 
 
 Group 22:
 
@@ -16,49 +17,21 @@ Amair
 Sergio
 Ajiri
 
+Things still to be done: 
+
+(IMPORTANT!) Display profile moving corrupt (User should see their hobbies and save)
+- In the backend see how the hobbies are passed and save to the member
+
+(IMPORTANT!)match hobbies / filtering page   (Age or gender or both) AJAX n JQUERY
+- FADEOUT any information currently displayed and show on success the filtered data
 
 
-Tasks: 
+Predefined hobbies in the database / dummy data 
 
-Please see deadlines for each task:
+Responsive Bootstrap
 
+(IMPORTANT!)EXTRA FEATURE
 
-FrontEND: Sergio + Ajiri
-BackEND : Anas + Amair
-
-
-FRONTEND AND BACKEND
-
-<Deadlines: 
-
-
-  
-1. Users	can	create	an	account	on	the	site	and	login. (Backend mandem)
- ( validation)
-
-2. The	user’s	proFile	should	contain	(at	least):	proFile	image,	email,	gender,	date	of	birth,	
-and	a	list	of	hobbies.	(Anas) (REGEX + DATABASE)
-
-3. The	overall	list	of	hobbies	should	be	deFined	in	advance	by	the	application	developer,	
-so	the	users	of	the	site	can	only	select	one	or	more	hobbies	from	the	given	list.	(i.e.	on	
-your	DB	you	should	have	a	table	for	User	and	another	for	Hobby,	with	a	many-to-many	
-relationship	between	them)	 (DATABASE done)
-
-
-4. Users	should	then	see	a	list	of	other	users	who	have	the	most	similar	set	of	hobbies,	
-i.e.	for	each	two	users	you	should	count	how	many	hobbies	in	common	they	have,	and	
-then	list	those	users	in	descending	order	(users	with	most	common	hobbies	First).	
-
-[PAGE FOR HOBBIES NOT COMPLETED (SERGIO)]
-
-
-
-5. From	the	list	above	users	should	be	able	to	Filter	by	gender	and/or	age,	e.g.	only	
-females	with	ages	between	30	and	50.	Searching	and	Filtering	should	be	done	using	
-Ajax	and	jQuery.	---BackEND will be done week starting 26th 
-
-
-6. Frontend	should	use	Bootstrap,	and	be	responsive.	- Ajiri
 
 
 7. Apart	from	the	basic	features	above,	you	should	implement	at	least	one	extra	feature.	
