@@ -1,0 +1,90 @@
+{% extends 'matchapp/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+.main{
+    margin-left: 570px;
+}
+.title,.subtitle{
+	text-align: center
+}
+.container{
+	margin-left: 200px;
+    width: 30%;
+    padding: 10px;
+}
+.card-title{
+	text-align: center
+}
+.card{
+	 width:300px;
+}
+#slider-range {
+    margin: 10px;
+}
+.ui-slider-horizontal {
+    height: 8px;
+    width: 200px;
+}
+.ui-slider .ui-slider-handle {
+    height: 15px;
+    width: 5px;
+    padding-left: 5px;
+}
+</style>
+
+
+<h3 class="title"> Matches <h3>
+        <h4 class="subtitle"> You have {{numberOfhobbies}} match(es) </h4>
+
+
+<div class="filter_form">
+    <form action="{% url 'filter' %}" method="POST">
+        <div class="main">
+        	<br>
+        	<br>
+            &nbsp; &nbsp; &nbsp;<input type="radio" name="gender" value="Male">Male
+            <input type="radio" name="gender" value="Female"> Female
+            <div id="slider-range"></div>
+            <label for="age">Filter by age:</label>
+            <input type="text" id="age" readonly style="border:0; color:#f6931f; font-weight:bold;">
+
+
+        </div>
+    </form>
+</div>
+
+
+
+{%for match in matches%}
+
+
+                <div class="container">
+
+                    <div class="card-groups">
+                        <div class="card">
+
+
+                            <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"> {{ match.username }}</h5>
+                            </div>
+                            <p class="card-text">
+                                <div><b>Email:</b> {{ match.profile.email }}</div>
+                                <div><b>Age:</b> {{ match.profile.age }}</div>
+                                <div><b>Gender:</b> {{ match.profile.gender }}</div>
+                                <div><b>Hobbies:</b> {{ match.hobbies }}</div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                {%endfor%}
+
+
+
+
+
+                {% endblock %}

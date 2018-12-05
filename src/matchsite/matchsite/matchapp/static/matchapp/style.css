@@ -1,0 +1,134 @@
+body {
+
+        font-family: Arial, Helvetica, sans-serif;
+        /*background: linear-gradient(to bottom, #FFA69E 0%, #861657 100%);*/
+        background: white;
+    }
+
+    div.updateBtn {
+
+        text-align: center;
+
+
+    }
+    div.error_message {
+
+        text-align: center;
+        color: red;
+
+
+    }
+
+    div.container_register {
+
+        width: 400px;
+        margin: auto;
+        margin-top: 50px;
+        border: 3px;
+    }
+
+    div.tc_wrapper {
+
+        width: 800px;
+        margin: auto;
+        margin-top: 50px;
+        margin-left: 400px;
+        margin-bottom: 200px;
+        border: 3px;
+    }
+
+    div.tc_wrapper.h1 {
+
+        text-align: center;
+    }
+
+    /* navigation sidebar Css starts*/
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sidenav a {
+        padding: 6px 6px 6px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .main {
+        margin-left: 200px;
+        /* Same as the width of the sidenav */
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    /* navigation sidebar Css ends*/
+    /* user log in error stars*/
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+    /*user login error ends*/
+/*css for userprofile*/
+.subject-info-box-1,
+.subject-info-box-2 {
+    float: left;
+    width: 45%;
+
+    select {
+        height: 200px;
+        padding: 0;
+        option {
+            padding: 4px 10px 4px 10px;
+        }
+        option:hover {
+            background: #EEEEEE;
+        }
+    }
+}
+.subject-info-arrows {
+    float: left;
+    width: 10%;
+    input {
+        width: 70%;
+        margin-bottom: 5px;
+    }
+}
+/*css for userprofile*/

@@ -52,49 +52,80 @@
               <hr style="margin:5px 0 5px 0;">
 
               <form>
-                <div id="username"/><b>Username :</b> <input contenteditable='true' size="25" id="username" value={{user.username}}>
+                <div id="username"/><b>Username :</b> {{user.username}}
 
                 <div id="email"/><b>E-mail : </b> <input contenteditable='true' size="29"
                 type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 id="username" value= {{user.profile.email}}>
-
-                <div id="dob"/><b>Date of Birth : </b> <input contenteditable='true'
-                type="date" id="username" value={{user.profile.dob}}>
-
-                <div id="gender"/><b>Gender : </b> <input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} >
-                  <input type="radio" id="male" name="gender" value="male"
-                  checked>
-                  <label for="male">Male</label>
-                  <input type="radio" id="female" name="gender" value="female">
-                  <label for="female">Female</label>
-                </div>
-
-                <div id="hobbies"/><b>Hobbies : </b> <input contenteditable='true' size="27" id="username" value="">
-
-                <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
+                <!-- <input contenteditable='true'
+                type="date" id="username" value={{user.profile.dob}}>-->
+                <div id="dob"/><b>Date of Birth : </b>
+                <input type="text" readonly id="from-datepicker" size="23" value={{user.profile.gender}}></input>
 
 
+                <!--<input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} > -->
+                <div id="gender"/><b>Gender : </b>
+                <input type="radio" id="male" name="gender" value="M"
+                checked>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="F">
+                <label for="female">Female</label>
               </div>
-            </form>
 
-            <br><br>
+              <b>Hobbies : </b>
+
+              <div id="hobbies"/><div class="subject-info-box-1">
+                <select multiple="multiple" id='lstBox1' class="form-control">
+                  <option value="ajax">Ajax</option>
+                  <option value="jquery">jQuery</option>
+                </select>
+              </div>
+
+              <div class="subject-info-arrows text-center">
+                <input type="button" id="btnAllRight" value=">>" class="btn btn-default" /><br />
+                <input type="button" id="btnRight" value=">" class="btn btn-default" /><br />
+                <input type="button" id="btnLeft" value="<" class="btn btn-default" /><br />
+                <input type="button" id="btnAllLeft" value="<<" class="btn btn-default" />
+              </div>
+              <div class="subject-info-box-2">
+                <select multiple="multiple" id='lstBox2' class="form-control">
+                  <option value="asp">ASP.NET</option>
+                  <option value="c#">C#</option>
+                </select>
+              </div>
+              <div class="clearfix"></div>
+
+<script>
+
+</script>
+
+
+              <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
+
+
+            </div>
+          </form>
+
+          <br><br>
 
 
 
 
-            <!-- /.box-body -->
-          </div>
 
-          <!-- /.box -->
-
+          <!-- /.box-body -->
         </div>
 
+        <!-- /.box -->
 
       </div>
+
+
     </div>
   </div>
-  <script>
-  </script>
+</div>
+<script>
+
+</script>
 
 
 

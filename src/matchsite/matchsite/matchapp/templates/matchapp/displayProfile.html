@@ -1,0 +1,149 @@
+{% extends 'matchapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container_register">
+  <div class="container">
+    <div class="row">
+
+
+      <div class="col-md-7 ">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4>User Profile</h4>
+          </div>
+          <div class="panel-body">
+            <div class="box box-info">
+
+              <div class="box-body">
+                <div class="col-sm-6">
+
+
+
+                  <div align="center">
+                    <img alt="User Pic" src="{{user.profile.image.url}}" id="profile-image" class="img-circle img-responsive">
+                    <input id="profile-image-upload" class="hidden">
+                    <progress id="progressBar" value="0" max="100" style="width:150px;display:none;">
+                    </progress>
+
+                    <div style="color:#999;">click here to change profile image</div>
+                  </form>
+                  <!--Upload Image Js And Css-->
+                </div>
+
+                <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <input type="file" id="img_file" style="display:none;">
+                </form>
+                <br>
+
+                <!-- /input-group -->
+              </div>
+              <div class="col-sm-6">
+
+                <h4 style="color:#00b1b1;">{{user.username}}</h4></span>
+                <span>
+                  <p>Welcome to {{appname}}</p>
+                </span>
+              </div>
+              <div class="clearfix"></div>
+              <hr style="margin:5px 0 5px 0;">
+
+              <form>
+                <div id="username"/><b>Username :</b> <input contenteditable='true' size="25" id="username" value={{user.username}}>
+
+                <div id="email"/><b>E-mail : </b> <input contenteditable='true' size="29"
+                type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                id="username" value= {{user.profile.email}}>
+                <!-- <input contenteditable='true'
+                type="date" id="username" value={{user.profile.dob}}>-->
+                <div id="dob"/><b>Date of Birth : </b>
+                <input type="text" readonly id="from-datepicker" value={{user.profile.gender}}></input>
+
+
+                <!--<input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} > -->
+                <div id="gender"/><b>Gender : </b>
+                <input type="radio" id="male" name="gender" value="M"
+                checked>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="F">
+                <label for="female">Female</label>
+              </div>
+
+              <div id="hobbies"/><b>Hobbies : </b> <div class="subject-info-box-1">
+                <select multiple="multiple" id='lstBox1' class="form-control">
+                  <option value="ajax">Ajax</option>
+                  <option value="jquery">jQuery</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="mootool">MooTools</option>
+                  <option value="prototype">Prototype</option>
+                  <option value="dojo">Dojo</option>
+                </select>
+              </div>
+              <div class="subject-info-arrows text-center">
+                <input type="button" id="btnAllRight" value=">>" class="btn btn-default" /><br />
+                <input type="button" id="btnRight" value=">" class="btn btn-default" /><br />
+                <input type="button" id="btnLeft" value="<" class="btn btn-default" /><br />
+                <input type="button" id="btnAllLeft" value="<<" class="btn btn-default" />
+              </div>
+              <div class="subject-info-box-2">
+                <select multiple="multiple" id='lstBox2' class="form-control">
+                  <option value="asp">ASP.NET</option>
+                  <option value="c#">C#</option>
+                  <option value="vb">VB.NET</option>
+                  <option value="java">Java</option>
+                  <option value="php">PHP</option>
+                  <option value="python">Python</option>
+                </select>
+              </div>
+              <div class="clearfix"></div>
+
+
+
+
+              <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
+
+
+            </div>
+          </form>
+
+          <br><br>
+
+
+
+
+
+          <!-- /.box-body -->
+        </div>
+
+        <!-- /.box -->
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<script>
+
+</script>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</form>
+{% endblock %}

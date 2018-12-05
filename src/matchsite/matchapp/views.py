@@ -11,6 +11,8 @@ from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
 
+from matchapp.templatetags.extras import display_matches
+
 # REST imports
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, MemberSerializer
@@ -65,12 +67,6 @@ def tc(request):
 	return render(request, 'matchapp/tc.html')
 
 
-# should render the signup page
-"""def signup(request):
-	# form = UserRegForm()
-	# return render(request,'matchapp/register.html', {'form': form})
-	return HttpResponse("test")"""
-
 # once user clicks register button
 # should render user registered page if unique user is entered
 # need validation for email, user, dob, profile image
@@ -95,16 +91,21 @@ def register(request):
             user.set_password(password)
 
             try:user.save()     
-            except IntegrityError: raise Http404('Username '+ str(user)+' already taken: Username must be unique')
+            except: #IntegrityError: 
+                #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')
-            context = {
-                 'appname':appname,
-                 'form': form,
-                 'error':'Username '+ str(user) +' already taken: Usernames must be unique',
-                 }
+                context = {
+                    'appname':appname,
+                    'form': form,
+                    'error':'Username '+ str(user) +' already taken: Usernames must be unique',
+                    }
             # login(request,user)
-            return render(request, 'matchapp/register.html', context)
+                return render(request, 'matchapp/register.html', context)
+
+            form = UserLogInForm()
+
+            return render(request, 'matchapp/index.html', {'form': form})
 
 
      else:
@@ -205,10 +206,33 @@ def similarHobbies(request, user):
     return render(request, 'matchapp/matches.html', context)
 
 # filter button on similarHobbies page which generates
+# By gender or age or both !
 
 @loggedin
 def filter(request, user):
-	return HttpResponse("filter by gender and age using Ajax")
+    if request.method == 'POST':
+        exclude = Member.objects.exclude(username=user)
+        common = exclude.filter(hobbies__in=user.hobbies.all())
+        gender = request.POST['gender']
+        yearMin = Profile.getYearBorn(request.POST['age-min'])
+        yearMax = Profile.getYearBorn(request.POST['age-max'])
+
+        if gender and yearMin and yearMax:
+            sex = common.filter(profile__gender=gender)
+            match = sex.filter(profile__dob__year__range=(yearMax,yearMin))
+
+        elif gender:
+            match = common.filter(profile__gender= gender)
+
+        elif yearMin and yearMax:
+            match= common.filter(profile__dob__year__range=(yearMax,yearMin))
+        else:
+            raise Http404("Please fill in the boxes")
+
+        print(str(match))
+        return HttpResponse(display_matches(match))
+    else:            
+	    raise Http404("POST request was not used")
 
 
 @loggedin
@@ -276,7 +300,7 @@ def editProfile(request, user):
     else:
         raise Http404("PUT request was not used")
 
-@csrf_exempt
+
 @loggedin
 def upload_image(request, user):
     member = Member.objects.get(id=user.id)
