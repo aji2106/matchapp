@@ -9,12 +9,29 @@ function closeNav() {
 }
 
 
-function isNumberKey(evt){
+function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
     return true;
 }
+
+
+$(document).ready(function () {
+    $("#save_button").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/filter/',
+            success: function (data) {
+                console.log("success ")
+            }
+
+        })
+
+    });
+})
+
 
 $(document).ready(function () {
 
@@ -56,58 +73,58 @@ $('#profile-image-upload').click(function () {
     $("#img_file").click();
 });
 
-      $(function sliderRange() {
-          $("#slider-range").slider({
-              range: true,
-              min: 16,
-              max: 50,
-              values: [16, 50],
+$(function sliderRange() {
+    $("#slider-range").slider({
+        range: true,
+        min: 16,
+        max: 50,
+        values: [16, 50],
 
-              slide: function (event, ui) {
-                  var ageValue = getSecondPart($("#age").val());
-                  if (ui.values[1] == '50') {
-                      if (ageValue == ' 49' || ageValue == ' 50+') {
-                          $("#age").val(ui.values[0] + " - " + "50+");
-                      }
-                  }
-                  else {
-                      $("#age").val(ui.values[0] + " - " + ui.values[1]);
-                  }
-              }
-
-             
-          });
-
-          $("#age").val($("#slider-range").slider("values", 0) +
-            " - " + $("#slider-range").slider("values", 1) + "+ ");
-      });
-      
-      function getSecondPart(str) {
-          return str.split('-')[1];
-      }
+        slide: function (event, ui) {
+            var ageValue = getSecondPart($("#age").val());
+            if (ui.values[1] == '50') {
+                if (ageValue == ' 49' || ageValue == ' 50+') {
+                    $("#age").val(ui.values[0] + " - " + "50+");
+                }
+            }
+            else {
+                $("#age").val(ui.values[0] + " - " + ui.values[1]);
+            }
+        }
 
 
-      $(document ).ready(function() {
-          $("#from-datepicker").datepicker({
-              format: 'yyyy-mm-dd'
-          });
-          $("#from-datepicker").on("change", function () {
-              var fromdate = $(this).val();
-              alert(fromdate);
-          });
-      });
+    });
 
-
-$(document ).ready(function() {
-  $('#save_button').click(function (event) {
-  event.preventDefault();
-  $('input[name=gender]').attr('checked',false);
-  
-  var $slider = $("#slider-range");
-  $slider.slider("values", 0, 16);
-  $slider.slider("values", 1, 50);
-   $("#age").val($("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + "+ ");
+    $("#age").val($("#slider-range").slider("values", 0) +
+        " - " + $("#slider-range").slider("values", 1) + "+ ");
 });
+
+function getSecondPart(str) {
+    return str.split('-')[1];
+}
+
+
+$(document).ready(function () {
+    $("#from-datepicker").datepicker({
+        format: 'yyyy-mm-dd'
+    });
+    $("#from-datepicker").on("change", function () {
+        var fromdate = $(this).val();
+        alert(fromdate);
+    });
+});
+
+
+$(document).ready(function () {
+    $('#save_button').click(function (event) {
+        event.preventDefault();
+        $('input[name=gender]').attr('checked', false);
+
+        var $slider = $("#slider-range");
+        $slider.slider("values", 0, 16);
+        $slider.slider("values", 1, 50);
+        $("#age").val($("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + "+ ");
+    });
 });
 
 
