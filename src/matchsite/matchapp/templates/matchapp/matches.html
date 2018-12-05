@@ -45,6 +45,14 @@
     padding-left: 5px;
 }
 
+.age
+{
+    width: 30px; 
+}
+
+
+
+
 </style>
 
 
@@ -57,18 +65,26 @@
         <div class="main">
         	<br>
         	<br>
-            &nbsp; &nbsp; &nbsp;<input type="radio" name="gender" value="Male">Male
-            <input type="radio" name="gender" value="Female"> Female 
-            <div id="slider-range"></div>
-            <label for="age">Filter by age:</label>
-            <input type="text" id="age" readonly style="border:0; color:#f6931f; font-weight:bold;">
-             
-            
+            &nbsp; &nbsp; &nbsp;
+            <div class = "filter">
+                <div class = "gender">
+            <select>
+            <option disabled selected value> -- Select an option -- </option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            </select>
+            </br></br>       
+                 </div>
+                <div class = "ageFilter">
+            <input class = "age" type="text" onkeypress="return isNumberKey(event)"> </input> -
+            <input class = "age" type="text" onkeypress="return isNumberKey(event)"> </input>
+                 </div>
+             </br>
+            <input type = "button" value = "Search"> </input>
+            </div>
         </div>
     </form>
 </div>
-
-            <div class=updateBtn id=save_button><input type="submit" value="Reset"></div>
 
 
 {%for match in matches%}
