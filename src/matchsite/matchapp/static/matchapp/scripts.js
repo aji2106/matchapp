@@ -87,6 +87,12 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
+
+	$('#reset_button').click(function () {
+    	document.getElementById('genderOption').value='default'
+    	document.getElementById('range1').value = ""
+        document.getElementById('range2').value = ""
+	});
     
 });
 
