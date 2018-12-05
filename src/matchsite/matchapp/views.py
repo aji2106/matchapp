@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
+from datetime import datetime
 
 from matchapp.templatetags.extras import display_matches
 
@@ -205,17 +206,19 @@ def similarHobbies(request, user):
     print("users with similar hobbies" + str(match))
     return render(request, 'matchapp/matches.html', context)
 
+
 # filter button on similarHobbies page which generates
 # By gender or age or both !
-
+#remove csrf_exempt
+@csrf_exempt
 @loggedin
 def filter(request, user):
     if request.method == 'POST':
         exclude = Member.objects.exclude(username=user)
         common = exclude.filter(hobbies__in=user.hobbies.all())
-        gender = request.POST['gender']
-        yearMin = Profile.getYearBorn(request.POST['age-min'])
-        yearMax = Profile.getYearBorn(request.POST['age-max'])
+        gender = request.POST.get('gender', False)
+        yearMin = getYearBorn(request.POST.get('age-min', False))
+        yearMax = getYearBorn(request.POST.get('age-max', False))
 
         if gender and yearMin and yearMax:
             sex = common.filter(profile__gender=gender)
@@ -229,11 +232,14 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        print(str(match))
+        #print(str(match))
         return HttpResponse(display_matches(match))
     else:            
 	    raise Http404("POST request was not used")
 
+
+def getYearBorn(age):
+    return int((datetime.now().year - int(age)))
 
 @loggedin
 def displayProfile(request, user):

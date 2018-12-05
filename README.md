@@ -8,7 +8,7 @@ Group: Four students
 Mark: 15%
 Deadline: Friday 14 December
 
-: 1 WEEKS REMAINING 
+: 1 WEEK REMAINING 
 
 Group 22:
 

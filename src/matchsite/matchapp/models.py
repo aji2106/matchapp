@@ -60,9 +60,5 @@ class Profile(models.Model):
         else:
             return "DOB not specified"
 
-    @property
-    def getYearBorn(self, age):
-        return int((datetime.now().year - int(age)))
-
     def __str__(self):
         return self.user.username
