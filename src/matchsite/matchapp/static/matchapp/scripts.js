@@ -97,8 +97,69 @@ $(document).ready(function () {
     	document.getElementById('range1').value = ""
         document.getElementById('range2').value = ""
 	});
+
+    $('#reset_all').click(function () {
+        document.getElementById('genderOption').value='default'
+        document.getElementById('range1').value = ""
+        document.getElementById('range2').value = ""
+    });
     
 });
+
+$(document).ready(function () {
+
+    $('#searchAge').click(function () {
+        var range1 = document.getElementById('range1').value;
+        var range2 = document.getElementById('range2').value;
+        //document.getElementById('genderOption').value='default'
+        if (range1 == "")
+        {
+            alert("enter something ")
+        }
+
+        else if(range2 == "")
+        {
+
+        }
+
+        else if(range1 == "" && range2 == "")
+        {
+
+        }
+
+        //Ajax for search age
+        else
+        {
+
+        }
+    });
+    
+});
+
+$(document).ready(function () {
+
+    $('#genderOption').change(function() {
+        var val = $("#genderOption option:selected").text();
+        if(val == "All")
+        {
+
+        }
+
+        if(val == "Male")
+        {
+
+        }
+
+        if(val == "Female")
+        {
+
+        }
+    })
+    
+});
+
+
+
 
 
 
