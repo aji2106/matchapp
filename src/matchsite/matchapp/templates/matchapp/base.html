@@ -50,13 +50,23 @@
 <body>
 
   {% if loggedIn %}
-  <div id="mySidenav" class="sidenav">
-    <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+  <!--<div id="mySidenav" class="sidenav">
     <br><br><br><br><br><br>
     <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile</a>
     <a href="{% url 'similarHobbies' %}">Matches</a>
     <a href="{% url 'logout' %}">Log out</a>
+  </div>--> 
+  
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">{{appname}}</a>
+    </div>
+    <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile</a>
+    <a href="{% url 'similarHobbies' %}">Matches</a>
+    <a href="{% url 'logout' %}">Log out</a>
   </div>
+</nav>
   {% endif%}
 
 

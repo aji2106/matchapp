@@ -16,6 +16,10 @@ function isNumberKey(evt) {
     return true;
 }
 
+function age() {
+        document.getElementById("myDropdown").classList.toggle("show");
+}
+
 
 $(document).ready(function () {
     $("#save_button").click(function (event) {
@@ -89,7 +93,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
 	$('#reset_button').click(function () {
-    	document.getElementById('genderOption').value='default'
+    	//document.getElementById('genderOption').value='default'
     	document.getElementById('range1').value = ""
         document.getElementById('range2').value = ""
 	});
