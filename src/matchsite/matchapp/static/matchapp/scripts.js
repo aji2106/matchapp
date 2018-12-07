@@ -16,8 +16,13 @@ function isNumberKey(evt) {
     return true;
 }
 
+function gender() {
+        document.getElementById("genderDropdown").classList.toggle("show");
+}
+
 function age() {
-        document.getElementById("myDropdown").classList.toggle("show");
+        document.getElementById("ageDropdown").classList.toggle("show");
+
 }
 
 

@@ -45,7 +45,6 @@
     background-color: #f1f1f1;
     min-width: 160px;
     overflow: auto;
-    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
     z-index: 1;
 }
 
@@ -105,20 +104,23 @@
     </form>
 </div>-->
 
+<!--filter by age with radio buttons-->
 <div class="dropdown">
-<button onclick="age()" class="dropbtn">Filter by age</button>
-  <div id="myDropdown" class="dropdown-content">
-     </br>
-    <input id = "range1" class = "age" type="text" onkeypress="return isNumberKey(event)"> -
-    <input id = "range2" class = "age" type="text" onkeypress="return isNumberKey(event)"> </br> </br>
-    <input id = "searchAge" type = "button" value = "Search"> </input> </input> <input id = "reset_button" type = "button" value = "Reset"> </input>
+<button onclick="gender()" class="dropbtn">Filter by gender</button>
+  <div id="genderDropdown" class="dropdown-content">
+    </br>
+    <input type="radio" name="gender" value="male"> Male<br>
+    <input type="radio" name="gender" value="female"> Female<br>
+    <input type="radio" name="gender" value="all"> All
   </div>
-  <select id = "genderOption">
-            <option value = "default" disabled selected value> -- Filter by gender -- </option>
-            <option value="All">All</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-  </select>
+
+<button onclick="age()" class="dropbtn">Filter by age</button>
+  <div id="ageDropdown" class="dropdown-content">
+    </br>
+        <input id = "range1" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input> -
+        <input id = "range2" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input>
+  </div>
+
   <input id = "searchAll" type = "button" value = "Search All"> </input> </input> <input id = "reset_all" type = "button" value = "Reset All"> </input>
 
   
