@@ -60,7 +60,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">{{appname}}</a>
+      <a class="navbar-brand" href="{% url 'displayProfile' %}">{{appname}}</a>
     </div>
     <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile</a>
     <a href="{% url 'similarHobbies' %}">Matches</a>
