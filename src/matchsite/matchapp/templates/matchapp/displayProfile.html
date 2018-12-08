@@ -30,7 +30,7 @@
                     </progress>
 
                     <div style="color:#999;">click here to change profile image</div>
-                  </form>
+
                   <!--Upload Image Js And Css-->
                 </div>
 
@@ -43,7 +43,7 @@
                 <!-- /input-group -->
               </div>
               <div class="col-sm-6">
-                <h4 style="color:#00b1b1;">{{user.username}}</h4></span>
+                <h4 style="color:#00b1b1;">{{user.username}}</h4>
                 <span>
                   <p>Welcome to test{{appname}}</p>
                 </span>
@@ -60,14 +60,9 @@
                 <!-- <input contenteditable='true'
                 type="date" id="username" value={{user.profile.dob}}>-->
                 <div id="dob"/><b>Date of Birth : </b>
-                <input type="text" id="from-datepicker"/>
+                <input type="text" id="datepicker" size="30">
 
-                <div class="input-group date" data-provide="datepicker">
-                      <input type="text" class="form-control" data-date-format="yyyy/mm/dd">
-                      <div class="input-group-addon">
-                          <span class="glyphicon glyphicon-th"></span>
-                      </div>
-                  </div>
+
                 <!--<input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} > -->
                 <div id="gender"/><b>Gender : </b>
                 <input type="radio" id="male" name="gender" value="M"
@@ -100,21 +95,11 @@
               </div>
               <div class="clearfix"></div>
 
-<script>
-
-</script>
-
-
               <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
 
 
             </div>
           </form>
-
-          <br><br>
-
-
-
 
           <!-- /.box-body -->
         </div>
@@ -127,16 +112,13 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'matchapp/scripts.js' %}"></script>
+
 <script>
 
+
 </script>
-
-
-
-
-
-
-
 
 
 </div>

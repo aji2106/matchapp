@@ -85,17 +85,6 @@ $('#profile-image-upload').click(function () {
 
 
 $(document).ready(function () {
-    $("#from-datepicker").datepicker({
-        format: 'yyyy-mm-dd'
-    });
-    $("#from-datepicker").on("change", function () {
-        var fromdate = $(this).val();
-        alert(fromdate);
-    });
-});
-
-
-$(document).ready(function () {
 
 	$('#reset_button').click(function () {
     	//document.getElementById('genderOption').value='default'
@@ -108,7 +97,7 @@ $(document).ready(function () {
         document.getElementById('range1').value = ""
         document.getElementById('range2').value = ""
     });
-    
+
 });
 
 $(document).ready(function () {
@@ -138,7 +127,7 @@ $(document).ready(function () {
 
         }
     });
-    
+
 });
 
 $(document).ready(function () {
@@ -160,12 +149,76 @@ $(document).ready(function () {
 
         }
     })
-    
+
+});
+////////slush bucket
+$(document).ready(function () {
+    $('#btnRight').click(function (e) {
+        var selectedOpts = $('#lstBox1 option:selected');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+        $('#lstBox2').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+    $('#btnAllRight').click(function (e) {
+        var selectedOpts = $('#lstBox1 option');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+        $('#lstBox2').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+    $('#btnLeft').click(function (e) {
+        var selectedOpts = $('#lstBox2 option:selected');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+        $('#lstBox1').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+    $('#btnAllLeft').click(function (e) {
+        var selectedOpts = $('#lstBox2 option');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+        $('#lstBox1').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+}());
+
+////////
+$(document).ready(function () {
+    $("#from-datepicker").datepicker({
+        format:'YYYY-MM-DD'
+    });
+    $("#from-datepicker").on("change", function () {
+        var fromdate = $(this).val();
+        alert(fromdate);
+    });
 });
 
+////
+$(document).ready( function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth:true,
+      changeYear: true,
+      yearRange: '1900:2018',
+      dateFormat:"yy-mm-dd",
+      
 
+    });
+    $( "#format" ).on( "change", function() {
+      $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+    });
+  } );
 
-
-
-
-
+////
