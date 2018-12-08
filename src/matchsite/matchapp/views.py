@@ -213,12 +213,15 @@ def similarHobbies(request, user):
 @csrf_exempt
 @loggedin
 def filter(request, user):
-    if request.method == 'POST':
+    if request.method == 'GET':
         exclude = Member.objects.exclude(username=user)
         common = exclude.filter(hobbies__in=user.hobbies.all())
-        gender = request.POST.get('gender', False)
-        yearMin = getYearBorn(request.POST.get('age-min', False))
-        yearMax = getYearBorn(request.POST.get('age-max', False))
+        gender = request.GET.get('gender',False)
+        yearMin = getYearBorn(request.GET.get('age-min', False))
+        yearMax = getYearBorn(request.GET.get('age-max',False))
+
+
+        print(yearMin, yearMax, gender)
 
         if gender and yearMin and yearMax:
             sex = common.filter(profile__gender=gender)
@@ -232,14 +235,17 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        #print(str(match))
+        print(str(match))
         return HttpResponse(display_matches(match))
     else:            
-	    raise Http404("POST request was not used")
+	    raise Http404("GET request was not used")
 
 
 def getYearBorn(age):
-    return int((datetime.now().year - int(age)))
+    if age != '':
+        return int((datetime.now().year - int(age)))
+    else:
+        return age
 
 @loggedin
 def displayProfile(request, user):

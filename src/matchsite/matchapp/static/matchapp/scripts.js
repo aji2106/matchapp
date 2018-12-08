@@ -17,29 +17,37 @@ function isNumberKey(evt) {
 }
 
 function gender() {
-        document.getElementById("genderDropdown").classList.toggle("show");
+    document.getElementById("genderDropdown").classList.toggle("show");
 }
 
 function age() {
-        document.getElementById("ageDropdown").classList.toggle("show");
+    document.getElementById("ageDropdown").classList.toggle("show");
 
 }
 
 
 $(document).ready(function () {
-    $("#save_button").click(function (event) {
-        event.preventDefault();
+    $("#filter-form").submit(function (event) {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: '/filter/',
+            data: {
+                'gender': $(".gender:checked").val(),
+                'age-min': $('input[name=age-min]').val(),
+                'age-max': $('input[name=age-max]').val(),
+            },
             success: function (data) {
-                console.log("success ")
+                $("#matches").fadeOut()
+                $("#matches").append(data)
             }
-
-        })
-
+        });
+        event.preventDefault();
     });
 })
+
+
+
+
 
 
 $(document).ready(function () {
@@ -97,18 +105,18 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 
-	$('#reset_button').click(function () {
-    	//document.getElementById('genderOption').value='default'
-    	document.getElementById('range1').value = ""
-        document.getElementById('range2').value = ""
-	});
-
-    $('#reset_all').click(function () {
-        document.getElementById('genderOption').value='default'
+    $('#reset_button').click(function () {
+        //document.getElementById('genderOption').value='default'
         document.getElementById('range1').value = ""
         document.getElementById('range2').value = ""
     });
-    
+
+    $('#reset_all').click(function () {
+        document.getElementById('genderOption').value = 'default'
+        document.getElementById('range1').value = ""
+        document.getElementById('range2').value = ""
+    });
+
 });
 
 $(document).ready(function () {
@@ -117,55 +125,42 @@ $(document).ready(function () {
         var range1 = document.getElementById('range1').value;
         var range2 = document.getElementById('range2').value;
         //document.getElementById('genderOption').value='default'
-        if (range1 == "")
-        {
+        if (range1 == "") {
             alert("enter something ")
         }
 
-        else if(range2 == "")
-        {
+        else if (range2 == "") {
 
         }
 
-        else if(range1 == "" && range2 == "")
-        {
+        else if (range1 == "" && range2 == "") {
 
         }
 
         //Ajax for search age
-        else
-        {
+        else {
 
         }
     });
-    
+
 });
 
 $(document).ready(function () {
 
-    $('#genderOption').change(function() {
+    $('#genderOption').change(function () {
         var val = $("#genderOption option:selected").text();
-        if(val == "All")
-        {
+        if (val == "All") {
 
         }
 
-        if(val == "Male")
-        {
+        if (val == "Male") {
 
         }
 
-        if(val == "Female")
-        {
+        if (val == "Female") {
 
         }
     })
-    
+
 });
-
-
-
-
-
-
 
