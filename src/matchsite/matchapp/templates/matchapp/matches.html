@@ -9,64 +9,54 @@
 }
 
 .title,.subtitle{
-	text-align: center
+    text-align: center
 }
 
 
 .card-title{
-	text-align: center
+    text-align: center
 }
 
 .card{
-	 width:300px;
+     width:300px;
      
-}
-
-#slider-range {
-    margin: 10px;
-}
-.ui-slider-horizontal {
-    height: 8px;
-    width: 200px;
-}
-.ui-slider .ui-slider-handle {
-    height: 15px;
-    width: 5px;
-    padding-left: 5px;
 }
 
 .age{
     width: 30px; 
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    overflow: auto;
-    z-index: 1;
-}
+#topNav ul li ul { overflow:auto; }
 
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
 
-.dropdown a:hover {
-    background-color: #ddd;
 
-}
-
-.dropdown {
-    margin-left: 15px;
+#pr2:hover~ #a {
+    background-color: green;
 }
 
 .show {
     display: block;
 }
+
+.decoratedErrorField{
+    border:2px solid red;
+}
+
+#messageValidation{
+    text-align: center;
+    color: red;
+}
+
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+
 
 
 
@@ -75,56 +65,58 @@
 
 <h3 class="title"> Matches <h3>
         </br>
-        <h4 class="subtitle"> You have {{numberOfhobbies}} match(es) </h4>
+        <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
+        <p id = "messageValidation"></p>
 
-<!--
-<div class="filter_form">
-    <form action="{% url 'filter' %}" method="POST">
-        <div class="main">
-        	<br>
-        	<br>
-            &nbsp; &nbsp; &nbsp;
-            <div class = "filter">
-                <div class = "gender">
-            <select id = "genderOption">
-            <option value = "default" disabled selected value> -- Select an option -- </option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            </select>
-            </br></br>       
-            </div>
-                <div class = "ageFilter">
-            <input id = "range1" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input> -
-            <input id = "range2" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input>
-                 </div>
-             </br>
-            <input type = "button" value = "Search"> </input> <input id = "reset_button" type = "button" value = "Reset"> </input>
-            </div>
-        </div>
-    </form>
-</div>-->
+<form id = filter-form method = "POST" action = >
+<div class="container-fluid bg-light ">
+    <div class="row align-items-center justify-content-center">
 
-<!--filter by age with radio buttons-->
-<div class="dropdown">
-<button onclick="gender()" class="dropbtn">Filter by gender</button>
-  <div id="genderDropdown" class="dropdown-content">
-    </br>
-    <input type="radio" name="gender" value="male"> Male<br>
-    <input type="radio" name="gender" value="female"> Female<br>
-    <input type="radio" name="gender" value="all"> All
-  </div>
+                        <div class="col-md-2 pt-3">
+                           <div class="form-group ">
+                              <nav id="topNav">
+                              <ul style="list-style: none;">
+                                <li>
+                                  <a class = "dropbtn" href="#" title="Nav Link 2" onclick="gender()">Filter by Age</a>
+                                  <ul id = "displayContentG" style="list-style: none; display:none;">
+                                  </br>
+                                  </br>
+                                    <li> <input id = "range1" class = "age" type="text" name = "age-min" placeholder = "min" onkeypress="return isNumberKey(event)"> </input> to
+                                         <input id = "range2" class = "age" type="text" name = "age-max" placeholder = "max" onkeypress="return isNumberKey(event)"> </input>  </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </nav>
+                           </div>
+                        </div>
+                        <div class="col-md-2 pt-3">
+                           <div class="form-group">
+                              <nav id="topNav2">
+                              <ul style="list-style: none;">
+                                <li>
+                                  <a class = "dropbtn" id = "agedropdown"href="#" onclick="age()">Filter by Gender</a>
+                                  <ul id = "displayContentA" style="list-style: none; display:none;">
+                                    </br>
+                                    <li><input type="radio" class="gender" id="pr1" name="preset" value="1">Male</li>
+                                    <li><input type="radio" class="gender" id="pr2" name="preset" value="2">Female</li>
 
-<button onclick="age()" class="dropbtn">Filter by age</button>
-  <div id="ageDropdown" class="dropdown-content">
-    </br>
-        <input id = "range1" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input> -
-        <input id = "range2" class = "age" type="text" onkeypress="return isNumberKey(event)"> </input>
-  </div>
-
-  <input id = "searchAll" type = "button" value = "Search All"> </input> </input> <input id = "reset_all" type = "button" value = "Reset All"> </input>
-
-  
+                                  </ul>
+                                </li>
+                              </ul>
+                            </nav>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                           <button type="submit" id = "save_button" class="btn btn-primary btn-block">Search</button>
+                        </div>
+                        <div class="col-md-2">
+                           <button type="submit" id = "save_button" class="btn btn-primary btn-block">Refresh</button>
+                        </div>
+                    </div>
 </div>
+</form>
+
 
 
 
@@ -151,8 +143,6 @@
 
 </div>
 </div>
-
-
 
 
 
