@@ -29,8 +29,6 @@ function age() {
 
 }
 
-
-
 $(document).ready(function () {
     $("#save_button").click(function (event) {
         event.preventDefault();
@@ -76,9 +74,6 @@ $(document).bind('click', function (e) {
     if (!$clicked.parents().hasClass("drop-down"))
         $(".drop-down .options ul").hide();
 });
-
-
-
 
 
 $(document).ready(function () {
@@ -170,7 +165,8 @@ $(document).ready(function () {
 ////////
 $(document).ready(function () {
     $("#from-datepicker").datepicker({
-        format: 'YYYY-MM-DD'
+
+        format: 'yyyy-mm-dd'
     });
     $("#from-datepicker").on("change", function () {
         var fromdate = $(this).val();
@@ -185,75 +181,5 @@ $(document).ready(function () {
         changeYear: true,
         yearRange: '1900:2018',
         dateFormat: "yy-mm-dd",
-
-
-<<<<<<< HEAD
-        $(document).ready(function() {
-
-            $('#reset_button').click(function () {
-                //document.getElementById('genderOption').value='default'
-                document.getElementById('range1').value = ""
-                document.getElementById('range2').value = ""
-            });
-
-            $('#reset_all').click(function () {
-                document.getElementById('genderOption').value = 'default'
-                document.getElementById('range1').value = ""
-                document.getElementById('range2').value = ""
-            });
-
-        });
-
-    $(document).ready(function () {
-
-        $('#searchAge').click(function () {
-            var range1 = document.getElementById('range1').value;
-            var range2 = document.getElementById('range2').value;
-            //document.getElementById('genderOption').value='default'
-            if (range1 == "") {
-                alert("enter something ")
-            }
-
-            else if (range2 == "") {
-
-            }
-
-            else if (range1 == "" && range2 == "") {
-
-            }
-
-            //Ajax for search age
-            else {
-
-            }
-        });
-
-    });
-
-    $(document).ready(function () {
-
-        $('#genderOption').change(function () {
-            var val = $("#genderOption option:selected").text();
-            if (val == "All") {
-
-            }
-
-            if (val == "Male") {
-
-            }
-
-            if (val == "Female") {
-
-            }
-        })
-
-    });
-=======
-    });
-    $( "#format" ).on( "change", function() {
-      $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
-    });
-  } );
->>>>>>> 60807e98bbd9bfe4b550450f685b95c43a384d27
-
-////
+    })
+});
