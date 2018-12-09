@@ -219,8 +219,6 @@ def filter(request, user):
         yearMin = getYearBorn(request.GET.get('age-min', False))
         yearMax = getYearBorn(request.GET.get('age-max',False))
 
-        print(yearMin, yearMax, gender)
-
         if gender and yearMin and yearMax:
             sex = common.filter(profile__gender=gender)
             match = sex.filter(profile__dob__year__range=(yearMax,yearMin))
