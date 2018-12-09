@@ -20,7 +20,6 @@ function isNumberKey(evt) {
 
 
 function gender() {
-
     document.getElementById("displayContentG").classList.toggle("show");
 }
 
@@ -29,32 +28,39 @@ function age() {
 
 }
 
-$(document).ready(function () {
-    $("#save_button").click(function (event) {
-        event.preventDefault();
 
+$(document).ready(function () {
+    $("#filter-form").submit(function (event) {
         if ($("#range1").val() > $("#range2").val()) {
             document.getElementById("range1").className += " decoratedErrorField ";
             $("#messageValidation").html("Please ensure the first age is lower than the second");
         }
-
-
         $.ajax({
-            type: 'GET',
-            url: '/filter/',
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
             data: {
-                'gender': $(".gender:checked").val(),
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
                 'age-min': $('input[name=age-min]').val(),
                 'age-max': $('input[name=age-max]').val(),
+                'gender': $(".gender:checked").val(),
             },
             success: function (data) {
-                $("#matches").fadeOut()
-                $("#matches").append(data)
+                $("#matches").empty();
+                data = JSON.stringify(data)
+                data = JSON.parse(data)
+                var elements = data.split(',')
+
+                elements.forEach(function (element) {
+                    var val = element.replace(/['"]+/g, '')
+                    $('#matches').append(val)
+                });
+
             }
         });
         event.preventDefault();
     });
 })
+
 
 $(".drop-down .selected a").click(function () {
     $(".drop-down .options ul").toggle();
@@ -183,3 +189,4 @@ $(document).ready(function () {
         dateFormat: "yy-mm-dd",
     })
 });
+

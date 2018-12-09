@@ -209,8 +209,7 @@ def similarHobbies(request, user):
 
 # filter button on similarHobbies page which generates
 # By gender or age or both !
-#remove csrf_exempt
-@csrf_exempt
+
 @loggedin
 def filter(request, user):
     if request.method == 'GET':
@@ -219,7 +218,6 @@ def filter(request, user):
         gender = request.GET.get('gender',False)
         yearMin = getYearBorn(request.GET.get('age-min', False))
         yearMax = getYearBorn(request.GET.get('age-max',False))
-
 
         print(yearMin, yearMax, gender)
 
@@ -235,8 +233,8 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        print(str(match))
         return HttpResponse(display_matches(match))
+
     else:            
 	    raise Http404("GET request was not used")
 
