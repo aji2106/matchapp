@@ -43,6 +43,10 @@
     border:2px solid red;
 }
 
+.removeErrorField{
+    color: unset;
+}
+
 
 
 #messageValidation{
@@ -81,8 +85,9 @@
                             <nav id="topNav">
                                 <ul style="list-style: none;">
                                     <li>
-                                        <a class="dropbtn" href="#" title="Nav Link 2" onclick="gender()">Filter by Age</a>
-                                        <ul id="displayContentG" style="list-style: none; display:none;">
+                                        <!--<a class="dropbtn" href="#" title="Nav Link 2" onclick="gender()">Filter by Age</a>-->
+                                        <input type = "button" id = "filterByAge" value = "Filter by Age" class="dropbtn" title="Nav Link 2">
+                                        <ul id="displayContentA" style="list-style: none; display:none;">
                                             </br>
                                             </br>
                                             <li> <input id="range1" class="age" type="text" name="age-min" placeholder="min"
@@ -100,8 +105,9 @@
                             <nav id="topNav2">
                                 <ul style="list-style: none;">
                                     <li>
-                                        <a class="dropbtn" id="agedropdown" href="#" onclick="age()">Filter by Gender</a>
-                                        <ul id="displayContentA" style="list-style: none; display:none;">
+                                        <!--<a class="dropbtn" id="agedropdown" href="#" onclick="age()">Filter by Gender</a>-->
+                                        <input type ="button" class="dropbtn" id="agedropdown" value = "Filter by Gender">
+                                        <ul id="displayContentG" style="list-style: none; display:none;">
                                             </br>
                                             <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male</li>
                                             <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female</li>

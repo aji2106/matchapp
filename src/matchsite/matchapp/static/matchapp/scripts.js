@@ -19,23 +19,39 @@ function isNumberKey(evt) {
 }
 
 
-function gender() {
+/*function gender() {
     document.getElementById("displayContentG").classList.toggle("show");
 }
 
 function age() {
     document.getElementById("displayContentA").classList.toggle("show");
 
-}
+}*/
+
+$(document).ready(function () {
+    $('#filterByAge').click(function () {
+    document.getElementById("displayContentA").classList.toggle("show");
+    
+});
+});
+
+$(document).ready(function () {
+    $('#agedropdown').click(function () {
+    document.getElementById("displayContentG").classList.toggle("show");
+    
+});
+});
 
 
 $(document).ready(function () {
     $("#filter-form").submit(function (event) {
-        //message validations
-        if ($("#range1").val() > $("#range2").val()) {
+        
+        //validation for age
+        if (parseInt($("#range1").val()) > parseInt($("#range2").val())) {
             document.getElementById("range1").className += " decoratedErrorField ";
             $("#messageValidation").html("Please ensure the first age is lower than the second");
         }
+<<<<<<< HEAD
 
         $.ajax({
             type: $(this).attr('method'),
@@ -59,9 +75,41 @@ $(document).ready(function () {
                 });
                 let count = matches[0].children.length
                 $(".subtitle").text("You have " + count + " match(es)");
+=======
+>>>>>>> 8f6b76c32a7bb9d86a51e15e8ae768faeab05b4b
 
-            }
-        });
+        else {
+            //remove the validation
+            $("#range1").removeClass("decoratedErrorField");
+            $("#messageValidation").empty();
+
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'age-min': $('input[name=age-min]').val(),
+                    'age-max': $('input[name=age-max]').val(),
+                    'gender': $(".gender:checked").val(),
+                },
+                success: function (data) {
+                    $("#matches").empty();
+                    data = JSON.stringify(data)
+                    data = JSON.parse(data)
+                    var elements = data.split(',')
+
+                    elements.forEach(function (element) {
+                        var val = element.replace(/['"]+/g, '')
+                        $('#matches').append(val)
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#messageValidation").html("Please fill in fields to filter the matches");
+                }
+                
+            });
+     }
         event.preventDefault();
     });
 })
@@ -87,6 +135,7 @@ $(document).bind('click', function (e) {
 });
 
 
+//edit profile
 $(document).ready(function () {
 
     $("#update_button").click(function (event) {
@@ -123,6 +172,23 @@ $(document).ready(function () {
     });
 
 })
+
+//refresh matches list
+$(document).ready(function () {
+    $('#reset_button').click(function () {
+    $.ajax({
+            type: "GET",
+            url: "/similarHobbies/",
+            success: function() {
+                location.reload();
+            }
+
+        })
+    });
+    
+});
+
+
 $('#profile-image-upload').click(function () {
     $("#img_file").click();
 });
