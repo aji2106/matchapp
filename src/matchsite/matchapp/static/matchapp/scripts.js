@@ -31,10 +31,12 @@ function age() {
 
 $(document).ready(function () {
     $("#filter-form").submit(function (event) {
+        //message validations
         if ($("#range1").val() > $("#range2").val()) {
             document.getElementById("range1").className += " decoratedErrorField ";
             $("#messageValidation").html("Please ensure the first age is lower than the second");
         }
+        
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
