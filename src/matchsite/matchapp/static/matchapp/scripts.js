@@ -30,53 +30,27 @@ function age() {
 
 $(document).ready(function () {
     $('#filterByAge').click(function () {
-    document.getElementById("displayContentA").classList.toggle("show");
-    
-});
+        document.getElementById("displayContentA").classList.toggle("show");
+
+    });
 });
 
 $(document).ready(function () {
     $('#agedropdown').click(function () {
-    document.getElementById("displayContentG").classList.toggle("show");
-    
-});
+        document.getElementById("displayContentG").classList.toggle("show");
+
+    });
 });
 
 
 $(document).ready(function () {
     $("#filter-form").submit(function (event) {
-        
+
         //validation for age
         if (parseInt($("#range1").val()) > parseInt($("#range2").val())) {
             document.getElementById("range1").className += " decoratedErrorField ";
             $("#messageValidation").html("Please ensure the first age is lower than the second");
         }
-<<<<<<< HEAD
-
-        $.ajax({
-            type: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: {
-                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                'age-min': $('input[name=age-min]').val(),
-                'age-max': $('input[name=age-max]').val(),
-                'gender': $(".gender:checked").val(),
-            },
-            success: function (data) {
-                var matches = $("#matches")
-                $("#matches").empty();
-                data = JSON.stringify(data)
-                data = JSON.parse(data)
-                var elements = data.split(',')
-
-                elements.forEach(function (element) {
-                    let val = element.replace(/['"]+/g, '')
-                    $('#matches').append(val)
-                });
-                let count = matches[0].children.length
-                $(".subtitle").text("You have " + count + " match(es)");
-=======
->>>>>>> 8f6b76c32a7bb9d86a51e15e8ae768faeab05b4b
 
         else {
             //remove the validation
@@ -107,9 +81,9 @@ $(document).ready(function () {
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#messageValidation").html("Please fill in fields to filter the matches");
                 }
-                
+
             });
-     }
+        }
         event.preventDefault();
     });
 })
@@ -176,16 +150,16 @@ $(document).ready(function () {
 //refresh matches list
 $(document).ready(function () {
     $('#reset_button').click(function () {
-    $.ajax({
+        $.ajax({
             type: "GET",
             url: "/similarHobbies/",
-            success: function() {
+            success: function () {
                 location.reload();
             }
 
         })
     });
-    
+
 });
 
 
