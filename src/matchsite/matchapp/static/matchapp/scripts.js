@@ -36,7 +36,7 @@ $(document).ready(function () {
             document.getElementById("range1").className += " decoratedErrorField ";
             $("#messageValidation").html("Please ensure the first age is lower than the second");
         }
-        
+
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
@@ -47,15 +47,18 @@ $(document).ready(function () {
                 'gender': $(".gender:checked").val(),
             },
             success: function (data) {
+                var matches = $("#matches")
                 $("#matches").empty();
                 data = JSON.stringify(data)
                 data = JSON.parse(data)
                 var elements = data.split(',')
 
                 elements.forEach(function (element) {
-                    var val = element.replace(/['"]+/g, '')
+                    let val = element.replace(/['"]+/g, '')
                     $('#matches').append(val)
                 });
+                let count = matches[0].children.length
+                $(".subtitle").text("You have " + count + " match(es)");
 
             }
         });
