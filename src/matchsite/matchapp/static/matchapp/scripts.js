@@ -67,6 +67,7 @@ $(document).ready(function () {
                     'gender': $(".gender:checked").val(),
                 },
                 success: function (data) {
+                    var matches = $("#matches")
                     $("#matches").empty();
                     data = JSON.stringify(data)
                     data = JSON.parse(data)
@@ -77,6 +78,8 @@ $(document).ready(function () {
                         $('#matches').append(val)
                     });
 
+                    let count = matches[0].children.length
+                    $(".subtitle").text("You have " + count + " match(es)");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#messageValidation").html("Please fill in fields to filter the matches");
