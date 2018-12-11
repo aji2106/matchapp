@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from django.http import HttpResponse, Http404
-from matchapp.models import Member, Profile, Hobby
+from matchapp.models import Member, Profile, Hobby, NumberRequest
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
@@ -11,12 +11,15 @@ from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
 from datetime import datetime
+from django.contrib.auth import get_user_model
 
 from matchapp.templatetags.extras import display_matches
 
 # REST imports
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, MemberSerializer
+
+User = get_user_model()
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -321,3 +324,28 @@ def upload_image(request, user):
     else:
         return HttpResponse("test")
     
+@loggedin
+def send_request(request, user, id):
+    toUser = get_object_or_404(User, id=id)
+    NRequest, created = NumberRequest.objects.get_or_create(
+        from_user=user,
+        to_user=toUser)
+    return HttpResponseRedirect("matchapp/matches.html")
+
+@loggedin
+def cancel_request(request, user, id):
+    toUser = get_object_or_404(User, id=id)
+    NRequest = NumberRequest.objects.filter(
+        from_user=user,
+        to_user=toUser).first()
+    NRequest.delete()
+    return HttpResponseRedirect("matchapp/matches.html")
+
+@loggedin
+def accept_request(request, user, id):
+    from_user = get_object_or_404(User, id=id)
+    NRequest = NumberRequest.objects.filter(
+        from_user=from_user,
+        to_user=user).first()
+    
+    return HttpResponseRedirect("matchapp/matches.html")
