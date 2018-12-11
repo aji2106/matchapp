@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
+from django.core.validators import RegexValidator
 
 # The Hobby models provides an intermediate model for
 # the 'hobbies' ManyToMany relationship between Members
@@ -59,6 +60,10 @@ class Profile(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     dob = models.DateField(max_length=8, null=True)
+    phone_regex = RegexValidator(
+        regex=r'^\+?1?\d{11}$', message="Phone number must be entered in the format: '+999999999'. only 11 digits allowed.")
+    number = models.CharField(
+        validators=[phone_regex], max_length=11, blank=True)  # validators should be a list
 
     @property
     def age(self):
