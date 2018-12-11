@@ -82,7 +82,7 @@ $(document).ready(function () {
                     $(".subtitle").text("You have " + count + " match(es)");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    $("#messageValidation").html("Please fill in fields to filter the matches");
+                    $("#messageValidation").html("Please fill in the fields to filter the matches");
                 }
 
             });

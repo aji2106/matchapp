@@ -63,7 +63,9 @@
     cursor: pointer;
 }
 
-
+.row.align-items-center.justify-content-center {
+    background-color: white;
+}
 
 
 
@@ -85,7 +87,6 @@
                             <nav id="topNav">
                                 <ul style="list-style: none;">
                                     <li>
-                                        <!--<a class="dropbtn" href="#" title="Nav Link 2" onclick="gender()">Filter by Age</a>-->
                                         <input type = "button" id = "filterByAge" value = "Filter by Age" class="dropbtn" title="Nav Link 2">
                                         <ul id="displayContentA" style="list-style: none; display:none;">
                                             </br>
@@ -100,12 +101,12 @@
                             </nav>
                         </div>
                     </div>
+
                     <div class="col-md-2 pt-3">
                         <div class="form-group">
                             <nav id="topNav2">
                                 <ul style="list-style: none;">
                                     <li>
-                                        <!--<a class="dropbtn" id="agedropdown" href="#" onclick="age()">Filter by Gender</a>-->
                                         <input type ="button" class="dropbtn" id="agedropdown" value = "Filter by Gender">
                                         <ul id="displayContentG" style="list-style: none; display:none;">
                                             </br>
@@ -119,42 +120,62 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
-                        <button type="submit" id="save_button" class="btn btn-primary btn-block">Search</button>
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group ">
+                            <nav id="topNav">
+                                <ul style="list-style: none;">
+                                    <li>
+                                            <button type="submit" id="save_button" class="btn btn-primary btn-block">Search</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" id="reset_button" class="btn btn-primary btn-block">Refresh</button>
+
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group ">
+                            <nav id="topNav">
+                                <ul style="list-style: none;">
+                                    <li>
+                                            <button type="button" id="reset_button" class="btn btn-primary btn-block">Refresh</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
         </form>
 
-        <div id=matches>
-            {%for match in matches%}
+<div id=matches>
+    
+    {%for match in matches%}
 
-            <div class="col-sm-4 my-4">
+    <div class="col-sm-4 my-4">
 
-                <div class="card-groups">
-                    <div class="card">
+        <div class="card-groups">
+            <div class="card">
 
 
-                        <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"> {{ match.username }}</h5>
-                        </div>
-                        <p class="card-text">
-                            <div><b>Email:</b> {{ match.profile.email }}</div>
-                            <div><b>Age:</b> {{ match.profile.age }}</div>
-                            <div><b>Gender:</b> {{ match.profile.gender }}</div>
-                        </p>
-                    </div>
-
+                <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
+                <div class="card-body text-center">
+                    <h5 class="card-title"> {{ match.username }}</h5>
                 </div>
+                <p class="card-text">
+                    <div><b>Email:</b> {{ match.profile.email }}</div>
+                    <div><b>Age:</b> {{ match.profile.age }}</div>
+                    <div><b>Gender:</b> {{ match.profile.gender }}</div>
+                </p>
             </div>
 
-            {%endfor%}
-
         </div>
+    </div>
+
+    {%endfor%}
+
+</div>
 
 
-        {% endblock %}
+{% endblock %}
