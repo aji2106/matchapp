@@ -198,6 +198,18 @@ def similarHobbies(request, user):
     # Note to self do not need the gt thing check first
     match = hobbies.order_by('-hob_count')
 
+    """p = Member.objects.filter(id = user.id).first()
+    u = p.user
+    sent_number_request = Number.objects.filter(from_user = u)
+    rec_number_request = Number.objects.filter(to_user = u)
+
+    #if user sends number 
+    button_status = 'none'
+    #if p not in request.user.profile.friends.all()
+    
+    if len(Number.objects.filter(from_user=request.user).filter(to_user=p.user)) == 1:
+        button_status = 'number_request_sent'"""
+
     context = {
         'appname': appname,
         'matches': match,
@@ -205,8 +217,6 @@ def similarHobbies(request, user):
         'loggedIn': True
         }
 
-    #print(str(match.profile))
-    print("users with similar hobbies" + str(match))
     return render(request, 'matchapp/matches.html', context)
 
 
