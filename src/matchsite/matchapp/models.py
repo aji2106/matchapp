@@ -27,6 +27,13 @@ class Member(User):
         related_name='related_to'
     )
 
+    numbers = models.ManyToManyField(
+        to='self',
+        symmetrical=False,
+        through="Number",
+        related_name="related_nums"
+    )
+
     # one property that counts hobbies for member
     @property
     def hobbies_count(self):
@@ -62,3 +69,21 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Number(models.Model):
+    to_user = models.ForeignKey(
+        to=Member,
+        related_name='sent',
+        on_delete=models.CASCADE
+    )
+
+    from_user = models.ForeignKey(
+        to=Member,
+        related_name='received',
+        on_delete=models.CASCADE
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'From ' + self.to_user.username + ' to ' + self.from_user.username
