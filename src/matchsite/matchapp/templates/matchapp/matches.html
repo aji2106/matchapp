@@ -173,9 +173,18 @@
                     <div><b>Gender:</b> {{ match.profile.gender }}</div>
                 </p>
                 <div class="card-footer">
-                    <div class = "center-button">
-                        <button type = "button">Request Number</button>
-                    </div>
+
+                    <form method = "POST" action="{% url 'send_request' match.id%}"> {% csrf_token %}
+
+                        <input type="submit" value="Request Number" />
+                        {% if requested %}
+                        <p> hi </p>
+
+                        {% else %}
+                        <p> bye </p>
+                        
+                        {% endif %}
+                    </form>
                 </div>
             </div>
 

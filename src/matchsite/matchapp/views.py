@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
-from django.http import HttpResponse, Http404
-from matchapp.models import Member, Profile, Hobby, NumberRequest
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from matchapp.models import Member, Profile, Hobby, Number
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
@@ -324,28 +324,51 @@ def upload_image(request, user):
     else:
         return HttpResponse("test")
     
-@loggedin
-def send_request(request, user, id):
-    toUser = get_object_or_404(User, id=id)
-    NRequest, created = NumberRequest.objects.get_or_create(
-        from_user=user,
-        to_user=toUser)
-    return HttpResponseRedirect("matchapp/matches.html")
+#@loggedin
+def send_request(request, id):
+    #toUser = get_object_or_404(User, id=id)
+    #requested = False
+    if 'username' in request.session:
+        username = request.session['username']
+        to_member = Member.objects.get(username = username)
+        from_member  = Member.objects.get(id=id)
+        NRequest, created = Number.objects.get_or_create(
+        from_user=from_member,
+        to_user=to_member)
+        
+        context = {
+        'requested': True
+        }
 
-@loggedin
+        return HttpResponseRedirect("/similarHobbies",context)
+        #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
+
+#@loggedin
 def cancel_request(request, user, id):
-    toUser = get_object_or_404(User, id=id)
-    NRequest = NumberRequest.objects.filter(
-        from_user=user,
-        to_user=toUser).first()
-    NRequest.delete()
-    return HttpResponseRedirect("matchapp/matches.html")
+     if 'username' in request.session:
+        username = request.session['username']
+        to_member = Member.objects.get(username = username)
+        from_member  = Member.objects.get(id=id)
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
 
-@loggedin
+        NRequest.delete()
+
+        return HttpResponseRedirect("matchapp/matches.html")
+
+#@loggedin
 def accept_request(request, user, id):
-    from_user = get_object_or_404(User, id=id)
-    NRequest = NumberRequest.objects.filter(
+     if 'username' in request.session:
+        username = request.session['username']
+        from_user = Member.objects.get(username = username)
+        NRequest = Number.objects.filter(
         from_user=from_user,
         to_user=user).first()
-    
-    return HttpResponseRedirect("matchapp/matches.html")
+        user1 = Member.objects.get(username=from_user)
+        user2 = Member.objects.get(username=NRequest.to_user)
+        context = {
+        'user1Number': user1.numbers,
+        'user2Number': user2.numbers
+        }
+        return HttpResponseRedirect("matchapp/matches.html")

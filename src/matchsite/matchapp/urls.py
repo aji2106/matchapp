@@ -1,5 +1,6 @@
 from django.urls import path, include
 from matchapp import views
+from django.conf.urls import url
 
 from rest_framework.routers import DefaultRouter
 
@@ -27,6 +28,12 @@ urlpatterns = [
     path('filter/', views.filter, name='filter'),
     # upload image
     path('uploadimage/', views.upload_image, name='uploadimage'),
+    # send request
+    url(r'^send_request/(?P<id>\d+)/$', views.send_request, name='send_request'),
+    # accept request
+    url(r'^acceptRequest/(?P<id>\d+)/$', views.accept_request, name='accept_request'),
+    # cancel request
+    url(r'^cancelRequest/(?P<id>\d+)/$', views.cancel_request, name='cancel_request'),
     # API
     path('api/', include(router.urls))
 ]
