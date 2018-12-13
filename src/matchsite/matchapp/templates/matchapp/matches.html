@@ -1,5 +1,6 @@
 {% extends 'matchapp/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <style>
@@ -20,11 +21,11 @@
 
 .card{
      width:300px;
-     
+
 }
 
 .age{
-    width: 30px; 
+    width: 30px;
 }
 
 #topNav ul li ul { overflow:auto; }
@@ -75,7 +76,7 @@
 
 </style>
 
-
+<br>
 <h3 class="title"> Matches <h3>
         </br>
         <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
@@ -154,7 +155,7 @@
         </form>
 
 <div id=matches>
-    
+
     {%for match in matches%}
 
     <div class="col-sm-4 my-4">
@@ -182,7 +183,7 @@
 
                         {% else %}
                         <p> bye </p>
-                        
+
                         {% endif %}
                     </form>
                 </div>
