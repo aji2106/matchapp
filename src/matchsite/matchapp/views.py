@@ -266,8 +266,6 @@ def displayProfile(request, user):
 #remove csrf_exempt
 @loggedin
 def editProfile(request, user):
-<<<<<<< HEAD
-=======
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
         formM = MemberProfile(request.POST,instance=user)
@@ -301,7 +299,6 @@ def editProfile(request, user):
             return HttpResponse("else")
 
 def editProfile(request, user, slug = None):
->>>>>>> b0d1be28d74f0ceae33c5e289b6e0db17d1e42c8
 
 
     # Profile : GENDER , EMAIL , [can add a hobby to the member]
@@ -349,7 +346,6 @@ def upload_image(request, user):
     else:
         return HttpResponse("Image not in request")
 
-<<<<<<< HEAD
 @loggedin
 def contacts(request, user):
     # all the users matches that is logged in 
@@ -358,13 +354,6 @@ def contacts(request, user):
     match = exclude.filter(hobbies__in=user.hobbies.all())
     
     friends = user.friends.all()
-=======
-
-def displayRequests(request,template,context):
-    return render_to_response(template, context)
-
-
->>>>>>> b0d1be28d74f0ceae33c5e289b6e0db17d1e42c8
 
     context = {
         'u': user,
