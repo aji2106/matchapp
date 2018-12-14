@@ -6,7 +6,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.http import QueryDict
-from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
@@ -45,8 +44,8 @@ def index(request):
     """if 'username' in request.session:
         return redirect('displayProfile')"""
     """else:"""
-    return render(request, 'matchapp/index.html', {'form': form})
-    
+    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+
 
 
 # user logged in
@@ -61,7 +60,7 @@ def loggedin(view):
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user)
         else:
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
     return mod_view
 
 # terms and conditions
@@ -94,8 +93,8 @@ def register(request):
             user = Member(username=username)
             user.set_password(password)
 
-            try:user.save()     
-            except: #IntegrityError: 
+            try:user.save()
+            except: #IntegrityError:
                 #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')
@@ -109,7 +108,7 @@ def register(request):
 
             form = UserLogInForm()
 
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
@@ -153,7 +152,7 @@ def login(request):
                         return render(request, 'matchapp/displayProfile.html', context)
 
                 # return HttpResponse("<span> User or password is wrong </span")
-                
+
                 else:
                     #raise Http404('User or password is incorrect')
                     context = {
@@ -163,14 +162,14 @@ def login(request):
                     }
                     # login(request,user)
                     return render(request, 'matchapp/index.html', context)
-    
+
     else:
         #return displayProfile(request,)
         form = UserLogInForm()
         context = {
         'appname':appname,
         'form': form,
-        'loggedIn': True
+        'loggedIn': False
         }
         return render(request, 'matchapp/index.html', context)
 
@@ -234,7 +233,7 @@ def filter(request, user):
 
         return HttpResponse(display_matches(match))
 
-    else:            
+    else:
 	    raise Http404("GET request was not used")
 
 
@@ -249,12 +248,14 @@ def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
         form = UserProfile()
+        formM = MemberProfile()
         person = Member.objects.get(id=user.id)
         hobby = Hobby.objects.all()
 
         context = {
             'appname':appname,
             'form': form,
+            'formM': formM,
             'user': person,
             'hobbies': hobby,
             'loggedIn': True
@@ -263,9 +264,44 @@ def displayProfile(request, user):
         return render(request, 'matchapp/displayProfile.html', context)
 
 #remove csrf_exempt
-@csrf_exempt
 @loggedin
 def editProfile(request, user):
+<<<<<<< HEAD
+=======
+    if request.method == 'POST':
+        form = UserProfile(request.POST,instance=user)
+        formM = MemberProfile(request.POST,instance=user)
+        if form.is_valid() and formM.is_valid():
+
+            profile = Profile.objects.get(user=user.id)
+            profile.email = form.cleaned_data.get('email')
+            profile.dob = form.cleaned_data.get('dob')
+            profile.gender = form.cleaned_data.get('gender')
+
+            profile.save()
+
+            member = Member.objects.get(id=user.id)
+            allHobbies= formM.cleaned_data.get('hobbies')
+
+            member.hobbies.set(allHobbies)
+            member.save()
+
+            context = {
+                'appname':appname,
+                'form': form,
+                'formM': formM,
+                'user': member,
+                'hobbies': allHobbies,
+                'loggedIn': True
+            }
+
+            return render(request, 'matchapp/displayProfile.html', context)
+        else:
+            print (form.errors)
+            return HttpResponse("else")
+
+def editProfile(request, user, slug = None):
+>>>>>>> b0d1be28d74f0ceae33c5e289b6e0db17d1e42c8
 
 
     # Profile : GENDER , EMAIL , [can add a hobby to the member]
@@ -277,11 +313,11 @@ def editProfile(request, user):
         profile = Profile.objects.get(user=member.id)
 
         data = QueryDict(request.body)
-        
+
         profile.gender = data['gender']
         profile.email = data['email']
         profile.dob = data['dob']
-       
+
         # Need to make sure to save the hobbies
         # to the user
 
@@ -295,8 +331,10 @@ def editProfile(request, user):
         }
         return JsonResponse(response)
 
+
     else:
-        raise Http404("PUT request was not used")
+        form = UserProfile()
+    return render_to_response(request, 'matchapp/editProfile.html', {'form': form})
 
 
 @loggedin
@@ -311,6 +349,7 @@ def upload_image(request, user):
     else:
         return HttpResponse("Image not in request")
 
+<<<<<<< HEAD
 @loggedin
 def contacts(request, user):
     # all the users matches that is logged in 
@@ -319,6 +358,13 @@ def contacts(request, user):
     match = exclude.filter(hobbies__in=user.hobbies.all())
     
     friends = user.friends.all()
+=======
+
+def displayRequests(request,template,context):
+    return render_to_response(template, context)
+
+
+>>>>>>> b0d1be28d74f0ceae33c5e289b6e0db17d1e42c8
 
     context = {
         'u': user,
@@ -337,6 +383,17 @@ def send_request(request, id):
         NRequest, created = Number.objects.get_or_create(
         from_user=from_member,
         to_user=to_member)
+
+
+        context = {
+        'requested': True
+        }
+
+        return HttpResponseRedirect("/similarHobbies",context)
+        #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
+
+        request.session['created'] = "created"
+        return HttpResponseRedirect("/similarHobbies")
         request.session['created'] = "created"
         return HttpResponseRedirect("/contact")
 

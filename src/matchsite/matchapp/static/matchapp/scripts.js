@@ -19,14 +19,14 @@ function isNumberKey(evt) {
 }
 
 
-/*function gender() {
-    document.getElementById("displayContentG").classList.toggle("show");
-}
+$(document).ready( function() {
+  $('#id_dob').datepicker({
+    format: 'yyyy-mm-dd',
+    clearBtn:true,
+    endDate:'-18y',
 
-function age() {
-    document.getElementById("displayContentA").classList.toggle("show");
-
-}*/
+  });
+} );
 
 $(document).ready(function () {
     $('#filterByAge').click(function () {
@@ -173,69 +173,8 @@ $('#profile-image-upload').click(function () {
 
 
 
-////////slush bucket
-$(document).ready(function () {
-    $('#btnRight').click(function (e) {
-        var selectedOpts = $('#lstBox1 option:selected');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
-        $('#lstBox2').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-    $('#btnAllRight').click(function (e) {
-        var selectedOpts = $('#lstBox1 option');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
-        $('#lstBox2').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-    $('#btnLeft').click(function (e) {
-        var selectedOpts = $('#lstBox2 option:selected');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
-        $('#lstBox1').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-    $('#btnAllLeft').click(function (e) {
-        var selectedOpts = $('#lstBox2 option');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
-        $('#lstBox1').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-}());
+////
 
-////////
-$(document).ready(function () {
-    $("#from-datepicker").datepicker({
 
-        format: 'yyyy-mm-dd'
-    });
-    $("#from-datepicker").on("change", function () {
-        var fromdate = $(this).val();
-        alert(fromdate);
-    });
-});
 
 ////
-$(document).ready(function () {
-    $("#datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '1900:2018',
-        dateFormat: "yy-mm-dd",
-    })
-});
-

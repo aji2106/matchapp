@@ -5,7 +5,7 @@
 
 
 <div class="container_register">
-  <div class="container">
+  <div class="container_profile">
     <div class="row">
 
 
@@ -51,55 +51,17 @@
               <div class="clearfix"></div>
               <hr style="margin:5px 0 5px 0;">
 
-              <form>
-                <div id="username"/><b>Username :</b> {{user.username}}
-
-                <div id="email"/><b>E-mail : </b> <input contenteditable='true' size="29"
-                type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                id="username" value= {{user.profile.email}}>
-                <!-- <input contenteditable='true'
-                type="date" id="username" value={{user.profile.dob}}>-->
-                <div id="dob"/><b>Date of Birth : </b>
-                <input type="text" id="datepicker" size="30">
+              <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
 
 
-                <!--<input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} > -->
-                <div id="gender"/><b>Gender : </b>
-                <input type="radio" id="male" name="gender" value="M"
-                checked>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="F">
-                <label for="female">Female</label>
-              </div>
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  {{ formM.as_p }}
 
-              <b>Hobbies : </b>
+                  <!--<div class=updateBtn id=update_button><input type="submit" value="Save"></div>-->
+                  <input type="submit" value="submit">
 
-              <div id="hobbies"/><div class="subject-info-box-1">
-                <select multiple="multiple" id='lstBox1' class="form-control">
-                  <option value="ajax">Ajax</option>
-                  <option value="jquery">jQuery</option>
-                </select>
-              </div>
-
-              <div class="subject-info-arrows text-center">
-                <input type="button" id="btnAllRight" value=">>" class="btn btn-default" /><br />
-                <input type="button" id="btnRight" value=">" class="btn btn-default" /><br />
-                <input type="button" id="btnLeft" value="<" class="btn btn-default" /><br />
-                <input type="button" id="btnAllLeft" value="<<" class="btn btn-default" />
-              </div>
-              <div class="subject-info-box-2">
-                <select multiple="multiple" id='lstBox2' class="form-control">
-                  <option value="asp">ASP.NET</option>
-                  <option value="c#">C#</option>
-                </select>
-              </div>
-              <div class="clearfix"></div>
-
-              <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
-
-
-            </div>
-          </form>
+                </form>
 
           <!-- /.box-body -->
         </div>
