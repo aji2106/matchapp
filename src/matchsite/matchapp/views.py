@@ -293,6 +293,7 @@ if form.is_valid():
 @csrf_exempt
 @loggedin
 <<<<<<< HEAD
+<<<<<<< HEAD
 def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
@@ -326,6 +327,8 @@ def editProfile(request, user):
             print (form.errors)
             return HttpResponse("else")
 =======
+=======
+>>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
 def editProfile(request, user, slug = None):
 
 
@@ -375,13 +378,19 @@ def upload_image(request, user, slug = None):
         return HttpResponse("test")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #@loggedin
 =======
+=======
+>>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
 
 def displayRequests(request,template,context):
     return render_to_response(template, context)
     
 
+<<<<<<< HEAD
+>>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
+=======
 >>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
 def send_request(request, id):
     if 'username' in request.session:
@@ -392,6 +401,7 @@ def send_request(request, id):
         from_user=from_member,
         to_user=to_member)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         context = {
         'requested': True
@@ -399,6 +409,10 @@ def send_request(request, id):
 
         return HttpResponseRedirect("/similarHobbies",context)
         #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
+=======
+        request.session['created'] = "created"
+        return HttpResponseRedirect("/similarHobbies")
+>>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
 =======
         request.session['created'] = "created"
         return HttpResponseRedirect("/similarHobbies")
