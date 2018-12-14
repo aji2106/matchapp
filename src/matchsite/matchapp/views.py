@@ -45,7 +45,7 @@ def index(request):
     """if 'username' in request.session:
         return redirect('displayProfile')"""
     """else:"""
-    return render(request, 'matchapp/index.html', {'form': form})
+    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
 
@@ -61,7 +61,7 @@ def loggedin(view):
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user, slug=None)
         else:
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
     return mod_view
 
 # terms and conditions
@@ -109,7 +109,7 @@ def register(request):
 
             form = UserLogInForm()
 
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
@@ -170,7 +170,7 @@ def login(request):
         context = {
         'appname':appname,
         'form': form,
-        'loggedIn': True
+        'loggedIn': False
         }
         return render(request, 'matchapp/index.html', context)
 
