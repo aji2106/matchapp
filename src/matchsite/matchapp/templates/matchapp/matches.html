@@ -189,11 +189,6 @@
                     <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
                         <input type="submit" value="Accept Request"/> 
                         Number: {{acceptedUser}}                   
-
-                        {% else %}
-                        <p> bye </p>
-
-                        {% endif %}
                     </form>
                     
                 </div>
