@@ -46,7 +46,7 @@ def index(request):
         return redirect('displayProfile')"""
     """else:"""
     return render(request, 'matchapp/index.html', {'form': form})
-    
+
 
 
 # user logged in
@@ -94,8 +94,8 @@ def register(request):
             user = Member(username=username)
             user.set_password(password)
 
-            try:user.save()     
-            except: #IntegrityError: 
+            try:user.save()
+            except: #IntegrityError:
                 #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')
@@ -153,7 +153,7 @@ def login(request):
                         return render(request, 'matchapp/displayProfile.html', context)
 
                 # return HttpResponse("<span> User or password is wrong </span")
-                
+
                 else:
                     #raise Http404('User or password is incorrect')
                     context = {
@@ -163,7 +163,7 @@ def login(request):
                     }
                     # login(request,user)
                     return render(request, 'matchapp/index.html', context)
-    
+
     else:
         #return displayProfile(request,)
         form = UserLogInForm()
@@ -203,10 +203,10 @@ def similarHobbies(request, user):
     sent_number_request = Number.objects.filter(from_user = u)
     rec_number_request = Number.objects.filter(to_user = u)
 
-    #if user sends number 
+    #if user sends number
     button_status = 'none'
     #if p not in request.user.profile.friends.all()
-    
+
     if len(Number.objects.filter(from_user=request.user).filter(to_user=p.user)) == 1:
         button_status = 'number_request_sent'"""
 
@@ -246,7 +246,7 @@ def filter(request, user):
 
         return HttpResponse(display_matches(match))
 
-    else:            
+    else:
 	    raise Http404("GET request was not used")
 
 
@@ -261,12 +261,14 @@ def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
         form = UserProfile()
+        formM = MemberProfile()
         person = Member.objects.get(id=user.id)
         hobby = Hobby.objects.all()
 
         context = {
             'appname':appname,
             'form': form,
+            'formM': formM,
             'user': person,
             'hobbies': hobby,
             'loggedIn': True
@@ -289,37 +291,41 @@ if form.is_valid():
 @csrf_exempt
 @loggedin
 def editProfile(request, user):
+    if request.method == 'POST':
+        form = UserProfile(request.POST,instance=user)
+        formM = MemberProfile(request.POST,instance=user)
+        if form.is_valid() and formM.is_valid():
 
+            profile = Profile.objects.get(user=user.id)
+            profile.email = form.cleaned_data.get('email')
+            profile.dob = form.cleaned_data.get('dob')
+            profile.gender = form.cleaned_data.get('gender')
 
-    # Profile : GENDER , EMAIL , [can add a hobby to the member]
-    # Member : list of hobbies
+            profile.save()
 
-    if request.method == "PUT":
-        try: member = Member.objects.get(id=user.id)
-        except Member.DoesNotExist: raise Http404("Member does not exist")
-        profile = Profile.objects.get(user=member.id)
+            member = Member.objects.get(id=user.id)
+            allHobbies= formM.cleaned_data.get('hobbies')
 
-        data = QueryDict(request.body)
-        
-        profile.gender = data['gender']
-        profile.email = data['email']
-        profile.dob = data['dob']
-       
-        # Need to make sure to save the hobbies
-        # to the user
+            member.hobbies.set(allHobbies)
+            member.save()
 
-        profile.save()
+            context = {
+                'appname':appname,
+                'form': form,
+                'formM': formM,
+                'user': member,
+                'hobbies': allHobbies,
+                'loggedIn': True
+            }
 
-        response = {
-             'gender': profile.gender,
-             'dob': profile.dob,
-             'email': profile.email
-
-        }
-        return JsonResponse(response)
+            return render(request, 'matchapp/displayProfile.html', context)
+        else:
+            print (form.errors)
+            return HttpResponse("else")
 
     else:
-        raise Http404("PUT request was not used")
+        form = UserProfile()
+    return render_to_response(request, 'matchapp/editProfile.html', {'form': form})
 
 
 @loggedin
@@ -333,7 +339,7 @@ def upload_image(request, user):
         return HttpResponse(profile.image.url)
     else:
         return HttpResponse("test")
-    
+
 #@loggedin
 def send_request(request, id):
     #toUser = get_object_or_404(User, id=id)
@@ -345,7 +351,7 @@ def send_request(request, id):
         NRequest, created = Number.objects.get_or_create(
         from_user=from_member,
         to_user=to_member)
-        
+
         context = {
         'requested': True
         }

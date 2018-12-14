@@ -4,6 +4,22 @@ body {
         /*background: linear-gradient(to bottom, #FFA69E 0%, #861657 100%);*/
         background: white;
     }
+    div.container_profile {
+
+    width: 900px;
+    align-content: left;
+
+    margin-right: 500px;
+    margin-left: 30px;
+    }
+    .profileForm {
+
+    width: auto;
+    align-content: center;
+
+    margin-right: 500px;
+    margin-left: 30px;
+    }
 
     div.updateBtn {
 
