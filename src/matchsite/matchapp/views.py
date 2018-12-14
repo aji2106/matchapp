@@ -336,17 +336,6 @@ def send_request(request, id):
         NRequest, created = Number.objects.get_or_create(
         from_user=from_member,
         to_user=to_member)
-
-
-        context = {
-        'requested': True
-        }
-
-        return HttpResponseRedirect("/similarHobbies",context)
-        #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
-
-        request.session['created'] = "created"
-        return HttpResponseRedirect("/similarHobbies")
         request.session['created'] = "created"
         return HttpResponseRedirect("/contact")
 
@@ -355,6 +344,18 @@ def cancel_request(request, id):
         username = request.session['username']
         to_member = Member.objects.get(username = username)
         from_member  = Member.objects.get(id=id)
+
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+def delete_request(request, id):
+     if 'username' in request.session:
+        username = request.session['username']
+        from_member = Member.objects.get(username = username)
+        to_member  = Member.objects.get(id=id)
         NRequest = Number.objects.filter(
         from_user=from_member,
         to_user=to_member).first()
@@ -369,8 +370,7 @@ def accept_request(request, id):
         NRequest = Number.objects.filter(
         from_user=from_member,
         to_user=to_member).first()
-        
-            
+             
         # Make these users friends of each other
         to_member.friends.add(from_member)
         from_member.friends.add(to_member)

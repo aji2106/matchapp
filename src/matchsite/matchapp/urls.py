@@ -35,6 +35,8 @@ urlpatterns = [
     # accept request
     url(r'^accept_request/(?P<id>\d+)/$',
         views.accept_request, name='accept_request'),
+    url(r'^delete_request/(?P<id>\d+)/$',
+        views.delete_request, name='delete_request'),
     # cancel request
     url(r'^cancel_request/(?P<id>\d+)/$',
         views.cancel_request, name='cancel_request'),

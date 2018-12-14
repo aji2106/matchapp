@@ -35,7 +35,7 @@
 
         {% else%}
         {% if match|check_sent:u %}
-        <p>You have already sent a request to {{match}}</p>
+        <small><a class='btn btn-warning' href="/delete_request/{{ match.id }}">Cancel Request</a></small>
 
         {% else %}
         <small><a class="btn btn-warning" href="/send_request/{{ match.id }}">Request Number</a></small>
