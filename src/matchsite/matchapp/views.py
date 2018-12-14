@@ -292,8 +292,6 @@ if form.is_valid():
 #remove csrf_exempt
 @csrf_exempt
 @loggedin
-<<<<<<< HEAD
-<<<<<<< HEAD
 def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
@@ -326,9 +324,7 @@ def editProfile(request, user):
         else:
             print (form.errors)
             return HttpResponse("else")
-=======
-=======
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
+
 def editProfile(request, user, slug = None):
 
 
@@ -341,11 +337,11 @@ def editProfile(request, user, slug = None):
         profile = Profile.objects.get(user=member.id)
 
         data = QueryDict(request.body)
-        
+
         profile.gender = data['gender']
         profile.email = data['email']
         profile.dob = data['dob']
-       
+
         # Need to make sure to save the hobbies
         # to the user
 
@@ -358,7 +354,7 @@ def editProfile(request, user, slug = None):
 
         }
         return JsonResponse(response)
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
+
 
     else:
         form = UserProfile()
@@ -377,21 +373,13 @@ def upload_image(request, user, slug = None):
     else:
         return HttpResponse("test")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#@loggedin
-=======
-=======
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
+
 
 def displayRequests(request,template,context):
     return render_to_response(template, context)
-    
 
-<<<<<<< HEAD
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
-=======
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
+
+
 def send_request(request, id):
     if 'username' in request.session:
         username = request.session['username']
@@ -400,8 +388,7 @@ def send_request(request, id):
         NRequest, created = Number.objects.get_or_create(
         from_user=from_member,
         to_user=to_member)
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
         context = {
         'requested': True
@@ -409,14 +396,11 @@ def send_request(request, id):
 
         return HttpResponseRedirect("/similarHobbies",context)
         #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
-=======
+
         request.session['created'] = "created"
         return HttpResponseRedirect("/similarHobbies")
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
-=======
         request.session['created'] = "created"
         return HttpResponseRedirect("/similarHobbies")
->>>>>>> d8dfb3b82b0a3c399facec175589ef5665ded571
 
 def cancel_request(request, id):
      if 'username' in request.session:
