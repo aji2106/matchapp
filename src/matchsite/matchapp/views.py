@@ -6,7 +6,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.http import QueryDict
-from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
@@ -290,7 +289,6 @@ if form.is_valid():
 # https://stackoverflow.com/questions/5871730/need-a-minimal-django-file-upload-example
 
 #remove csrf_exempt
-@csrf_exempt
 @loggedin
 def editProfile(request, user):
     if request.method == 'POST':
