@@ -23,8 +23,9 @@ urlpatterns = [
     # logout page
     path('logout/', views.logout, name='logout'),
     # similar hobbies
-    #url(r'^(?P<slug>[\w-]+)/$', views.similarHobbies, name='similarHobbies'),
     path('similarHobbies/', views.similarHobbies, name='similarHobbies'),
+    # contact similar matches
+    path('contact/', views.contacts, name='contact'),
     #Ajax: filter
     path('filter/', views.filter, name='filter'),
     # upload image
@@ -32,9 +33,11 @@ urlpatterns = [
     # send request
     url(r'^send_request/(?P<id>\d+)/$', views.send_request, name='send_request'),
     # accept request
-    url(r'^accept_request/(?P<id>\d+)/$', views.accept_request, name='accept_request'),
+    url(r'^accept_request/(?P<id>\d+)/$',
+        views.accept_request, name='accept_request'),
     # cancel request
-    url(r'^cancel_request/(?P<id>\d+)/$', views.cancel_request, name='cancel_request'),
+    url(r'^cancel_request/(?P<id>\d+)/$',
+        views.cancel_request, name='cancel_request'),
     # API
     path('api/', include(router.urls))
 ]

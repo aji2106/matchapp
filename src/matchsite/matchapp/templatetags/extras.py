@@ -1,7 +1,20 @@
 from django import template
+from matchapp.models import Number
 import json
 
 register = template.Library()
+
+
+@register.filter
+def check_request(match, user):
+    everyone = Number.objects.all()
+    return everyone.filter(to_user=user).filter(from_user=match).exists()
+
+
+@register.filter
+def check_sent(match, user):
+    everyone = Number.objects.all()
+    return everyone.filter(to_user=match).filter(from_user=user).exists()
 
 
 @register.filter
