@@ -112,6 +112,7 @@ $(document).bind('click', function (e) {
 });
 
 
+
 //edit profile
 $(document).ready(function () {
 

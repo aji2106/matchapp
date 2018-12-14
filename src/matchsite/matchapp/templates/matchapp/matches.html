@@ -174,18 +174,23 @@
                     <div><b>Gender:</b> {{ match.profile.gender }}</div>
                 </p>
                 <div class="card-footer">
+                    <form method = "POST" action="{% url 'send_request' match.id %}"> {% csrf_token %} 
+                        <input id = "request_number" type="submit" value="Request Number"/>
+                    </form>  
 
-                    <form method = "POST" action="{% url 'send_request' match.id%}"> {% csrf_token %}
-
-                        <input type="submit" value="Request Number" />
-                        {% if requested %}
-                        <p> hi </p>
-
-                        {% else %}
-                        <p> bye </p>
-
-                        {% endif %}
+                    {% if 'created' in request.session %}  
+                    
+                    <form method = "POST" action="{% url 'cancel_request' match.id %}"> {% csrf_token %} 
+                        <input type="submit" value="Cancel Request"/>
                     </form>
+
+                    {% endif %}
+
+                    <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
+                        <input type="submit" value="Accept Request"/> 
+                        Number: {{acceptedUser}}                   
+                    </form>
+                    
                 </div>
             </div>
 
