@@ -62,7 +62,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     dob = models.DateField(max_length=8, null=True)
     phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{11}$', message="Phone number must be entered in the format: '+999999999'. only 11 digits allowed.")
+        regex=r'^(?:0|\+?44)(?:\d\s?){9,11}$', message="Phone number must be entered in the format: '+999999999'. only 11 digits allowed.")
     number = models.CharField(
         validators=[phone_regex], max_length=11, blank=True)  # validators should be a list
 
@@ -92,4 +92,4 @@ class Number(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'From ' + self.to_user.username + ' to ' + self.from_user.username
+        return 'From ' + self.from_user.username + ' to ' + self.to_user.username
