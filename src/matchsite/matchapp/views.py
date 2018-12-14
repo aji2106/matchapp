@@ -298,42 +298,6 @@ def editProfile(request, user):
             print (form.errors)
             return HttpResponse("else")
 
-def editProfile(request, user, slug = None):
-
-
-    # Profile : GENDER , EMAIL , [can add a hobby to the member]
-    # Member : list of hobbies
-
-    if request.method == "PUT":
-        try: member = Member.objects.get(id=user.id)
-        except Member.DoesNotExist: raise Http404("Member does not exist")
-        profile = Profile.objects.get(user=member.id)
-
-        data = QueryDict(request.body)
-
-        profile.gender = data['gender']
-        profile.email = data['email']
-        profile.dob = data['dob']
-
-        # Need to make sure to save the hobbies
-        # to the user
-
-        profile.save()
-
-        response = {
-             'gender': profile.gender,
-             'dob': profile.dob,
-             'email': profile.email
-
-        }
-        return JsonResponse(response)
-
-
-    else:
-        form = UserProfile()
-    return render_to_response(request, 'matchapp/editProfile.html', {'form': form})
-
-
 @loggedin
 def upload_image(request, user):
     member = Member.objects.get(id=user.id)
