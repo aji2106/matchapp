@@ -93,8 +93,9 @@ def register(request):
             user = Member(username=username)
             user.set_password(password)
 
-            try:user.save()
-            except: #IntegrityError:
+            try:user.save() 
+            except:
+            #IntegrityError:
                 #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')

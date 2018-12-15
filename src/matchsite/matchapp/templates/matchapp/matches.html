@@ -101,24 +101,14 @@
                     <div>Email:</b> {{ match.profile.email }}</div>
                     <div>Age:</b> {{ match.profile.age }}</div>
                     <div>Gender:</b> {{ match.profile.gender }}</div>
+                    {%for hobbies in match.hobbies.all %}
+                    <div> Hobbies: {{hobbies}} </div>
+                    {%endfor%}
                 </p>
                 <div class="card-footer">
                     <form method = "POST" action="{% url 'send_request' match.id %}"> {% csrf_token %} 
                         <input id = "request_number" type="submit" value="Request Number"/>
                     </form>  
-
-                    {% if 'created' in request.session %}  
-                    
-                    <form method = "POST" action="{% url 'cancel_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Cancel Request"/>
-                    </form>
-
-                    {% endif %}
-
-                    <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Accept Request"/> 
-                        Number: {{acceptedUser}}                   
-                    </form>
                     
                 </div>
             </div>
