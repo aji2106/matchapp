@@ -3,6 +3,8 @@ import re
 from django.forms import ModelChoiceField
 from django.db import models
 from .models import Profile, Member, Number
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 
@@ -40,8 +42,7 @@ class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['email','dob','gender','number']
-        widgets = {
-            'dob': forms.DateInput(attrs={'class':'datepicker'})
+        'dob': forms.DateInput(attrs={'class':'datepicker'})
         }
 
 
