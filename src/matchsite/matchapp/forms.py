@@ -24,22 +24,6 @@ class UserRegForm(forms.Form):
     re_password = forms.CharField(label='Repeat Password',max_length=32, widget=forms.PasswordInput(attrs={
     "placeholder":"Repeat password",
     "name":"re_password"}))
-    """
-    def clean(self):
-        cleaned_data = super(UserRegForm, self).clean()
-        password = cleaned_data.get("password")
-        re_password = cleaned_data.get("re_password")
-
-        if password != re_password:
-            raise forms.ValidationError(
-            "Passwords do not match"
-            )"""
-
-    """def clean(self):
-            cd = self.cleaned_data
-            if cd.get('password') != cd.get('password_confirm'):
-                self.add_error('password_confirm', "passwords do not match !")
-                return cd"""
 
 
 
@@ -54,19 +38,10 @@ class UserLogInForm(forms.Form):
 class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['email','dob','gender','number']
-
-
+        fields = ['user','email','dob','gender','number']
 
 
 class MemberProfile(forms.ModelForm):
     class Meta:
         model = Member
-        fields = ['hobbies']
-
-
-"""def clean(self):
-        cd = self.cleaned_data
-        if cd.get('password') != cd.get('password_confirm'):
-            self.add_error('password_confirm', "passwords do not match !")
-        return cd"""
+        fields = ['hobbies',]

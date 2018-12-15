@@ -84,7 +84,6 @@ def register(request):
         form = UserRegForm(request.POST)
 
         if form.is_valid():
-
 			# user = form.save(commit=False)
 			# normalized data
             username = form.cleaned_data['username']
@@ -109,11 +108,6 @@ def register(request):
             form = UserLogInForm()
 
             return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
-
-        else:
-            errors=form.errors
-            form = UserRegForm()
-            return render(request, 'matchapp/register.html', {'form': form, 'errors': errors})
 
 
      else:
@@ -141,14 +135,16 @@ def login(request):
                         request.session['username'] = username
                         request.session['password'] = password
                         form = UserProfile()
+                        formM = MemberProfile()
                         person = Member.objects.get(id=user.id)
-                        hobby = Hobby.objects.all()
+                        #hobby = Hobby.objects.all()
 
                         context = {
                             'appname':appname,
                             'form': form,
+                            'formM': formM,
                             'user': person,
-                            'hobbies': hobby,
+                            #'hobbies': hobby,
                             'loggedIn': True
                         }
 						# login(request,user)
@@ -255,14 +251,12 @@ def displayProfile(request, user):
         form = UserProfile()
         formM = MemberProfile()
         person = Member.objects.get(username=user)
-        hobby = Hobby.objects.all()
 
         context = {
             'appname':appname,
             'form': form,
             'formM': formM,
             'user': person,
-            'hobbies': hobby,
             'loggedIn': True
         }
 

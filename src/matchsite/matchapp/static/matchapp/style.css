@@ -6,6 +6,9 @@ body {
         padding-top: 10px;
 
     }
+    div.error_message{
+      color:red;
+    }
     div.container_profile {
 
     width: 900px;
@@ -171,8 +174,8 @@ body {
     width: 30px;
 }
 
-#topNav ul li ul{ 
-    overflow:auto; 
+#topNav ul li ul{
+    overflow:auto;
 }
 
 #pr2:hover~ #a {
