@@ -20,6 +20,7 @@
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
         crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Latest compiled JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -28,7 +29,7 @@
 <body>
 
     {% if loggedIn %}
-
+    <!---
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -51,7 +52,22 @@
         </div>
 
     </nav>
+    -->
+    <div class="topnav" id="myTopnav">
+    <div class = "floatLeftNav">
+    <a href="{% url 'displayProfile' %}"> <i class="fab fa-meetup fa-2x"></i></a>
+    <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile <i class="fas fa-users fa-2x"></i></a>
+    <a href="{% url 'similarHobbies' %}">Matches <i class="fas fa-heart fa-2x"></i></a>
+    <a href="{% url 'contact' %}">Contact <i class="fas fa-phone-square fa-2x"></i></a>
+    </div>
+    <div class = "floatRightNav">
+    <a href="{% url 'logout' %}">Log out <i class="fas fa-sign-out-alt fa-2x"></i></a>
+    </div>
 
+  <a href="javascript:void(0);" class="icon" onclick="navBar()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
     {% endif%}
     <center>
         <br>

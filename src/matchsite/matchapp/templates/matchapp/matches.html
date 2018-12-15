@@ -97,28 +97,18 @@
                 <div class="card-body text-center">
                     <h5 class="card-title"> {{ match.username }}</h5>
                 </div>
-                <p class="card-text">
-                    <div>Email:</b> {{ match.profile.email }}</div>
-                    <div>Age:</b> {{ match.profile.age }}</div>
-                    <div>Gender:</b> {{ match.profile.gender }}</div>
-                </p>
+                <table>
+                    <tr> <td> Age: {{ match.profile.age }} </td> </tr> 
+                    <tr> <td> Gender: {{ match.profile.gender }} </td> </tr>
+                    <tr> <td> Hobbies:
+                    {%for hobbies in match.hobbies.all %}
+                    {{hobbies}}  
+                    {%endfor%} </td> </tr>
+                </table>
                 <div class="card-footer">
                     <form method = "POST" action="{% url 'send_request' match.id %}"> {% csrf_token %} 
                         <input id = "request_number" type="submit" value="Request Number"/>
                     </form>  
-
-                    {% if 'created' in request.session %}  
-                    
-                    <form method = "POST" action="{% url 'cancel_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Cancel Request"/>
-                    </form>
-
-                    {% endif %}
-
-                    <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Accept Request"/> 
-                        Number: {{acceptedUser}}                   
-                    </form>
                     
                 </div>
             </div>
