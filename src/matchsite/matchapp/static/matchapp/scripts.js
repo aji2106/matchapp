@@ -7,6 +7,19 @@ function navBar() {
   }
 }
 
+$(document).ready(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+100",
+      dateFormat: 'yy-mm-dd',
+      autoclose: true,
+      maxDate: '-18y',
+
+      // You can put more options here.
+
+    });
+  });
 ///password validation starts
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";

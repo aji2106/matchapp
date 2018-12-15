@@ -5,6 +5,7 @@ from django.db import models
 from .models import Profile, Member, Number
 
 
+
 class UserRegForm(forms.Form):
 
 
@@ -38,7 +39,11 @@ class UserLogInForm(forms.Form):
 class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['user','email','dob','gender','number']
+        fields = ['email','dob','gender','number']
+        widgets = {
+            'dob': forms.DateInput(attrs={'class':'datepicker'})
+        }
+
 
 
 class MemberProfile(forms.ModelForm):
