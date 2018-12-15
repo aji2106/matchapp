@@ -110,6 +110,11 @@ def register(request):
 
             return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
+        else:
+            errors=form.errors
+            form = UserRegForm()
+            return render(request, 'matchapp/register.html', {'form': form, 'errors': errors})
+
 
      else:
         form = UserRegForm()

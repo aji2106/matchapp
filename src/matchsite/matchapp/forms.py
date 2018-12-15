@@ -15,12 +15,6 @@ class UserRegForm(forms.Form):
     "title":"Usernames must be between 3 and 15 characters. Only letters and numbers are allowed"
     }))
 
-    number = forms.IntegerField(label='Phone number', widget=forms.TextInput(attrs={
-    "placeholder":"Enter phone number",
-    "pattern":"^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$",
-    "name":"number",
-    "title":"Number must follow the UK mobile phone number, with optional +44 national code. Allows optional brackets and spaces at appropriate positions."
-    }))
     password = forms.CharField(label='Password',max_length=32, widget=forms.PasswordInput(attrs={
     "placeholder":"Enter password",
     "pattern":"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
@@ -30,7 +24,7 @@ class UserRegForm(forms.Form):
     re_password = forms.CharField(label='Repeat Password',max_length=32, widget=forms.PasswordInput(attrs={
     "placeholder":"Repeat password",
     "name":"re_password"}))
-
+    """
     def clean(self):
         cleaned_data = super(UserRegForm, self).clean()
         password = cleaned_data.get("password")
@@ -39,9 +33,9 @@ class UserRegForm(forms.Form):
         if password != re_password:
             raise forms.ValidationError(
             "Passwords do not match"
-            )
+            )"""
 
-            """def clean(self):
+    """def clean(self):
             cd = self.cleaned_data
             if cd.get('password') != cd.get('password_confirm'):
                 self.add_error('password_confirm', "passwords do not match !")
