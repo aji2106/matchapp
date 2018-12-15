@@ -3,6 +3,8 @@ body {
         font-family: Arial, Helvetica, sans-serif;
         /*background: linear-gradient(to bottom, #FFA69E 0%, #861657 100%);*/
         background: white;
+        padding-top: 10px;
+
     }
     div.container_profile {
 

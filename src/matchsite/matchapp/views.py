@@ -249,7 +249,7 @@ def displayProfile(request, user):
     if request.method == "GET":
         form = UserProfile()
         formM = MemberProfile()
-        person = Member.objects.get(id=user.id)
+        person = Member.objects.get(username=user)
         hobby = Hobby.objects.all()
 
         context = {
