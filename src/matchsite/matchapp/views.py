@@ -292,7 +292,7 @@ if form.is_valid():
 #remove csrf_exempt
 @csrf_exempt
 @loggedin
-def editProfile(request, user):
+def editProfile(request, user,slug):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
         formM = MemberProfile(request.POST,instance=user)
@@ -302,6 +302,7 @@ def editProfile(request, user):
             profile.email = form.cleaned_data.get('email')
             profile.dob = form.cleaned_data.get('dob')
             profile.gender = form.cleaned_data.get('gender')
+            profile.number = form.cleaned_data.get('number')
 
             profile.save()
 
@@ -322,43 +323,21 @@ def editProfile(request, user):
 
             return render(request, 'matchapp/displayProfile.html', context)
         else:
-            print (form.errors)
-            return HttpResponse("else")
+            error=form.errors
+            member = Member.objects.get(id=user.id)
+            print=error
 
-def editProfile(request, user, slug = None):
+            context = {
+                'appname':appname,
+                'form': form,
+                'formM': formM,
+                'user': member,
+                'loggedIn': True,
+                'error': error
+            }
 
+            return render(request, 'matchapp/displayProfile.html', context)
 
-    # Profile : GENDER , EMAIL , [can add a hobby to the member]
-    # Member : list of hobbies
-
-    if request.method == "PUT":
-        try: member = Member.objects.get(id=user.id)
-        except Member.DoesNotExist: raise Http404("Member does not exist")
-        profile = Profile.objects.get(user=member.id)
-
-        data = QueryDict(request.body)
-
-        profile.gender = data['gender']
-        profile.email = data['email']
-        profile.dob = data['dob']
-
-        # Need to make sure to save the hobbies
-        # to the user
-
-        profile.save()
-
-        response = {
-             'gender': profile.gender,
-             'dob': profile.dob,
-             'email': profile.email
-
-        }
-        return JsonResponse(response)
-
-
-    else:
-        form = UserProfile()
-    return render_to_response(request, 'matchapp/editProfile.html', {'form': form})
 
 
 @loggedin

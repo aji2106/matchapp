@@ -2,7 +2,7 @@ from django import forms
 import re
 from django.forms import ModelChoiceField
 from django.db import models
-from .models import Profile, Member
+from .models import Profile, Member, Number
 
 
 
@@ -27,17 +27,22 @@ class UserRegForm(forms.Form):
 
 
 class UserLogInForm(forms.Form):
-        username = forms.CharField(label='Username', min_length=2,max_length=15, widget=forms.TextInput(attrs={
+        username = forms.CharField( min_length=2,max_length=15, widget=forms.TextInput(attrs={
         "placeholder":"Username"}))
-        password = forms.CharField(label='Password', min_length=8,max_length=32, widget=forms.PasswordInput(attrs={
+        password = forms.CharField( min_length=8,max_length=32, widget=forms.PasswordInput(attrs={
         "placeholder":"Password"}))
 
 
 class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['user','email','gender','dob']
-        dob = forms.DateField(label='Date of Birth')
+        fields = ['user','email','gender','dob','number']
+        number = forms.CharField(label='Password',max_length=32, widget=forms.PasswordInput(attrs={
+            "placeholder":"Enter password",
+            "pattern":"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
+            "name":"password",
+            "title":"Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+        }))
 
 
 
@@ -45,6 +50,7 @@ class MemberProfile(forms.ModelForm):
     class Meta:
         model = Member
         fields = ['hobbies']
+
 
 """def clean(self):
         cd = self.cleaned_data
