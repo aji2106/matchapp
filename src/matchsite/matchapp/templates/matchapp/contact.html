@@ -1,0 +1,55 @@
+{% extends 'matchapp/base.html' %}
+{% load static %}
+{% load extras %}
+
+{% block content %}
+
+<div id='matches'>
+
+    {% if matches %}
+
+    {% for match in matches %}
+
+    <div id={{match.id}} class="match">
+
+        <h1>{{match.username}}</h1>
+        <p>{{match.profile.gender}}</p>
+
+        <!--  here is the code for the number buttons
+        <button type=button class=deleteItem>Delete</button>
+        -->
+
+
+        <!-- if the match are friends then that means 
+             they have accepted each other so show the number -->
+        {% if match in friends %}
+
+        <p>{{match.profile.number}}</p>
+
+        <!-- We know they are not friends so we can request their number-->
+        {%else%}
+
+        {% if match|check_request:u %}
+        <small><a class='btn btn-primary' href="/accept_request/{{ match.id }}">Accept</a></small>
+        <small><a class='btn btn-warning' href="/cancel_request/{{ match.id }}">Ignore</a></small>
+
+        {% else%}
+        {% if match|check_sent:u %}
+        <small><a class='btn btn-warning' href="/delete_request/{{ match.id }}">Cancel Request</a></small>
+
+        {% else %}
+        <small><a class="btn btn-warning" href="/send_request/{{ match.id }}">Request Number</a></small>
+        {%endif%}
+        {%endif%}
+        {% endif %}
+
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <br><span class='info'>No matches yet</span><br><br>
+    {% endif %}
+</div>
+
+
+{% endblock %}

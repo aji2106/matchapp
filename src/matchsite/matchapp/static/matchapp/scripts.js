@@ -19,18 +19,8 @@ function isNumberKey(evt) {
 }
 
 
-/*function gender() {
-    document.getElementById("displayContentG").classList.toggle("show");
-}
-
-function age() {
-    document.getElementById("displayContentA").classList.toggle("show");
-
-}*/
-
 $(document).ready( function() {
   $('#id_dob').datepicker({
-    print("in datepicker")
     format: 'yyyy-mm-dd',
     clearBtn:true,
     endDate:'-18y',

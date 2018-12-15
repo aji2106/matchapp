@@ -6,7 +6,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.http import QueryDict
-from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
@@ -45,7 +44,7 @@ def index(request):
     """if 'username' in request.session:
         return redirect('displayProfile')"""
     """else:"""
-    return render(request, 'matchapp/index.html', {'form': form})
+    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
 
@@ -53,15 +52,15 @@ def index(request):
 
 
 def loggedin(view):
-    def mod_view(request, slug=None):
+    def mod_view(request):
         form = UserLogInForm()
         if 'username' in request.session:
             username = request.session['username']
             try: user = Member.objects.get(username=username)
             except Member.DoesNotExist: raise Http404('Member does not exist')
-            return view(request, user, slug=None)
+            return view(request, user)
         else:
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
     return mod_view
 
 # terms and conditions
@@ -109,7 +108,7 @@ def register(request):
 
             form = UserLogInForm()
 
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
@@ -170,7 +169,7 @@ def login(request):
         context = {
         'appname':appname,
         'form': form,
-        'loggedIn': True
+        'loggedIn': False
         }
         return render(request, 'matchapp/index.html', context)
 
@@ -178,7 +177,7 @@ def login(request):
 
 
 @loggedin
-def logout(request, user,slug = None):
+def logout(request, user):
 	request.session.flush()
 	return redirect("/")
 
@@ -187,7 +186,7 @@ def logout(request, user,slug = None):
 
 
 @loggedin
-def similarHobbies(request, user, slug = None):
+def similarHobbies(request, user):
     # Get all the other users exclude current logged in user
     exclude = Member.objects.exclude(id=user.id)
     # Filter based on the current logged in user on same hobbies
@@ -198,25 +197,11 @@ def similarHobbies(request, user, slug = None):
     # Note to self do not need the gt thing check first
     match = hobbies.order_by('-hob_count')
 
-    """p = Profile.objects.get(slug=slug).first()
-    u = p.user
-    sent_number_request = Number.objects.filter(from_user = u)
-    rec_number_request = Number.objects.filter(to_user = u)
-
-    #if user sends number
-    button_status = 'none'
-    #if p not in request.user.profile.friends.all()
-
-    if len(Number.objects.filter(from_user=request.user).filter(to_user=p.user)) == 1:
-        button_status = 'number_request_sent'"""
-
     context = {
         'appname': appname,
         'matches': match,
         'numberOfhobbies': hobbies.count(),
         'loggedIn': True
-        #'currentUser': cUserNumber,
-        #'acceptedUser': user2Number
         }
 
     return render(request, 'matchapp/matches.html', context)
@@ -226,7 +211,7 @@ def similarHobbies(request, user, slug = None):
 # By gender or age or both !
 
 @loggedin
-def filter(request, user, slug = None):
+def filter(request, user):
     if request.method == 'GET':
         exclude = Member.objects.exclude(username=user)
         common = exclude.filter(hobbies__in=user.hobbies.all())
@@ -259,7 +244,7 @@ def getYearBorn(age):
         return age
 
 @loggedin
-def displayProfile(request, user, slug = None):
+def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
         form = UserProfile()
@@ -277,22 +262,10 @@ def displayProfile(request, user, slug = None):
         }
 
         return render(request, 'matchapp/displayProfile.html', context)
-"""try:
-
-if form.is_valid():
-	username = form.cleaned_data.get("username")
-	email = form.cleaned_data.get("email")
-	gender = form.cleaned_data.get("gender")
-	dob = dorm.cleaned_data.get("dob")"""
-
-# user profile edit page
-# https://stackoverflow.com/questions/29246468/django-how-can-i-update-the-profile-pictures-via-modelform
-# https://stackoverflow.com/questions/5871730/need-a-minimal-django-file-upload-example
 
 #remove csrf_exempt
-@csrf_exempt
 @loggedin
-def editProfile(request, user,slug):
+def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
         formM = MemberProfile(request.POST,instance=user)
@@ -302,7 +275,6 @@ def editProfile(request, user,slug):
             profile.email = form.cleaned_data.get('email')
             profile.dob = form.cleaned_data.get('dob')
             profile.gender = form.cleaned_data.get('gender')
-            profile.number = form.cleaned_data.get('number')
 
             profile.save()
 
@@ -323,25 +295,11 @@ def editProfile(request, user,slug):
 
             return render(request, 'matchapp/displayProfile.html', context)
         else:
-            error=form.errors
-            member = Member.objects.get(id=user.id)
-            print=error
-
-            context = {
-                'appname':appname,
-                'form': form,
-                'formM': formM,
-                'user': member,
-                'loggedIn': True,
-                'error': error
-            }
-
-            return render(request, 'matchapp/displayProfile.html', context)
-
-
+            print (form.errors)
+            return HttpResponse("else")
 
 @loggedin
-def upload_image(request, user, slug = None):
+def upload_image(request, user):
     member = Member.objects.get(id=user.id)
     profile = Profile.objects.get(user = member.id)
     if 'img_file' in request.FILES:
@@ -350,15 +308,26 @@ def upload_image(request, user, slug = None):
         profile.save()
         return HttpResponse(profile.image.url)
     else:
-        return HttpResponse("test")
+        return HttpResponse("Image not in request")
 
+@loggedin
+def contacts(request, user):
+    # all the users matches that is logged in 
+    # Get the requested user   
+    exclude = Member.objects.exclude(id=user.id)    
+    match = exclude.filter(hobbies__in=user.hobbies.all())
+    
+    friends = user.friends.all()
 
+    context = {
+        'u': user,
+        'matches': match,
+        'friends': friends,
+        'loggedIn': True,
+    }
 
-def displayRequests(request,template,context):
-    return render_to_response(template, context)
-
-
-
+    return render(request, 'matchapp/contact.html', context)
+    
 def send_request(request, id):
     if 'username' in request.session:
         username = request.session['username']
@@ -367,21 +336,22 @@ def send_request(request, id):
         NRequest, created = Number.objects.get_or_create(
         from_user=from_member,
         to_user=to_member)
-
-
-        context = {
-        'requested': True
-        }
-
-        return HttpResponseRedirect("/similarHobbies",context)
-        #return render_to_response("matchapp/matches.html", RequestContext(request, {}))
-
         request.session['created'] = "created"
-        return HttpResponseRedirect("/similarHobbies")
-        request.session['created'] = "created"
-        return HttpResponseRedirect("/similarHobbies")
+        return HttpResponseRedirect("/contact")
 
 def cancel_request(request, id):
+     if 'username' in request.session:
+        username = request.session['username']
+        to_member = Member.objects.get(username = username)
+        from_member  = Member.objects.get(id=id)
+
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+def delete_request(request, id):
      if 'username' in request.session:
         username = request.session['username']
         from_member = Member.objects.get(username = username)
@@ -390,7 +360,7 @@ def cancel_request(request, id):
         from_user=from_member,
         to_user=to_member).first()
         NRequest.delete()
-        return HttpResponseRedirect("/similarHobbies")
+        return HttpResponseRedirect("/contact")
 
 def accept_request(request, id):
      if 'username' in request.session:
@@ -400,12 +370,19 @@ def accept_request(request, id):
         NRequest = Number.objects.filter(
         from_user=from_member,
         to_user=to_member).first()
+             
+        # Make these users friends of each other
+        to_member.friends.add(from_member)
+        from_member.friends.add(to_member)
+
         acceptedUser = Profile.objects.get(user=from_member).number
         currentUser  = Profile.objects.get(user=NRequest.to_user).number
-        print(acceptedUser)
-        context = {
-        'acceptedUser': acceptedUser,
-        'currentUser': currentUser
-        }
-        displayRequests(request,'matchapp/matches.html',context)
-        return HttpResponseRedirect("/similarHobbies")
+       
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+
+
+
+
+

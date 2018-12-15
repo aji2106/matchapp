@@ -5,32 +5,33 @@
 
 <style>
 
-    .main{
+.main {
     margin-left: 570px;
 }
 
-.title,.subtitle{
+.title,.subtitle {
     text-align: center
 }
+
 .col-sm-4 {
     display: inline;
 }
+
 .card-title{
     text-align: center
 }
 
 .card{
      width:300px;
-
 }
 
 .age{
     width: 30px;
 }
 
-#topNav ul li ul { overflow:auto; }
-
-
+#topNav ul li ul{ 
+    overflow:auto; 
+}
 
 #pr2:hover~ #a {
     background-color: green;
@@ -71,6 +72,29 @@
 .center-button {
     text-align: center;
 }
+
+#save_button,#reset_button {
+    background-color:#3498DB;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:2px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+
+
+#save_button, #reset_button {
+    position:relative;
+    top:1px;
+}
+
 
 
 
@@ -115,9 +139,10 @@
                                         <input type ="button" class="dropbtn" id="agedropdown" value = "Filter by Gender">
                                         <ul id="displayContentG" style="list-style: none; display:none;">
                                             </br>
-                                            <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male</li>
-                                            <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female</li>
-
+                                            <table>
+                                            <tr> <td> <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male</li> </td> </tr>
+                                            <tr> <td> <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female</li> </td> </tr>
+                                            </table>
                                         </ul>
                                     </li>
                                 </ul>
@@ -127,10 +152,10 @@
 
                     <div class="col-md-2 pt-3">
                         <div class="form-group ">
-                            <nav id="topNav">
+                            <nav id="topNav3">
                                 <ul style="list-style: none;">
                                     <li>
-                                            <button type="submit" id="save_button" class="btn btn-primary btn-block">Search</button>
+                                            <button type="submit" id="save_button" >Search</button>
                                     </li>
                                 </ul>
                             </nav>
@@ -139,10 +164,10 @@
 
                     <div class="col-md-2 pt-3">
                         <div class="form-group ">
-                            <nav id="topNav">
+                            <nav id="topNav4">
                                 <ul style="list-style: none;">
                                     <li>
-                                            <button type="button" id="reset_button" class="btn btn-primary btn-block">Refresh</button>
+                                            <button type="button" id="reset_button" >Refresh</button>
                                     </li>
                                 </ul>
                             </nav>

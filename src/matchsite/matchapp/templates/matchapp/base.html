@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
+        crossorigin="anonymous">
     <!-- Latest compiled JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -31,26 +32,32 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-              <div class="icon>"
-                <a class="navbar-brand" href="{% url 'displayProfile' %}">{{appname}} <i class="fab fa-meetup fa-2x"></i></a>
-</div>
+                <div class="icon>" <a class="navbar-brand" href="{% url 'displayProfile' %}">{{appname}} <i class="fab fa-meetup fa-2x"></i></a>
+                </div>
             </div>
             <div class="icon2">
-            <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile <i class="fas fa-users fa-2x"></i></a>
-          </div>
-          <div class="icon3">
+                <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile <i class="fas fa-users fa-2x"></i></a>
+            </div>
+            <div class="icon3">
 
-            <a href="{% url 'similarHobbies' %}">Matches   <i class="fas fa-heart fa-2x"></i></a>
-          </div>
-            <a href="{% url 'logout' %}">Log out  <i class="fas fa-sign-out-alt fa-2x"></i></a>
+                <a href="{% url 'similarHobbies' %}">Matches <i class="fas fa-heart fa-2x"></i></a>
+            </div>
         </div>
+
+        <a href="{% url 'contact' %}">Contact <i class="fas fa-phone-square fa-2x"></i></a>
+        </div>
+
+        <a href="{% url 'logout' %}">Log out <i class="fas fa-sign-out-alt fa-2x"></i></a>
+        </div>
+
     </nav>
+
     {% endif%}
-<center>
-  <br>
-    {% block content %}
-    {% endblock %}
-  </center>
+    <center>
+        <br>
+        {% block content %}
+        {% endblock %}
+    </center>
 
 </body>
 

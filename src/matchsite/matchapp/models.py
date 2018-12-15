@@ -28,10 +28,9 @@ class Member(User):
         related_name='related_to'
     )
 
-    numbers = models.ManyToManyField(
+    friends = models.ManyToManyField(
         to='self',
-        symmetrical=False,
-        through="Number",
+        blank=True,
         related_name="related_nums"
     )
 
