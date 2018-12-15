@@ -42,7 +42,9 @@ class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['email','dob','gender','number']
-        'dob': forms.DateInput(attrs={'class':'datepicker'})
+        
+        widgets = {
+            'dob': forms.DateInput(attrs={'class':'datepicker'})
         }
 
 
