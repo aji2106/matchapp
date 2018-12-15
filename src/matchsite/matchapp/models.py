@@ -50,7 +50,7 @@ class Profile(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
-    slug = models.SlugField()
+    
     image = models.ImageField(upload_to='profile_images',
                               default='default.jpg')
     email = models.EmailField()

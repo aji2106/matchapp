@@ -19,14 +19,6 @@ function isNumberKey(evt) {
 }
 
 
-$(document).ready( function() {
-  $('#id_dob').datepicker({
-    format: 'yyyy-mm-dd',
-    clearBtn:true,
-    endDate:'-18y',
-
-  });
-} );
 
 $(document).ready(function () {
     $('#filterByAge').click(function () {
