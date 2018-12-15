@@ -15,6 +15,13 @@ class UserRegForm(forms.Form):
             "name":"username",
             "title":"Usernames must be between 3 and 15 characters. Only letters and numbers are allowed"
         }))
+
+        number = forms.IntegerField(label='Phone number', widget=forms.TextInput(attrs={
+            "placeholder":"Enter phone number",
+            "pattern":"^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$",
+            "name":"number",
+            "title":"Number must follow the UK mobile phone number, with optional +44 national code. Allows optional brackets and spaces at appropriate positions."
+        }))
         password = forms.CharField(label='Password',max_length=32, widget=forms.PasswordInput(attrs={
             "placeholder":"Enter password",
             "pattern":"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
@@ -24,6 +31,7 @@ class UserRegForm(forms.Form):
         re_password = forms.CharField(label='Repeat Password',max_length=32, widget=forms.PasswordInput(attrs={
             "placeholder":"Repeat password",
             "name":"re_password"}))
+
 
 
 class UserLogInForm(forms.Form):
@@ -36,13 +44,8 @@ class UserLogInForm(forms.Form):
 class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['user','email','gender','dob','number']
-        number = forms.CharField(label='Password',max_length=32, widget=forms.PasswordInput(attrs={
-            "placeholder":"Enter password",
-            "pattern":"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
-            "name":"password",
-            "title":"Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-        }))
+        fields = ['email','dob','gender','number']
+
 
 
 

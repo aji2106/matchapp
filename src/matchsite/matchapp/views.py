@@ -265,7 +265,7 @@ def displayProfile(request, user):
 
 #remove csrf_exempt
 @loggedin
-def editProfile(request, user,slug):
+def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
         formM = MemberProfile(request.POST,instance=user)
