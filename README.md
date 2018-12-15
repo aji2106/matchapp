@@ -8,7 +8,7 @@ Group: Four students
 Mark: 15%
 Deadline: Friday 14 December
 
-: 1 WEEKS REMAINING 
+: 1 WEEK REMAINING 
 
 Group 22:
 
@@ -22,15 +22,14 @@ Things still to be done:
 (IMPORTANT!) Display profile moving corrupt (User should see their hobbies and save)
 - In the backend see how the hobbies are passed and save to the member
 
-(IMPORTANT!)match hobbies / filtering page   (Age or gender or both) AJAX n JQUERY
-- FADEOUT any information currently displayed and show on success the filtered data
+(IMPORTANT!)EXTRA FEATURE
 
+(Important)Filter:
+- Should be able to reset and change the match count for each search 
 
 Predefined hobbies in the database / dummy data 
 
 Responsive Bootstrap
-
-(IMPORTANT!)EXTRA FEATURE
 
 
 

@@ -1,99 +1,230 @@
 {% extends 'matchapp/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 
 <style>
 
-.main{
+.main {
     margin-left: 570px;
 }
 
-.title,.subtitle{
-	text-align: center
+.title,.subtitle {
+    text-align: center
 }
 
-.container{
-	margin-left: 200px;
-    width: 30%;
-    padding: 10px;
-
+.col-sm-4 {
+    display: inline;
 }
 
 .card-title{
-	text-align: center
+    text-align: center
 }
 
 .card{
-	 width:300px;
+     width:300px;
+}
+
+.age{
+    width: 30px;
+}
+
+#topNav ul li ul{ 
+    overflow:auto; 
+}
+
+#pr2:hover~ #a {
+    background-color: green;
+}
+
+.show {
+    display: block;
+}
+
+.decoratedErrorField{
+    border:2px solid red;
+}
+
+.removeErrorField{
+    color: unset;
 }
 
 
-#slider-range {
-    margin: 10px;
+
+#messageValidation{
+    text-align: center;
+    color: red;
 }
-.ui-slider-horizontal {
-    height: 8px;
-    width: 200px;
+
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
 }
-.ui-slider .ui-slider-handle {
-    height: 15px;
-    width: 5px;
-    padding-left: 5px;
+
+.row.align-items-center.justify-content-center {
+    background-color: white;
 }
+
+.center-button {
+    text-align: center;
+}
+
+#save_button,#reset_button {
+    background-color:#3498DB;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:2px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+
+
+#save_button, #reset_button {
+    position:relative;
+    top:1px;
+}
+
+
+
 
 </style>
 
-
+<br>
 <h3 class="title"> Matches <h3>
-        <h4 class="subtitle"> You have {{numberOfhobbies}} match(es) </h4>
+        </br>
+        <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
+        <p id="messageValidation"></p>
+
+        <form method="GET" action="{% url 'filter' %}" id=filter-form>
+
+            <div class="container-fluid bg-light ">
+                <div class="row align-items-center justify-content-center">
+
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group ">
+                            <nav id="topNav">
+                                <ul style="list-style: none;">
+                                    <li>
+                                        <input type = "button" id = "filterByAge" value = "Filter by Age" class="dropbtn" title="Nav Link 2">
+                                        <ul id="displayContentA" style="list-style: none; display:none;">
+                                            </br>
+                                            </br>
+                                            <li> <input id="range1" class="age" type="text" name="age-min" placeholder="min"
+                                                    onkeypress="return isNumberKey(event)"> </input> to
+                                                <input id="range2" class="age" type="text" name="age-max" placeholder="max"
+                                                    onkeypress="return isNumberKey(event)"> </input> </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group">
+                            <nav id="topNav2">
+                                <ul style="list-style: none;">
+                                    <li>
+                                        <input type ="button" class="dropbtn" id="agedropdown" value = "Filter by Gender">
+                                        <ul id="displayContentG" style="list-style: none; display:none;">
+                                            </br>
+                                            <table>
+                                            <tr> <td> <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male</li> </td> </tr>
+                                            <tr> <td> <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female</li> </td> </tr>
+                                            </table>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group ">
+                            <nav id="topNav3">
+                                <ul style="list-style: none;">
+                                    <li>
+                                            <button type="submit" id="save_button" >Search</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pt-3">
+                        <div class="form-group ">
+                            <nav id="topNav4">
+                                <ul style="list-style: none;">
+                                    <li>
+                                            <button type="button" id="reset_button" >Refresh</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
 
 
-<div class="filter_form">
-    <form action="{% url 'filter' %}" method="POST">
-        <div class="main">
-        	<br>
-        	<br>
-            &nbsp; &nbsp; &nbsp;<input type="radio" name="gender" value="Male">Male
-            <input type="radio" name="gender" value="Female"> Female 
-            <div id="slider-range"></div>
-            <label for="age">Filter by age:</label>
-            <input type="text" id="age" readonly style="border:0; color:#f6931f; font-weight:bold;">
-             
-            
+                </div>
+            </div>
+        </form>
+
+<div id=matches>
+
+    {%for match in matches%}
+
+    <div class="col-sm-4 my-4">
+
+        <div class="card-groups">
+            <div class="card">
+
+
+                <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
+                <div class="card-body text-center">
+                    <h5 class="card-title"> {{ match.username }}</h5>
+                </div>
+                <p class="card-text">
+                    <div><b>Email:</b> {{ match.profile.email }}</div>
+                    <div><b>Age:</b> {{ match.profile.age }}</div>
+                    <div><b>Gender:</b> {{ match.profile.gender }}</div>
+                </p>
+                <div class="card-footer">
+                    <form method = "POST" action="{% url 'send_request' match.id %}"> {% csrf_token %} 
+                        <input id = "request_number" type="submit" value="Request Number"/>
+                    </form>  
+
+                    {% if 'created' in request.session %}  
+                    
+                    <form method = "POST" action="{% url 'cancel_request' match.id %}"> {% csrf_token %} 
+                        <input type="submit" value="Cancel Request"/>
+                    </form>
+
+                    {% endif %}
+
+                    <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
+                        <input type="submit" value="Accept Request"/> 
+                        Number: {{acceptedUser}}                   
+                    </form>
+                    
+                </div>
+            </div>
+
         </div>
-    </form>
+    </div>
+
+    {%endfor%}
+
 </div>
 
 
-
-{%for match in matches%}
-
-
-                <div class="container">
-
-                    <div class="card-groups">
-                        <div class="card">
-
-
-                            <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title"> {{ match.username }}</h5>
-                            </div>
-                            <p class="card-text">
-                                <div><b>Email:</b> {{ match.profile.email }}</div>
-                                <div><b>Age:</b> {{ match.profile.age }}</div>
-                                <div><b>Gender:</b> {{ match.profile.gender }}</div>
-                                <div><b>Hobbies:</b> {{ match.hobbies }}</div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-                {%endfor%}
-
-
-
-
-
-                {% endblock %}
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 import re
 from django.forms import ModelChoiceField
 from django.db import models
-
+from .models import Profile, Member
 
 
 
@@ -32,17 +32,22 @@ class UserLogInForm(forms.Form):
         password = forms.CharField(label='Password', min_length=8,max_length=32, widget=forms.PasswordInput(attrs={
         "placeholder":"Password"}))
 
-class UserProfile(forms.Form):
-        username = forms.CharField(label='Enter your username', max_length=100)
-        password = forms.CharField(max_length=32, widget=forms.PasswordInput)
-        re_password = forms.CharField(max_length=32, widget=forms.PasswordInput)
-        email=forms.EmailField()
 
-        SOURCE_CHOICES = [
-        ('Football', 'Football'),
-        ('Gym', 'Gym'),
-        ('Painting', 'Painting'),
-        ('Music', 'Music'),
-         ]
-        hobbies=models.CharField(max_length=10,choices=SOURCE_CHOICES,)
-        #hobbies=forms.CharField(widget=forms.Textarea)
+class UserProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['user','email','gender','dob']
+        dob = forms.DateField(label='Date of Birth')
+
+
+
+class MemberProfile(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ['hobbies']
+
+"""def clean(self):
+        cd = self.cleaned_data
+        if cd.get('password') != cd.get('password_confirm'):
+            self.add_error('password_confirm', "passwords do not match !")
+        return cd"""

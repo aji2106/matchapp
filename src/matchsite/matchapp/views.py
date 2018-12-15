@@ -1,21 +1,24 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
-from django.http import HttpResponse, Http404
-from matchapp.models import Member, Profile, Hobby
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from matchapp.models import Member, Profile, Hobby, Number
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.http import QueryDict
-from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.db import IntegrityError
 from django.shortcuts import render_to_response
+from datetime import datetime
+from django.contrib.auth import get_user_model
 
 from matchapp.templatetags.extras import display_matches
 
 # REST imports
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, MemberSerializer
+
+User = get_user_model()
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -41,8 +44,8 @@ def index(request):
     """if 'username' in request.session:
         return redirect('displayProfile')"""
     """else:"""
-    return render(request, 'matchapp/index.html', {'form': form})
-    
+    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+
 
 
 # user logged in
@@ -57,7 +60,7 @@ def loggedin(view):
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user)
         else:
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
     return mod_view
 
 # terms and conditions
@@ -90,8 +93,8 @@ def register(request):
             user = Member(username=username)
             user.set_password(password)
 
-            try:user.save()     
-            except: #IntegrityError: 
+            try:user.save()
+            except: #IntegrityError:
                 #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')
@@ -105,7 +108,7 @@ def register(request):
 
             form = UserLogInForm()
 
-            return render(request, 'matchapp/index.html', {'form': form})
+            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
@@ -149,7 +152,7 @@ def login(request):
                         return render(request, 'matchapp/displayProfile.html', context)
 
                 # return HttpResponse("<span> User or password is wrong </span")
-                
+
                 else:
                     #raise Http404('User or password is incorrect')
                     context = {
@@ -159,14 +162,14 @@ def login(request):
                     }
                     # login(request,user)
                     return render(request, 'matchapp/index.html', context)
-    
+
     else:
         #return displayProfile(request,)
         form = UserLogInForm()
         context = {
         'appname':appname,
         'form': form,
-        'loggedIn': True
+        'loggedIn': False
         }
         return render(request, 'matchapp/index.html', context)
 
@@ -201,21 +204,20 @@ def similarHobbies(request, user):
         'loggedIn': True
         }
 
-    #print(str(match.profile))
-    print("users with similar hobbies" + str(match))
     return render(request, 'matchapp/matches.html', context)
+
 
 # filter button on similarHobbies page which generates
 # By gender or age or both !
 
 @loggedin
 def filter(request, user):
-    if request.method == 'POST':
+    if request.method == 'GET':
         exclude = Member.objects.exclude(username=user)
         common = exclude.filter(hobbies__in=user.hobbies.all())
-        gender = request.POST['gender']
-        yearMin = Profile.getYearBorn(request.POST['age-min'])
-        yearMax = Profile.getYearBorn(request.POST['age-max'])
+        gender = request.GET.get('gender',False)
+        yearMin = getYearBorn(request.GET.get('age-min', False))
+        yearMax = getYearBorn(request.GET.get('age-max',False))
 
         if gender and yearMin and yearMax:
             sex = common.filter(profile__gender=gender)
@@ -229,77 +231,72 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        print(str(match))
         return HttpResponse(display_matches(match))
-    else:            
-	    raise Http404("POST request was not used")
 
+    else:
+	    raise Http404("GET request was not used")
+
+
+def getYearBorn(age):
+    if age != '':
+        return int((datetime.now().year - int(age)))
+    else:
+        return age
 
 @loggedin
 def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
         form = UserProfile()
+        formM = MemberProfile()
         person = Member.objects.get(id=user.id)
         hobby = Hobby.objects.all()
 
         context = {
             'appname':appname,
             'form': form,
+            'formM': formM,
             'user': person,
             'hobbies': hobby,
             'loggedIn': True
         }
 
         return render(request, 'matchapp/displayProfile.html', context)
-"""try:
-
-if form.is_valid():
-	username = form.cleaned_data.get("username")
-	email = form.cleaned_data.get("email")
-	gender = form.cleaned_data.get("gender")
-	dob = dorm.cleaned_data.get("dob")"""
-
-# user profile edit page
-# https://stackoverflow.com/questions/29246468/django-how-can-i-update-the-profile-pictures-via-modelform
-# https://stackoverflow.com/questions/5871730/need-a-minimal-django-file-upload-example
 
 #remove csrf_exempt
-@csrf_exempt
 @loggedin
 def editProfile(request, user):
+    if request.method == 'POST':
+        form = UserProfile(request.POST,instance=user)
+        formM = MemberProfile(request.POST,instance=user)
+        if form.is_valid() and formM.is_valid():
 
+            profile = Profile.objects.get(user=user.id)
+            profile.email = form.cleaned_data.get('email')
+            profile.dob = form.cleaned_data.get('dob')
+            profile.gender = form.cleaned_data.get('gender')
 
-    # Profile : GENDER , EMAIL , [can add a hobby to the member]
-    # Member : list of hobbies
+            profile.save()
 
-    if request.method == "PUT":
-        try: member = Member.objects.get(id=user.id)
-        except Member.DoesNotExist: raise Http404("Member does not exist")
-        profile = Profile.objects.get(user=member.id)
+            member = Member.objects.get(id=user.id)
+            allHobbies= formM.cleaned_data.get('hobbies')
 
-        data = QueryDict(request.body)
-        
-        profile.gender = data['gender']
-        profile.email = data['email']
-        profile.dob = data['dob']
-       
-        # Need to make sure to save the hobbies
-        # to the user
+            member.hobbies.set(allHobbies)
+            member.save()
 
-        profile.save()
+            context = {
+                'appname':appname,
+                'form': form,
+                'formM': formM,
+                'user': member,
+                'hobbies': allHobbies,
+                'loggedIn': True
+            }
 
-        response = {
-             'gender': profile.gender,
-             'dob': profile.dob,
-             'email': profile.email
-
-        }
-        return JsonResponse(response)
-
-    else:
-        raise Http404("PUT request was not used")
-
+            return render(request, 'matchapp/displayProfile.html', context)
+        else:
+            print (form.errors)
+            return HttpResponse("else")
 
 @loggedin
 def upload_image(request, user):
@@ -311,5 +308,81 @@ def upload_image(request, user):
         profile.save()
         return HttpResponse(profile.image.url)
     else:
-        return HttpResponse("test")
+        return HttpResponse("Image not in request")
+
+@loggedin
+def contacts(request, user):
+    # all the users matches that is logged in 
+    # Get the requested user   
+    exclude = Member.objects.exclude(id=user.id)    
+    match = exclude.filter(hobbies__in=user.hobbies.all())
     
+    friends = user.friends.all()
+
+    context = {
+        'u': user,
+        'matches': match,
+        'friends': friends,
+        'loggedIn': True,
+    }
+
+    return render(request, 'matchapp/contact.html', context)
+    
+def send_request(request, id):
+    if 'username' in request.session:
+        username = request.session['username']
+        from_member = Member.objects.get(username = username)
+        to_member = Member.objects.get(id=id)
+        NRequest, created = Number.objects.get_or_create(
+        from_user=from_member,
+        to_user=to_member)
+        request.session['created'] = "created"
+        return HttpResponseRedirect("/contact")
+
+def cancel_request(request, id):
+     if 'username' in request.session:
+        username = request.session['username']
+        to_member = Member.objects.get(username = username)
+        from_member  = Member.objects.get(id=id)
+
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+def delete_request(request, id):
+     if 'username' in request.session:
+        username = request.session['username']
+        from_member = Member.objects.get(username = username)
+        to_member  = Member.objects.get(id=id)
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+def accept_request(request, id):
+     if 'username' in request.session:
+        username = request.session['username']
+        to_member = Member.objects.get(username = username)
+        from_member  = Member.objects.get(id=id)
+        NRequest = Number.objects.filter(
+        from_user=from_member,
+        to_user=to_member).first()
+             
+        # Make these users friends of each other
+        to_member.friends.add(from_member)
+        from_member.friends.add(to_member)
+
+        acceptedUser = Profile.objects.get(user=from_member).number
+        currentUser  = Profile.objects.get(user=NRequest.to_user).number
+       
+        NRequest.delete()
+        return HttpResponseRedirect("/contact")
+
+
+
+
+
+

@@ -1,16 +1,37 @@
 {% extends 'matchapp/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
-
+<style>
+  .col-md-7 {
+    width: 100%;
+    margin-left: -70px;
+  } 
+  #id_user {
+    width: 100px;
+  }
+  #id_email {
+    width: 200px;
+  }
+  #id_gender {
+    width: 70px;
+  }
+  #id_dob {
+    width: 100px;
+  }
+  #id_hobbies {
+    width: 150px;
+  }
+</style>
 
 <div class="container_register">
-  <div class="container">
+  <div class="container_profile">
     <div class="row">
 
-
+   
       <div class="col-md-7 ">
-
+         <center>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4>User Profile</h4>
@@ -30,7 +51,7 @@
                     </progress>
 
                     <div style="color:#999;">click here to change profile image</div>
-                  </form>
+
                   <!--Upload Image Js And Css-->
                 </div>
 
@@ -43,96 +64,46 @@
                 <!-- /input-group -->
               </div>
               <div class="col-sm-6">
-                <h4 style="color:#00b1b1;">{{user.username}}</h4></span>
+                <h4 style="color:#00b1b1;">{{user.username}}</h4>
                 <span>
-                  <p>Welcome to {{appname}}</p>
+                  <p>Welcome to test{{appname}}</p>
                 </span>
               </div>
               <div class="clearfix"></div>
               <hr style="margin:5px 0 5px 0;">
 
-              <form>
-                <div id="username"/><b>Username :</b> {{user.username}}
+              <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
 
-                <div id="email"/><b>E-mail : </b> <input contenteditable='true' size="29"
-                type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                id="username" value= {{user.profile.email}}>
-                <!-- <input contenteditable='true'
-                type="date" id="username" value={{user.profile.dob}}>-->
-                <div id="dob"/><b>Date of Birth : </b>
-                <input type="text" readonly id="from-datepicker" size="23" value={{user.profile.gender}}></input>
+                  <div style="margin-left: 50%; margin: 0 auto; background-color:red;">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  {{ formM|crispy }}
 
-
-                <!--<input contenteditable='true' size="28"  id="username" value={{user.profile.gender}} > -->
-                <div id="gender"/><b>Gender : </b>
-                <input type="radio" id="male" name="gender" value="M"
-                checked>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="F">
-                <label for="female">Female</label>
-              </div>
-
-              <b>Hobbies : </b>
-
-              <div id="hobbies"/><div class="subject-info-box-1">
-                <select multiple="multiple" id='lstBox1' class="form-control">
-                  <option value="ajax">Ajax</option>
-                  <option value="jquery">jQuery</option>
-                </select>
-              </div>
-
-              <div class="subject-info-arrows text-center">
-                <input type="button" id="btnAllRight" value=">>" class="btn btn-default" /><br />
-                <input type="button" id="btnRight" value=">" class="btn btn-default" /><br />
-                <input type="button" id="btnLeft" value="<" class="btn btn-default" /><br />
-                <input type="button" id="btnAllLeft" value="<<" class="btn btn-default" />
-              </div>
-              <div class="subject-info-box-2">
-                <select multiple="multiple" id='lstBox2' class="form-control">
-                  <option value="asp">ASP.NET</option>
-                  <option value="c#">C#</option>
-                </select>
-              </div>
-              <div class="clearfix"></div>
-
-<script>
-
-</script>
-
-
-              <div class=updateBtn id=update_button><input type="submit" value="Save"></div>
-
-
-            </div>
-          </form>
-
-          <br><br>
-
-
-
-
+                  <!--<div class=updateBtn id=update_button><input type="submit" value="Save"></div>-->
+                  <button type="button" class="btn btn-success">Submit</button>
+                  </div>
+                </form>
 
           <!-- /.box-body -->
         </div>
+        </center>
 
         <!-- /.box -->
 
       </div>
+    
 
 
     </div>
   </div>
 </div>
+
+<script src="{% static 'matchapp/scripts.js' %}"></script>
+
 <script>
 
+
 </script>
-
-
-
-
-
-
-
 
 
 </div>

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
+from django.core.validators import RegexValidator
 
 # The Hobby models provides an intermediate model for
 # the 'hobbies' ManyToMany relationship between Members
@@ -27,6 +28,12 @@ class Member(User):
         related_name='related_to'
     )
 
+    friends = models.ManyToManyField(
+        to='self',
+        blank=True,
+        related_name="related_nums"
+    )
+
     # one property that counts hobbies for member
     @property
     def hobbies_count(self):
@@ -43,6 +50,7 @@ class Profile(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
+    slug = models.SlugField()
     image = models.ImageField(upload_to='profile_images',
                               default='default.jpg')
     email = models.EmailField()
@@ -52,10 +60,35 @@ class Profile(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     dob = models.DateField(max_length=8, null=True)
+    phone_regex = RegexValidator(
+        regex=r'^(?:0|\+?44)(?:\d\s?){9,11}$', message="Phone number must be entered in the format: '+999999999'. only 11 digits allowed.")
+    number = models.CharField(
+        validators=[phone_regex], max_length=11, blank=True)  # validators should be a list
 
     @property
     def age(self):
-        return int((datetime.now().year - self.dob.year))
+        if self.dob is not None:
+            return int((datetime.now().year - self.dob.year))
+        else:
+            return "DOB not specified"
 
     def __str__(self):
         return self.user.username
+
+
+class Number(models.Model):
+    to_user = models.ForeignKey(
+        to=Member,
+        related_name='sent',
+        on_delete=models.CASCADE
+    )
+
+    from_user = models.ForeignKey(
+        to=Member,
+        related_name='received',
+        on_delete=models.CASCADE
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'From ' + self.from_user.username + ' to ' + self.to_user.username

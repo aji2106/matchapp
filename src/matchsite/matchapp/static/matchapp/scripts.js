@@ -9,13 +9,111 @@ function closeNav() {
 }
 
 
-function isNumberKey(evt){
+
+function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
     return true;
+
 }
 
+
+$(document).ready( function() {
+  $('#id_dob').datepicker({
+    format: 'yyyy-mm-dd',
+    clearBtn:true,
+    endDate:'-18y',
+
+  });
+} );
+
+$(document).ready(function () {
+    $('#filterByAge').click(function () {
+        document.getElementById("displayContentA").classList.toggle("show");
+
+    });
+});
+
+$(document).ready(function () {
+    $('#agedropdown').click(function () {
+        document.getElementById("displayContentG").classList.toggle("show");
+
+    });
+});
+
+
+$(document).ready(function () {
+    $("#filter-form").submit(function (event) {
+
+        //validation for age
+        if (parseInt($("#range1").val()) > parseInt($("#range2").val())) {
+            document.getElementById("range1").className += " decoratedErrorField ";
+            $("#messageValidation").html("Please ensure the first age is lower than the second");
+        }
+
+        else {
+            //remove the validation
+            $("#range1").removeClass("decoratedErrorField");
+            $("#messageValidation").empty();
+
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'age-min': $('input[name=age-min]').val(),
+                    'age-max': $('input[name=age-max]').val(),
+                    'gender': $(".gender:checked").val(),
+                },
+                success: function (data) {
+                    var matches = $("#matches")
+                    $("#matches").empty();
+                    data = JSON.stringify(data)
+                    data = JSON.parse(data)
+                    var elements = data.split(',')
+
+                    elements.forEach(function (element) {
+                        var val = element.replace(/['"]+/g, '')
+                        $('#matches').append(val)
+                    });
+
+                    let count = matches[0].children.length
+                    $(".subtitle").text("You have " + count + " match(es)");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#messageValidation").html("Please fill in the fields to filter the matches");
+                }
+
+            });
+        }
+        event.preventDefault();
+    });
+})
+
+
+$(".drop-down .selected a").click(function () {
+    $(".drop-down .options ul").toggle();
+});
+
+//SELECT OPTIONS AND HIDE OPTION AFTER SELECTION
+$(".drop-down .options ul li a").click(function () {
+    var text = $(this).html();
+    $(".drop-down .selected a span").html(text);
+    $(".drop-down .options ul").hide();
+});
+
+
+//HIDE OPTIONS IF CLICKED ANYWHERE ELSE ON PAGE
+$(document).bind('click', function (e) {
+    var $clicked = $(e.target);
+    if (!$clicked.parents().hasClass("drop-down"))
+        $(".drop-down .options ul").hide();
+});
+
+
+
+//edit profile
 $(document).ready(function () {
 
     $("#update_button").click(function (event) {
@@ -52,50 +150,31 @@ $(document).ready(function () {
     });
 
 })
+
+//refresh matches list
+$(document).ready(function () {
+    $('#reset_button').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/similarHobbies/",
+            success: function () {
+                location.reload();
+            }
+
+        })
+    });
+
+});
+
+
 $('#profile-image-upload').click(function () {
     $("#img_file").click();
 });
-/////datepicket displayProfile
-$( document ).ready(function() {
-  $("#from-datepicker").datepicker({
-    format: 'yyyy-mm-dd'
-
-  });
-  $("#from-datepicker").on("change", function () {
-    var fromdate = $(this).val();
-    alert(fromdate);
-  });
-});
-
-
-      $(function () {
-          $("#slider-range").slider({
-              range: true,
-              min: 16,
-              max: 50,
-              values: [21, 30],
-              slide: function (event, ui) {
-                  console.log($("#age").val());
-                  var ageValue = getSecondPart($("#age").val());
-                  if (ui.values[1] == '50') {
-                      if (ageValue == ' 49' || ageValue == ' 50+') {
-                          $("#age").val(ui.values[0] + " - " + "50+");
-                      }
-                  }
-                  else {
-                      $("#age").val(ui.values[0] + " - " + ui.values[1]);
-                  }
-              }
-          });
-
-          $("#age").val($("#slider-range").slider("values", 0) +
-            " - " + $("#slider-range").slider("values", 1));
-      });
-      
-      function getSecondPart(str) {
-          return str.split('-')[1];
-      }
 
 
 
-////datepicker displayProfile
+////
+
+
+
+////
