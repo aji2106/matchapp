@@ -4,13 +4,11 @@
 {% block content %}
 
 
-
 <style>
-
 
   body
   {
-    background: url("/static/images/bg.png") no-repeat;
+    background: url("/static/images/backgroundWC.jpg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -33,71 +31,62 @@
 
   <div class=container_register>
     <form method="POST">
-      <!--{% csrf_token %}-->
-      <!--<div class="imgcontainer">
-      <img style="width: 100%; margin: 0 auto;" src="{% static 'images/logo1.png' %}" class="logo">
-    </div>-->
 
-    <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <span id='message'></span>
-      <div id='error_signup' class='error_message'> {{error}} </div>
-      <!-- Trigger/Open The Modal -->
-      <div>By creating an account you agree to our <button id="myBtn"> Terms and Conditions</button>
-      <input type="checkbox" name="tc"style="margin-bottom:15px" required/></div>
-      <br>
-      <!-- The Modal -->
-      <div id="myModal" class="modal">
+      <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <span id='message'></span>
+        <div id='error_signup' class='error_message'> {{error}} </div>
+        <!-- Trigger/Open The Modal -->
+        <div>By creating an account you agree to our <button id="myBtn"> Terms and Conditions</button>
+          <input type="checkbox" name="tc"style="margin-bottom:15px" required/></div>
+          <br>
+          <!-- The Modal -->
+          <div id="myModal" class="modal">
 
-        <!-- Modal content -->
-        <div class="modal-content">
-          <span class="close">&times;</span>
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
               <h1>Summary of Terms</h1>
 
-          <br>
+              <br>
 
               <p>You must read and agree to our Terms of Use (the “Agreement”) because it forms the binding contract between you and MatchApp. However, we’ve provided this short summary for your convenience (with capitalized terms defined in the Agreement).</p>
 
-          <br>
+              <br>
               <b>Age.</b> <p> I confirm I am 18 years old or above. <p>
 
-              <b>Acceptance.</b> <p>By using the Service, you agree to this Agreement, our Privacy Policy and Safety Tips, and any terms that apply to in app purchase you make.</p>
+                <b>Acceptance.</b> <p>By using the Service, you agree to this Agreement, our Privacy Policy and Safety Tips, and any terms that apply to in app purchase you make.</p>
 
-              <b>Eligibility.</b> <p>You must be at least 18 to use the Service and not prohibited by law from using the Service. You promise to follow the law and that you’re not a convicted felon or sex offender.</p>
+                <b>Eligibility.</b> <p>You must be at least 18 to use the Service and not prohibited by law from using the Service. You promise to follow the law and that you’re not a convicted felon or sex offender.</p>
 
-              <b>Your Account.</b> <p>If you use Facebook to access MatchApp, you must authorize us to access certain information from Facebook to use MatchApp. You agree to keep your account secure and confidential.</p>
+                <b>Your Account.</b> <p>If you use Facebook to access MatchApp, you must authorize us to access certain information from Facebook to use MatchApp. You agree to keep your account secure and confidential.</p>
 
-              <b>Modifying the Services.</b> <p>We may modify the Services at any time or discontinue them altogether. You can terminate your account in Settings, and we reserve the right to terminate it for you if you violate this Agreement or if we deem your use of the Service to be inappropriate.</p>
+                <b>Modifying the Services.</b> <p>We may modify the Services at any time or discontinue them altogether. You can terminate your account in Settings, and we reserve the right to terminate it for you if you violate this Agreement or if we deem your use of the Service to be inappropriate.</p>
 
-              <b>Safety.</b> <p>MatchApp is not responsible for the actions of its users or your interactions with them, and we don’t conduct background checks. Be careful and be sure to read and follow our Safety Tips on interacting with people on or off of MatchApp.</p>
+                <b>Safety.</b> <p>MatchApp is not responsible for the actions of its users or your interactions with them, and we don’t conduct background checks. Be careful and be sure to read and follow our Safety Tips on interacting with people on or off of MatchApp.</p>
 
-              <b>Rights.</b> <p>MatchApp grants you the right to use our Service as authorized and permitted by this Agreement. See the Agreement for a full list of actions you agree not to take. You grant MatchApp the right to display your profile and Content for the limited purpose of MatchApp operating the Service and researching and developing new ones.</p>
+                <b>Rights.</b> <p>MatchApp grants you the right to use our Service as authorized and permitted by this Agreement. See the Agreement for a full list of actions you agree not to take. You grant MatchApp the right to display your profile and Content for the limited purpose of MatchApp operating the Service and researching and developing new ones.</p>
 
-              <b>Rules.</b> <p>See the Agreement for a list of the rules you agree to abide by when you use MatchApp, such as not soliciting money from other users, harassing other users or using the Service for any illegal purposes.</p>
+                <b>Rules.</b> <p>See the Agreement for a list of the rules you agree to abide by when you use MatchApp, such as not soliciting money from other users, harassing other users or using the Service for any illegal purposes.</p>
 
-              <b>Copyright.</b> <p>If you believe your work has been posted on the Service in violation of your copyright, please send a notice to our Copyright Agent following instructions in the Agreement.</p>
+                <b>Copyright.</b> <p>If you believe your work has been posted on the Service in violation of your copyright, please send a notice to our Copyright Agent following instructions in the Agreement.</p>
 
 
-        </div>
+              </div>
 
+            </div>
+
+
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button><br><br>
+
+            <p>Already have an account? <a href="{% url 'index' %}">Click here</a>.</p>
+
+          </div>
+
+        </form>
       </div>
-
-
-
-
-
-
-
-      <button type="submit" class="btn btn-success">Submit</button>
-      <button type="submit" class="btn btn-primary">Reset</button><br><br>
-
-      <p>Already have an account? <a href="{% url 'index' %}">Click here</a>.</p>
-
     </div>
-
-  </form>
-</div>
-</div>
-</div>
-{% endblock %}
+  </div>
+  {% endblock %}

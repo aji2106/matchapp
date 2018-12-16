@@ -137,7 +137,7 @@ body {
         padding-top: 10px;
 
     }
-    div.error_message{
+    .error_message{
       color:red;
       width:400px;
       text-align:left;
