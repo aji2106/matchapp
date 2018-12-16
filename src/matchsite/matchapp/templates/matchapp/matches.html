@@ -15,7 +15,8 @@
 
             <div class="container-fluid bg-light ">
                 <div class="row align-items-center justify-content-center">
-
+                    <p style=font-size:17px;"> Show me: </p>
+                    
                     <div class="col-md-2 pt-3">
                         <div class="form-group ">
                             <nav id="topNav">
@@ -32,22 +33,6 @@
                                 </div>
 
 
-                                <!--<ul style="list-style: none;">
-                                    <li>
-                                        <input type = "button" id = "filterByAge" value = "Filter by Age" class="dropbtn" title="Nav Link 2" >
-                                        <div>
-                                        <ul id="displayContentA" style="list-style: none; display:none;">
-                                            </br>
-                                            </br>
-                                            <li> <input id="range1" class="age" type="text" name="age-min" placeholder="min"
-                                                    onkeypress="return isNumberKey(event)"  maxlength="3">  to
-                                                <input id="range2" class="age" type="text" name="age-max" placeholder="max"
-                                                    onkeypress="return isNumberKey(event)" maxlength="3">  </li>
-                                        </ul>
-                                        </div>
-
-                                    </li>
-                                </ul>-->
                             </nav>
                         </div>
                     </div>
@@ -55,7 +40,23 @@
                     <div class="col-md-2 pt-3">
                         <div class="form-group">
                             <nav id="topNav2">
-                                <div class="btn-group dropdown">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                      <div class="input-group">
+
+                                        <div class="input-group-btn" data-toggle="buttons">
+                                          <label class="btn btn-primary active">
+                                            <input type="radio" class="gender" id="pr1" name="gender" value="M">Male <i class='fas fa-mars' style='font-size:24px'></i>  
+                                          </label>
+                                          <label class="btn btn-primary">
+                                            <input type="radio" class="gender" id="pr2" name="gender" value="F">Female  <i class='fas fa-venus' style='font-size:24px'></i>
+                                          </label>
+                                        </div>
+
+                                      </div>
+
+                                <!--<div class="btn-group dropdown">
                                 <button class="btn btn-success btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Filter by Gender
                                 </button>
@@ -64,7 +65,7 @@
                                              <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male <i class='fas fa-mars' style='font-size:24px'></i>   </li> 
                                             <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female  <i class='fas fa-venus' style='font-size:24px'></i></li>  
                                             
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <!--
                                 <ul style="list-style: none;">
@@ -118,7 +119,8 @@
 
     {%for match in matches%}
 
-    <div class="col-sm-4 my-4">
+    <!--<div class="col-sm-4 my-4">-->
+        <div class="col-md-2 pt-3">
 
         <div class="card-groups">
             <div class="card">
