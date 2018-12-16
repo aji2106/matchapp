@@ -29,6 +29,7 @@
     <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
     {%csrf_token%}
     {{ form|crispy }}
+    <span id='message'></span>
 
     <p>By creating an account you agree to our <a href="{% url 'tc' %}"><u> Terms & Privacy </u></a>
       <input type="checkbox" name="tc"style="margin-bottom:15px" required></p>
@@ -39,6 +40,7 @@
     <p>Already have an account? <a href="{% url 'index' %}">Click here</a>.</p>
     <div id='error_signup' class='error_message'> {{error}} <div>
     </div>
+
 
 
 </form>

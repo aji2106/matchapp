@@ -28,6 +28,17 @@ class UserRegForm(forms.Form):
     "placeholder":"Repeat password",
     "name":"re_password"}))
 
+    def clean(self):
+        cleaned_data = super(UserRegForm, self).clean()
+
+        password = cleaned_data.get('password')
+        re_password = cleaned_data.get('re_password ')
+
+        if password and re_password:
+            if password != re_password:
+                raise forms.ValidationError("The two password fields must match.")
+                return cleaned_data
+
 
 
 

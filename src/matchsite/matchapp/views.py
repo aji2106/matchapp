@@ -91,27 +91,43 @@ def register(request):
 			# normalized data
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            re_password = form.cleaned_data['re_password']
+            print(str(username))
+            print(str(password))
+            print(str(re_password))
+            if password and re_password:
+                if password != re_password:
+                    #raise forms.ValidationError("The two password fields must match.")
+                    #return cleaned_data
+                    error=("Error: The two password fields do not match.")
+                    context = {
+                        'appname':appname,
+                        'form': form,
+                        'error':error
+                        }
+                    return render(request, 'matchapp/register.html', context)
 
-            user = Member(username=username)
-            user.set_password(password)
+                else:
+                    user = Member(username=username)
+                    user.set_password(password)
 
-            try:user.save()
-            except:
-            #IntegrityError:
-                #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
+                    try:user.save()
+                    except:
+                    #IntegrityError:
+                        #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
-			#return redirect('index')
-                context = {
-                    'appname':appname,
-                    'form': form,
-                    'error':'Username '+ str(user) +' already taken: Usernames must be unique',
-                    }
-            # login(request,user)
-                return render(request, 'matchapp/register.html', context)
+        			#return redirect('index')
+                        context = {
+                            'appname':appname,
+                            'form': form,
+                            'error':'Username '+ str(user) +' already taken: Usernames must be unique',
+                            }
+                    # login(request,user)
+                        return render(request, 'matchapp/register.html', context)
 
-            form = UserLogInForm()
+                    form = UserLogInForm()
 
-            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+                    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
