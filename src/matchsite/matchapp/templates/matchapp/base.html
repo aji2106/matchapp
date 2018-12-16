@@ -47,35 +47,29 @@
         </div>
     </nav>
     -->
-    <nav class="navbar navbar-default navbar-fixed-top" >
-            <div class="container">
-                <div class="navbar-header">
-                    <div class="icon>" id="first" <a class="navbar-brand" href="{% url 'displayProfile' %}">{{appname}} <i class="fab fa-meetup fa-2x" ></i></a>
-                    </div>
-                </div>
-                <div class="icon2">
-                    <a class="profile" id="second" href="{% url 'displayProfile' %}" name="displayProfile">Profile <i class="fas fa-user fa-2x" " style="color:black"></i></a>
-                </div>
-                <div id="third" class="icon3">
+    <div class="topnav" id="myTopnav">
+    <div class = "floatLeftNav">
+    <a href="{% url 'displayProfile' %}"> <i class="fab fa-meetup fa-2x"></i></a>
+    <a class="profile" href="{% url 'displayProfile' %}" name="displayProfile">Profile <i class="fas fa-users fa-2x"></i></a>
+    <a href="{% url 'similarHobbies' %}">Matches <i class="fas fa-heart fa-2x"></i></a>
+    <a href="{% url 'contact' %}">Contact <i class="fas fa-phone-square fa-2x"></i></a>
+    </div>
+    <div class = "floatRightNav">
+    <a href="{% url 'logout' %}">Log out <i class="fas fa-sign-out-alt fa-2x"></i></a>
+    </div>
 
-                    <a href="{% url 'similarHobbies' %}">Matches <i class="fas fa-users fa-2x" " style="color:black"></i></a>
-                </div>
-
-                <div>
-                <a id="fourth" href="{% url 'contact' %}">Contact <i class="fas fa-phone-square fa-2x" " style="color:black"></i></a>
-                </div>
-
-                <div>
-                <a href="{% url 'logout' %}">Log out <i class="fas fa-sign-out-alt fa-2x" " style="color:black"></i></a>
-                </div>
-            </div>
-        </nav>
+  <a href="javascript:void(0);" class="icon" onclick="navBar()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
     {% endif%}
     <center>
         <br>
         {% block content %}
         {% endblock %}
     </center>
+
+  
 
 </body>
 <!-- Latest compiled JavaScript -->
