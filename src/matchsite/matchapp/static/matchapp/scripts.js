@@ -7,6 +7,9 @@ function navBar() {
     x.className = "topnav";
   }
 }
+////
+
+
 
 $(document).ready(function() {
     $( ".datepicker" ).datepicker({
@@ -43,7 +46,7 @@ function isNumberKey(evt) {
 function changeImage() {
     //console.log(document.getElementById("imgClickAndChange").src)
 
-        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png") 
+        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png")
         {
             //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
             document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
@@ -51,7 +54,7 @@ function changeImage() {
             console.log(document.getElementById("imgClickAndChange").src)
 
         }
-        else 
+        else
         {
             document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
         }
