@@ -376,8 +376,11 @@ def contacts(request, user):
     # display only if both users have liked each other
     like = Like.objects.filter(from_user=user)
 
+    friends = user.friends.all()
+
     context = {
         'u': user,
+        'friends': friends,
         'likes': like,
         'loggedIn': True,
     }
