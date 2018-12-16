@@ -12,7 +12,44 @@ background-image: linear-gradient(315deg, #db7f8e 0%, #7b0d1e 74%);*/
     color: black;
     font-weight: 300;
 }
+/*modal css*/
 
+.modal {
+  position: fixed;
+  transform: translate(0,0);
+  width: auto; left: 0; right: 0;
+  height: auto; top: 0; bottom: 0;
+  z-index: 990; /* display above everything else */
+  padding: 20px;
+  text-align:left;
+
+
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 0% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/*modal css ends*/
 input[type=text],[type=password] {
  width: 100%;
  padding: 12px 20px;
