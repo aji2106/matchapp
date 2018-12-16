@@ -6,7 +6,7 @@
 
 </br>
 <div id='matches'>
-    
+
 
     {% if matches %}
 
@@ -20,7 +20,7 @@
         <div class="card-body text-center" style="height: 75px">
         <h5 class = "card-title">
              {{match.username}} </br>
-            
+
         </h5>
         </div>
         <div class = "card-footer" style="height: 50px">
@@ -28,20 +28,20 @@
         <button type=button class=deleteItem>Delete</button>
         -->
 
-        <!-- if the match are friends then that means 
+        <!-- if the match are friends then that means
              they have accepted each other so show the number -->
         {% if match in friends %}
-        <div> {{match.profile.number}} </div> 
-        
+        <div> {{match.profile.number}} </div>
 
-        
+
+
 
         <!-- We know they are not friends so we can request their number-->
         {%else%}
 
         {% if match|check_request:u %}
-        <small><a class='btn btn-primary' href="/accept_request/{{ match.id }}">Accept</a></small>
-        <small><a class='btn btn-warning' href="/cancel_request/{{ match.id }}">Ignore</a></small>
+        <small><a class='btn btn-primary' href="/accept_request/{{ match.id }}"><img src="{% static 'images/Tinder-Heart.png' %}" width="25" height="25"></a></small>
+        <small><a class='btn btn-warning' href="/cancel_request/{{ match.id }}"><img src="{% static 'images/Tinder-cross.png' %}" width="25" height="25"></a></small>
 
         {% else%}
         {% if match|check_sent:u %}
