@@ -14,6 +14,9 @@
   #id_email {
     width: 200px;
   }
+  #id_number {
+    width: 120px;
+  }
   #id_gender {
     width: 70px;
   }
@@ -23,7 +26,7 @@
   #id_hobbies {
     width: 150px;
   }
-</style>
+</style>--
 
 
 <div class="container_register">
@@ -78,6 +81,7 @@
 
                   {% csrf_token %}
                   {{ form|crispy }}
+                  {{ formM|crispy }}
 
 
 
