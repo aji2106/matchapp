@@ -23,17 +23,19 @@
                     </div>
                     <div class="card-footer" style="height: 50px">
 
-                        {% if like.to_user|check_request:u %}
+                        {% if like.to_user in friends%}
+                        <p> {{like.to_user.profile.number}}</p>
+
+                        {% elif like.to_user|check_request:u %}
                         <small><a class='btn btn-primary' href="/accept_request/{{ like.to_user.id }}">Accept</a></small>
                         <small><a class='btn btn-warning' href="/cancel_request/{{ like.to_user.id }}">Ignore</a></small>
 
-                        {% else%}
-                        {% if like.to_user|check_sent:u %}
+                        {% elif like.to_user|check_sent:u %}
                         <small><a class='btn btn-warning' href="/delete_request/{{like.to_user.id }}">Cancel Request</a></small>
 
                         {% else %}
                         <small><a class="btn btn-warning" href="/send_request/{{ like.to_user.id }}">Request Number</a></small>
-                        {%endif%}
+
                         {% endif %}
 
                     </div>
