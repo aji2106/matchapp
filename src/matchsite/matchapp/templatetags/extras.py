@@ -1,8 +1,18 @@
 from django import template
-from matchapp.models import Number
+from matchapp.models import Number, Like
 import json
 
 register = template.Library()
+
+
+@register.filter
+def check_relationship(user, like_user):
+    return Like.objects.filter(from_user=like_user).filter(to_user=user).exists()
+
+
+@register.filter
+def check_likes(match, user):
+    return Like.objects.filter(from_user=user).filter(to_user=match).exists()
 
 
 @register.filter

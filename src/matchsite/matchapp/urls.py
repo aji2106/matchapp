@@ -40,6 +40,8 @@ urlpatterns = [
     # cancel request
     url(r'^cancel_request/(?P<id>\d+)/$',
         views.cancel_request, name='cancel_request'),
+    # @Ajax call the update the user who liked each other
+    path("liked/<int:match_id>/", views.liked, name='liked'),
     # API
     path('api/', include(router.urls))
 ]

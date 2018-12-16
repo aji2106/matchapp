@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from matchapp.models import Member, Profile, Hobby, Number
+from matchapp.models import Member, Profile, Hobby, Number, Like
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.shortcuts import render_to_response
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from matchapp.templatetags.extras import display_matches
 
@@ -189,6 +190,8 @@ def logout(request, user):
 # shows another page with users that have similar interests
 # order of most common hobbies first
 
+# Might have to get all users that have liked by the current logged in user
+# So if they refresh the page the likes would be there
 
 @loggedin
 def similarHobbies(request, user):
@@ -202,10 +205,20 @@ def similarHobbies(request, user):
     # Note to self do not need the gt thing check first
     match = hobbies.order_by('-hob_count')
 
+    # For the EXTRA FEATURE (get all the user that liked this user)
+    # It will be the to_user field
+    #print(str(user))
+
+    like = Like.objects.filter(from_user=user)
+
+    #print(str(like))
+
     context = {
         'appname': appname,
+        'u': user,
         'matches': match,
         'numberOfhobbies': hobbies.count(),
+        'likes' : like,
         'loggedIn': True
         }
 
@@ -268,7 +281,6 @@ def displayProfile(request, user):
 
         return render(request, 'matchapp/displayProfile.html', context)
 
-#remove csrf_exempt
 @loggedin
 def editProfile(request, user):
     if request.method == 'POST':
@@ -329,17 +341,12 @@ def upload_image(request, user):
 
 @loggedin
 def contacts(request, user):
-    # all the users matches that is logged in
-    # Get the requested user
-    exclude = Member.objects.exclude(id=user.id)
-    match = exclude.filter(hobbies__in=user.hobbies.all())
-
-    friends = user.friends.all()
+    # display only if both users have liked each other
+    like = Like.objects.filter(from_user=user)
 
     context = {
         'u': user,
-        'matches': match,
-        'friends': friends,
+        'likes': like,
         'loggedIn': True,
     }
 
@@ -392,8 +399,44 @@ def accept_request(request, id):
         to_member.friends.add(from_member)
         from_member.friends.add(to_member)
 
-        acceptedUser = Profile.objects.get(user=from_member).number
-        currentUser  = Profile.objects.get(user=NRequest.to_user).number
-
         NRequest.delete()
         return HttpResponseRedirect("/contact")
+
+# Ajax to update the likes
+def liked(request, match_id):
+
+    if request.method == 'PUT':
+        if 'username' in request.session:
+            u = request.session['username']
+            to_mem = Member.objects.get(id=match_id)
+            from_mem = Member.objects.get(username=u)
+            like = False
+
+            liked = Like.objects.filter(
+                from_user = from_mem,
+                to_user = to_mem
+            )
+            
+            # They have never liked this user before so like them 
+            if not liked.exists():
+                liked = Like(to_user = to_mem, from_user=from_mem, liked=True)
+                like = True
+                liked.save()
+            
+            # They have liked the user before but now unliked them so remove the like
+            # Remove the like
+            else:
+                # Check if the numbers request has been sent if so delete it
+                numberR = Number.objects.filter(to_user=to_mem).filter(from_user=from_mem)
+                if numberR.exists():
+                    numberR.delete()
+                liked.delete()
+        
+        response = {
+            "from_user" : from_mem.username,
+            "to_user": to_mem.username,
+            "liked": like
+        }
+        return JsonResponse(response)
+    else:
+        raise Http404("PUT request was not used")    

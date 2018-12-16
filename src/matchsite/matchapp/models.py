@@ -34,6 +34,14 @@ class Member(User):
         related_name="related_nums"
     )
 
+    like = models.ManyToManyField(
+        to='self',
+        blank=True,
+        symmetrical=False,
+        through='Like',
+        related_name='likes'
+    )
+
     # one property that counts hobbies for member
     @property
     def hobbies_count(self):
@@ -50,7 +58,7 @@ class Profile(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
-    
+
     image = models.ImageField(upload_to='profile_images',
                               default='default.jpg')
     email = models.EmailField()
@@ -74,6 +82,24 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Like(models.Model):
+    to_user = models.ForeignKey(
+        to=Member,
+        related_name='like_sent',
+        on_delete=models.CASCADE
+    )
+
+    from_user = models.ForeignKey(
+        to=Member,
+        related_name='like_received',
+        on_delete=models.CASCADE
+    )
+    liked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'From ' + self.from_user.username + ' likes ' + self.to_user.username
 
 
 class Number(models.Model):

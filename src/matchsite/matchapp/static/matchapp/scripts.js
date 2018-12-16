@@ -1,29 +1,29 @@
 //navigation bar
 function navBar() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
 }
 ////
 
 
 
-$(document).ready(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "-100:+100",
-      dateFormat: 'yy-mm-dd',
-      autoclose: true,
-      maxDate: '-18y',
+$(document).ready(function () {
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:+100",
+        dateFormat: 'yy-mm-dd',
+        autoclose: true,
+        maxDate: '-18y',
 
-      // You can put more options here.
+        // You can put more options here.
 
     });
-  });
+});
 ///password validation starts
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -46,19 +46,17 @@ function isNumberKey(evt) {
 function changeImage() {
     //console.log(document.getElementById("imgClickAndChange").src)
 
-        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png")
-        {
-            //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
-            document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
-            //$('#imgClickAndChange').attr('src', '');
-            console.log(document.getElementById("imgClickAndChange").src)
+    if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png") {
+        //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
+        document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
+        //$('#imgClickAndChange').attr('src', '');
+        console.log(document.getElementById("imgClickAndChange").src)
 
-        }
-        else
-        {
-            document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
-        }
     }
+    else {
+        document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
+    }
+}
 
 
 
@@ -200,15 +198,62 @@ $(document).ready(function () {
 
 });
 
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            // Only send the token to relative URLs i.e. locally.
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
+});
+
+
+$(document).ready(function () {
+    $('.heart').click(function () {
+        event.preventDefault();
+        var match = $('.card-title')[0].id
+        var black = '/static/images/like_1.png'
+        var red = '/static/images/like_2.png'
+
+        $.ajax({
+            type: 'PUT',
+            url: '/liked/' + match + '/',
+            success: function (data) {
+                data = JSON.stringify(data)
+                data = JSON.parse(data)
+                if (data.liked) {
+                    // if its true then red heart
+                    $(".heart").attr('src', red);
+                }
+                else {
+                    //empty heart 
+                    $(".heart").attr('src', black);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr)
+            }
+        })
+
+
+    });
+});
 
 $('#profile-image-upload').click(function () {
     $("#img_file").click();
 });
-
-
-
-////
-
-
-
-////
