@@ -1,5 +1,19 @@
 /* start of navbar */
 
+div.bg-couple{
+    background: url("/static/images/bg.png");
+    /*background-color: #db7f8e;
+background-image: linear-gradient(315deg, #db7f8e 0%, #7b0d1e 74%);*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;background=>
+    font-family: 'Source Sans Pro', sans-serif;
+    color: black;
+    font-weight: 300;
+}
+
+
 .floatLeftNav a{
     float: left;
 }
