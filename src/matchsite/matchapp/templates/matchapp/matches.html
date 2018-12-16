@@ -131,12 +131,12 @@
 
                     <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
                     <div class="card-body text-center">
-                        <h5 id={{match.id}} class="card-title"> {{ match.username }}
+                        <h5 class="card-title"> {{ match.username }}
                             {% if match|check_likes:u %}
-                            <input type="image" class='heart' name="submit" src="{% static '/images/like_2.png' %}"
+                            <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_2.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none;" />
                             {%else%}
-                            <input type="image" class='heart' name="submit" src="{% static '/images/like_1.png' %}"
+                            <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_1.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none; outline:0;" />
                             {%endif%}
                         </h5>
