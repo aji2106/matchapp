@@ -78,7 +78,7 @@
 
               <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
 
-
+                <div id='error_signup' class='error_message'> {{error}}                  </div>
                   {% csrf_token %}
                   {{ form|crispy }}
                   {{ formM|crispy }}

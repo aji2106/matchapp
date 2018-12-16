@@ -92,9 +92,6 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             re_password = form.cleaned_data['re_password']
-            print(str(username))
-            print(str(password))
-            print(str(re_password))
             if password and re_password:
                 if password != re_password:
                     #raise forms.ValidationError("The two password fields must match.")
@@ -113,10 +110,6 @@ def register(request):
 
                     try:user.save()
                     except:
-                    #IntegrityError:
-                        #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
-
-        			#return redirect('index')
                         context = {
                             'appname':appname,
                             'form': form,
@@ -294,28 +287,45 @@ def editProfile(request, user):
 
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
-            profile.dob = form.cleaned_data.get('dob')
-            profile.gender = form.cleaned_data.get('gender')
-            profile.number = form.cleaned_data.get('number')
 
-            profile.save()
+            if Profile.objects.filter(email = form.cleaned_data['email']).exists():
+                member = Member.objects.get(id=user.id)
+                allHobbies= formM.cleaned_data.get('hobbies')
+                email=profile.email
+                context = {
+                    'appname':appname,
+                    'form': form,
+                    'formM': formM,
+                    'user': member,
+                    'hobbies': allHobbies,
+                    'error' : 'Email '+ email +' is already in use',
+                    'loggedIn': True
+                }
 
-            member = Member.objects.get(id=user.id)
-            allHobbies= formM.cleaned_data.get('hobbies')
+                return render(request, 'matchapp/displayProfile.html', context)
+            else:
+                profile.dob = form.cleaned_data.get('dob')
+                profile.gender = form.cleaned_data.get('gender')
+                profile.number = form.cleaned_data.get('number')
 
-            member.hobbies.set(allHobbies)
-            member.save()
+                profile.save()
 
-            context = {
-                'appname':appname,
-                'form': form,
-                'formM': formM,
-                'user': member,
-                'hobbies': allHobbies,
-                'loggedIn': True
-            }
+                member = Member.objects.get(id=user.id)
+                allHobbies= formM.cleaned_data.get('hobbies')
 
-            return render(request, 'matchapp/displayProfile.html', context)
+                member.hobbies.set(allHobbies)
+                member.save()
+
+                context = {
+                    'appname':appname,
+                    'form': form,
+                    'formM': formM,
+                    'user': member,
+                    'hobbies': allHobbies,
+                    'loggedIn': True
+                }
+
+                return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)
