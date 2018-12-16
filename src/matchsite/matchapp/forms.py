@@ -31,9 +31,12 @@ class UserRegForm(forms.Form):
 
 
 
+
+
 class UserLogInForm(forms.Form):
         username = forms.CharField( min_length=2,max_length=15, widget=forms.TextInput(attrs={
-        "placeholder":"Username"}))
+        "placeholder":"Username",
+        'label':'e'}))
         password = forms.CharField( min_length=8,max_length=32, widget=forms.PasswordInput(attrs={
         "placeholder":"Password"}))
 
@@ -44,7 +47,19 @@ class UserProfile(forms.ModelForm):
         fields = ['email','dob','gender','number']
 
         widgets = {
-            'dob': forms.DateInput(attrs={'class':'datepicker'})
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Email',
+                'pattern':'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)',
+                }),
+
+            'dob': forms.DateInput(attrs={'placeholder': 'Date of Birth'}),
+
+            'number': forms.TextInput(attrs={
+                'placeholder': 'Phone number',
+                'pattern':'^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$',
+                'title':'UK mobile phone number, with optional +44 national code. Allows optional brackets and spaces at appropriate positions.'
+                })
+
         }
 
 

@@ -21,12 +21,13 @@
     width: 70px;
   }
   #id_dob {
-    width: 100px;
+    width: 120px;
   }
   #id_hobbies {
     width: 150px;
   }
-</style>--
+
+  </style>
 
 
 <div class="container_register">
@@ -78,7 +79,7 @@
 
               <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
 
-
+                <div id='error_signup' class='error_message'> {{error}}                  </div>
                   {% csrf_token %}
                   {{ form|crispy }}
                   {{ formM|crispy }}

@@ -1,3 +1,18 @@
+$(function () {
+    $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [75, 300],
+        slide: function (event, ui) {
+            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
+});
+
+
 //navigation bar
 function navBar() {
     var x = document.getElementById("myTopnav");
@@ -7,9 +22,59 @@ function navBar() {
         x.className = "topnav";
     }
 }
-////
+////password ValidationError
+function checkPasswordMatch() {
+    var password = $("#id_password").val();
+    var confirmPassword = $("#id_re_password").val();
+
+    if (password && confirmPassword)
+        if (password != confirmPassword)
+            $("#message").html("Passwords do not match!").css('color', 'red');
+        else
+            $("#message").html("Passwords match.").css('color', 'green');
+    else
+        $("#message").html(" ");
+}
+
+$(document).ready(function () {
+    $("#id_password, #id_re_password").keyup(checkPasswordMatch);
+});
+////////password ValidationError ends
+/////////terms and conditions modal
+
+$(document).ready(function () {
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
 
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+});
+
+
+
+
+///////terms and conditions modal
 
 $(document).ready(function () {
     $(".datepicker").datepicker({
@@ -43,6 +108,8 @@ function isNumberKey(evt) {
 
 }
 
+/*
+
 function changeImage() {
     //console.log(document.getElementById("imgClickAndChange").src)
 
@@ -59,7 +126,6 @@ function changeImage() {
 }
 
 
-
 $(document).ready(function () {
     $('#filterByAge').click(function () {
         document.getElementById("displayContentA").classList.toggle("show");
@@ -72,7 +138,7 @@ $(document).ready(function () {
         document.getElementById("displayContentG").classList.toggle("show");
 
     });
-});
+});*/
 
 
 $(document).ready(function () {
