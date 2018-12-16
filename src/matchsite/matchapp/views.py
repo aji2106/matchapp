@@ -149,6 +149,12 @@ def login(request):
                         request.session['password'] = password
                         form = UserProfile()
                         formM = MemberProfile()
+                        profile = Profile.objects.get(user=user.id)
+                        form = UserProfile(initial=model_to_dict(profile))
+
+                        person = Member.objects.get(username=user)
+
+                        formM = MemberProfile(initial=model_to_dict(person))
                         person = Member.objects.get(id=user.id)
                         #hobby = Hobby.objects.all()
 
