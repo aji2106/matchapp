@@ -99,7 +99,7 @@ def register(request):
                 if password != re_password:
                     #raise forms.ValidationError("The two password fields must match.")
                     #return cleaned_data
-                    error=("Error: The two password fields do not match.")
+                    error=("The two password fields do not match.")
                     context = {
                         'appname':appname,
                         'form': form,
