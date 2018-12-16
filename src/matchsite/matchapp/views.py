@@ -264,7 +264,7 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        return HttpResponse(display_matches(match))
+        return HttpResponse(display_matches(match,user))
 
     else:
 	    raise Http404("GET request was not used")

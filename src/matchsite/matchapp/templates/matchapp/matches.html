@@ -133,11 +133,9 @@
                     <div class="card-body text-center">
                         <h5 id={{match.id}} class="card-title"> {{ match.username }}
                             {% if match|check_likes:u %}
-                            {% csrf_token %}
                             <input type="image" class='heart' name="submit" src="{% static '/images/like_2.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none;" />
                             {%else%}
-                            {% csrf_token %}
                             <input type="image" class='heart' name="submit" src="{% static '/images/like_1.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none; outline:0;" />
                             {%endif%}
