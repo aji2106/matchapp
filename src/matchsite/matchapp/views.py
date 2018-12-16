@@ -258,9 +258,6 @@ def displayProfile(request, user):
         person = Member.objects.get(username=user)
 
         formM = MemberProfile(initial=model_to_dict(person))
-
-
-
         context = {
             'appname':appname,
             'form': form,
