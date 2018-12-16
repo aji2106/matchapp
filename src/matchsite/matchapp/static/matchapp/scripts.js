@@ -27,9 +27,6 @@ $(document).ready(function () {
 ////////password ValidationError ends
 
 
-
-
-
 $(document).ready(function() {
     $( ".datepicker" ).datepicker({
       changeMonth: true,
