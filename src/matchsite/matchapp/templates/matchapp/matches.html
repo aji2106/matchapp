@@ -95,7 +95,8 @@
 
                 <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
                 <div class="card-body text-center">
-                    <h5 class="card-title"> {{ match.username }}</h5>
+                    <h5 class="card-title"> {{ match.username }} 
+                    <img src="{% static '/images/like_1.png' %}" height="42" width="42" id="imgClickAndChange" onclick="changeImage()"> </h5> 
                 </div>
                 <table>
                     <tr> <td> Age: {{ match.profile.age }} </td> </tr> 

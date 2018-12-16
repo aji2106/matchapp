@@ -1,9 +1,5 @@
 /* start of navbar */
 
-.space{
-    
-}
-
 .floatLeftNav a{
     float: left;
 }
@@ -20,7 +16,7 @@
 }
 
 .topnav a {
-  
+
   display: block;
   color: #f2f2f2;
   text-align: center;

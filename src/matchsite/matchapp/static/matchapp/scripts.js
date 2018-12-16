@@ -1,3 +1,4 @@
+//navigation bar
 function navBar() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -38,6 +39,23 @@ function isNumberKey(evt) {
     return true;
 
 }
+
+function changeImage() {
+    //console.log(document.getElementById("imgClickAndChange").src)
+
+        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png") 
+        {
+            //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
+            document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
+            //$('#imgClickAndChange').attr('src', '');
+            console.log(document.getElementById("imgClickAndChange").src)
+
+        }
+        else 
+        {
+            document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
+        }
+    }
 
 
 

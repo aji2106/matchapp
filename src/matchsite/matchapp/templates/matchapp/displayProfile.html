@@ -1,8 +1,32 @@
 {% extends 'matchapp/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
-
+<style>
+  .col-md-7 {
+    width: 100%;
+    margin-left: -70px;
+  }
+  #id_user {
+    width: 100px;
+  }
+  #id_email {
+    width: 200px;
+  }
+  #id_number {
+    width: 120px;
+  }
+  #id_gender {
+    width: 70px;
+  }
+  #id_dob {
+    width: 100px;
+  }
+  #id_hobbies {
+    width: 150px;
+  }
+</style>--
 
 
 <div class="container_register">
@@ -56,12 +80,13 @@
 
 
                   {% csrf_token %}
-                  {{ form.as_table }}
-                  {{ formM.as_table }}
+                  {{ form|crispy }}
+                  {{ formM|crispy }}
+
 
 
                   <!--<div class=updateBtn id=update_button><input type="submit" value="Save"></div>-->
-                  <input type="submit" value="submit">
+                  <input type="submit" value="Submit">
 
                 </form>
 

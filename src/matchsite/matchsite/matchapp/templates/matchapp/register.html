@@ -4,39 +4,33 @@
 {% block content %}
 
 <style>
-
-
-  body
-  {
+  #main {
     background: url("/static/images/OnlineDating.jpg") no-repeat;
     background-size: cover;
     background-position: center;
   }
-
-
-
 </style>
+
 
 <div class=container_register>
 <form method="POST">
     <!--{% csrf_token %}-->
     <div class="imgcontainer">
-      <img style="width: 100%; margin: 0 auto;" src="{% static 'images/logo1.png' %}" class="logo">
+      <img src="{% static 'images/logo.png' %}" class="logo">
     </div>
-  
-    <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
+    <br>
     {%csrf_token%}
-    {{ form|crispy }}
+    {{ form.as_p }}
 
     <p>By creating an account you agree to our <a href="{% url 'tc' %}"><u> Terms & Privacy </u></a>
       <input type="checkbox" name="tc"style="margin-bottom:15px" required></p>
 
-    <button type="submit" class="btn btn-success">Submit</button>
-    <button type="submit" class="btn btn-primary">Reset</button><br><br>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset"><br></br>
 
     <p>Already have an account? <a href="{% url 'index' %}">Click here</a>.</p>
     <div id='error_signup' class='error_message'> {{error}} <div>
-    </div>
+
 
 
 </form>

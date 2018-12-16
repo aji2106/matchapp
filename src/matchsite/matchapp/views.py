@@ -14,6 +14,9 @@ from django.contrib.auth import get_user_model
 
 from matchapp.templatetags.extras import display_matches
 
+from django.forms.models import model_to_dict
+
+
 # REST imports
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, MemberSerializer
@@ -249,10 +252,12 @@ def getYearBorn(age):
 def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
-        form = UserProfile()
-        formM = MemberProfile()
+        profile = Profile.objects.get(user=user.id)
+        form = UserProfile(initial=model_to_dict(profile))
+
         person = Member.objects.get(username=user)
 
+        formM = MemberProfile(initial=model_to_dict(person))
         context = {
             'appname':appname,
             'form': form,
