@@ -19,6 +19,29 @@ body {
 
     }
 
+    div.container_profile {
+    width: 900px;
+
+        align-content: left;
+
+        margin-right: 500px;
+
+        margin-left: 30px;
+
+        }
+
+        .profileForm {
+
+        width: auto;
+
+        align-content: center;
+
+        margin-right: 500px;
+
+        margin-left: 30px;
+
+        }
+
     div.container_register {
 
         width: 400px;
@@ -35,6 +58,11 @@ body {
         margin-left: 400px;
         margin-bottom: 200px;
         border: 3px;
+    }
+
+
+    ul {
+      list-style: none;
     }
 
     div.tc_wrapper.h1 {

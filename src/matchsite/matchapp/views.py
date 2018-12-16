@@ -84,7 +84,6 @@ def register(request):
         form = UserRegForm(request.POST)
 
         if form.is_valid():
-
 			# user = form.save(commit=False)
 			# normalized data
             username = form.cleaned_data['username']
@@ -94,7 +93,8 @@ def register(request):
             user.set_password(password)
 
             try:user.save()
-            except: #IntegrityError:
+            except:
+            #IntegrityError:
                 #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
 
 			#return redirect('index')
@@ -136,14 +136,16 @@ def login(request):
                         request.session['username'] = username
                         request.session['password'] = password
                         form = UserProfile()
+                        formM = MemberProfile()
                         person = Member.objects.get(id=user.id)
-                        hobby = Hobby.objects.all()
+                        #hobby = Hobby.objects.all()
 
                         context = {
                             'appname':appname,
                             'form': form,
+                            'formM': formM,
                             'user': person,
-                            'hobbies': hobby,
+                            #'hobbies': hobby,
                             'loggedIn': True
                         }
 						# login(request,user)
@@ -249,15 +251,13 @@ def displayProfile(request, user):
     if request.method == "GET":
         form = UserProfile()
         formM = MemberProfile()
-        person = Member.objects.get(id=user.id)
-        hobby = Hobby.objects.all()
+        person = Member.objects.get(username=user)
 
         context = {
             'appname':appname,
             'form': form,
             'formM': formM,
             'user': person,
-            'hobbies': hobby,
             'loggedIn': True
         }
 
@@ -275,6 +275,7 @@ def editProfile(request, user):
             profile.email = form.cleaned_data.get('email')
             profile.dob = form.cleaned_data.get('dob')
             profile.gender = form.cleaned_data.get('gender')
+            profile.number = form.cleaned_data.get('number')
 
             profile.save()
 
@@ -295,8 +296,19 @@ def editProfile(request, user):
 
             return render(request, 'matchapp/displayProfile.html', context)
         else:
-            print (form.errors)
-            return HttpResponse("else")
+
+            member = Member.objects.get(id=user.id)
+            errors=form.errors
+            context = {
+                'appname':appname,
+                'form': form,
+                'formM': formM,
+                'user': member,
+                'error': errors,
+                'loggedIn': True
+            }
+
+            return render(request, 'matchapp/displayProfile.html', context)
 
 @loggedin
 def upload_image(request, user):
@@ -312,11 +324,11 @@ def upload_image(request, user):
 
 @loggedin
 def contacts(request, user):
-    # all the users matches that is logged in 
-    # Get the requested user   
-    exclude = Member.objects.exclude(id=user.id)    
+    # all the users matches that is logged in
+    # Get the requested user
+    exclude = Member.objects.exclude(id=user.id)
     match = exclude.filter(hobbies__in=user.hobbies.all())
-    
+
     friends = user.friends.all()
 
     context = {
@@ -327,7 +339,7 @@ def contacts(request, user):
     }
 
     return render(request, 'matchapp/contact.html', context)
-    
+
 def send_request(request, id):
     if 'username' in request.session:
         username = request.session['username']
@@ -370,19 +382,13 @@ def accept_request(request, id):
         NRequest = Number.objects.filter(
         from_user=from_member,
         to_user=to_member).first()
-             
+
         # Make these users friends of each other
         to_member.friends.add(from_member)
         from_member.friends.add(to_member)
 
         acceptedUser = Profile.objects.get(user=from_member).number
         currentUser  = Profile.objects.get(user=NRequest.to_user).number
-       
+
         NRequest.delete()
         return HttpResponseRedirect("/contact")
-
-
-
-
-
-

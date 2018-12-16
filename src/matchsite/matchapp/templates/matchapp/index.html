@@ -4,7 +4,6 @@
 {% block content %}
 
 <style>
-/* Made with love by Mutiullah Samim*/
 
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
@@ -16,7 +15,7 @@ font-family: 'Numans', sans-serif;
 
 }
 
-body 
+body
 {
     background: url("/static/images/background2.jpg");
     -webkit-background-size: cover;
@@ -32,17 +31,20 @@ body
 .container{
 height: 100%;
 align-content: center;
+border-radius: 25px;
+
 }
 
 .card{
 height: 400px;
 margin-top: auto;
 margin-bottom: auto;
+border-radius: 25px;
 width: 400px;
 }
 
 .card-header{
-    background-color: white;  
+    background-color: white;
 }
 
 .card-header h3{
@@ -51,7 +53,7 @@ color: black;
 
 .card-footer{
     height: 80px;
-    background-color: white;  
+    background-color: white;
 }
 
 
@@ -70,7 +72,7 @@ margin-left: 4px;
           appearance: none;
 
   outline: 0;
-  
+
   width: 250px;
   border-radius: 3px;
   padding: 10px 15px;
@@ -86,7 +88,7 @@ margin-left: 4px;
 }
 
 #login_submit{
-    background-color: #E12D50;     
+    background-color: #E12D50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -97,7 +99,7 @@ margin-left: 4px;
 }
 
 #login_submit:hover{
-    background-color: #e12d7d;    
+    background-color: #e12d7d;
 }
 
 #error_signin{
@@ -136,8 +138,8 @@ margin-left: 4px;
             </div>
             <div class="card-body">
                 <form method="POST" action="{% url 'login' %}"> {% csrf_token%}
-                    
-                    {{ form|crispy }}
+
+                    {{ form.as_p }}
 
                     <div class="form-group">
                         <input id = "login_submit" type="submit" value="LOGIN">

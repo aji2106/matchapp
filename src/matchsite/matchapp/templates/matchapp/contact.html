@@ -1,31 +1,39 @@
 {% extends 'matchapp/base.html' %}
-{% load crispy_forms_tags %}
 {% load static %}
 {% load extras %}
 
 {% block content %}
 
-<div style="margin-top: 60px;" id='matches'>
+</br>
+<div id='matches'>
 
     {% if matches %}
 
     {% for match in matches %}
 
+    <div class="col-sm-4 my-4">
+        <div class = "card-groups">
+            <div class = "card">
+                 <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
     <div id={{match.id}} class="match">
-
-        <h1>{{match.username}}</h1>
-        <p>{{match.profile.gender}}</p>
-
+        <div class="card-body text-center" style="height: 75px">
+        <h5 class = "card-title">
+             {{match.username}} </br>
+            
+        </h5>
+        </div>
+        <div class = "card-footer" style="height: 50px">
         <!--  here is the code for the number buttons
         <button type=button class=deleteItem>Delete</button>
         -->
 
-
         <!-- if the match are friends then that means 
              they have accepted each other so show the number -->
         {% if match in friends %}
+        <div> {{match.profile.number}} </div> 
+        
 
-        <p>{{match.profile.number}}</p>
+        
 
         <!-- We know they are not friends so we can request their number-->
         {%else%}
@@ -44,7 +52,11 @@
         {%endif%}
         {% endif %}
 
+        </div>
 
+    </div>
+            </div>
+        </div>
     </div>
     {% endfor %}
     {% else %}

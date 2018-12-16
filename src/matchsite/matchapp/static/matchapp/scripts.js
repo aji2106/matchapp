@@ -1,4 +1,26 @@
+//navigation bar
+function navBar() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 
+$(document).ready(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+100",
+      dateFormat: 'yy-mm-dd',
+      autoclose: true,
+      maxDate: '-18y',
+
+      // You can put more options here.
+
+    });
+  });
 ///password validation starts
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -18,15 +40,24 @@ function isNumberKey(evt) {
 
 }
 
+function changeImage() {
+    //console.log(document.getElementById("imgClickAndChange").src)
 
-$(document).ready( function() {
-  $('#id_dob').datepicker({
-    format: 'yyyy-mm-dd',
-    clearBtn:true,
-    endDate:'-18y',
+        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png") 
+        {
+            //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
+            document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
+            //$('#imgClickAndChange').attr('src', '');
+            console.log(document.getElementById("imgClickAndChange").src)
 
-  });
-} );
+        }
+        else 
+        {
+            document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
+        }
+    }
+
+
 
 $(document).ready(function () {
     $('#filterByAge').click(function () {

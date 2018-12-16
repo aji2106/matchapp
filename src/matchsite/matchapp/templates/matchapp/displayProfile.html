@@ -7,7 +7,7 @@
   .col-md-7 {
     width: 100%;
     margin-left: -70px;
-  } 
+  }
   #id_user {
     width: 100px;
   }
@@ -25,13 +25,14 @@
   }
 </style>
 
+
 <div class="container_register">
   <div class="container_profile">
     <div class="row">
 
-   
+
       <div class="col-md-7 ">
-         <center>
+
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4>User Profile</h4>
@@ -66,7 +67,7 @@
               <div class="col-sm-6">
                 <h4 style="color:#00b1b1;">{{user.username}}</h4>
                 <span>
-                  <p>Welcome to test{{appname}}</p>
+                  <p>Welcome to {{appname}}</p>
                 </span>
               </div>
               <div class="clearfix"></div>
@@ -74,24 +75,23 @@
 
               <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
 
-                  <div style="margin-left: 50%; margin: 0 auto; background-color:red;">
+
                   {% csrf_token %}
                   {{ form|crispy }}
-                  {{ formM|crispy }}
+
+
 
                   <!--<div class=updateBtn id=update_button><input type="submit" value="Save"></div>-->
-                  <button type="button" class="btn btn-success">Submit</button>
-                  </div>
+                  <input type="submit" value="Submit">
+
                 </form>
 
           <!-- /.box-body -->
         </div>
-        </center>
 
         <!-- /.box -->
 
       </div>
-    
 
 
     </div>

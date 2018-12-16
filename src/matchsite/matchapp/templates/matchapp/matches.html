@@ -1,106 +1,10 @@
 {% extends 'matchapp/base.html' %}
-{% load crispy_forms_tags %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 
-<style>
 
-.main {
-    margin-left: 570px;
-}
-
-.title,.subtitle {
-    text-align: center
-}
-
-.col-sm-4 {
-    display: inline;
-}
-
-.card-title{
-    text-align: center
-}
-
-.card{
-     width:300px;
-}
-
-.age{
-    width: 30px;
-}
-
-#topNav ul li ul{ 
-    overflow:auto; 
-}
-
-#pr2:hover~ #a {
-    background-color: green;
-}
-
-.show {
-    display: block;
-}
-
-.decoratedErrorField{
-    border:2px solid red;
-}
-
-.removeErrorField{
-    color: unset;
-}
-
-
-
-#messageValidation{
-    text-align: center;
-    color: red;
-}
-
-.dropbtn {
-    background-color: #3498DB;
-    color: white;
-    padding: 14px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-}
-
-.row.align-items-center.justify-content-center {
-    background-color: white;
-}
-
-.center-button {
-    text-align: center;
-}
-
-#save_button,#reset_button {
-    background-color:#3498DB;
-    -moz-border-radius:28px;
-    -webkit-border-radius:28px;
-    border-radius:28px;
-    border:2px;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:17px;
-    padding:16px 31px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #2f6627;
-}
-
-
-#save_button, #reset_button {
-    position:relative;
-    top:1px;
-}
-
-
-
-
-</style>
-
-<br>
+</br>
 <h3 class="title"> Matches <h3>
         </br>
         <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
@@ -191,30 +95,21 @@
 
                 <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
                 <div class="card-body text-center">
-                    <h5 class="card-title"> {{ match.username }}</h5>
+                    <h5 class="card-title"> {{ match.username }} 
+                    <img src="{% static '/images/like_1.png' %}" height="42" width="42" id="imgClickAndChange" onclick="changeImage()"> </h5> 
                 </div>
-                <p class="card-text">
-                    <div><b>Email:</b> {{ match.profile.email }}</div>
-                    <div><b>Age:</b> {{ match.profile.age }}</div>
-                    <div><b>Gender:</b> {{ match.profile.gender }}</div>
-                </p>
+                <table>
+                    <tr> <td> Age: {{ match.profile.age }} </td> </tr> 
+                    <tr> <td> Gender: {{ match.profile.gender }} </td> </tr>
+                    <tr> <td> Hobbies:
+                    {%for hobbies in match.hobbies.all %}
+                    {{hobbies}}  
+                    {%endfor%} </td> </tr>
+                </table>
                 <div class="card-footer">
                     <form method = "POST" action="{% url 'send_request' match.id %}"> {% csrf_token %} 
                         <input id = "request_number" type="submit" value="Request Number"/>
                     </form>  
-
-                    {% if 'created' in request.session %}  
-                    
-                    <form method = "POST" action="{% url 'cancel_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Cancel Request"/>
-                    </form>
-
-                    {% endif %}
-
-                    <form method = "POST" action="{% url 'accept_request' match.id %}"> {% csrf_token %} 
-                        <input type="submit" value="Accept Request"/> 
-                        Number: {{acceptedUser}}                   
-                    </form>
                     
                 </div>
             </div>
