@@ -3,6 +3,8 @@
 {% load static %}
 {% block content %}
 
+
+
 <style>
 
 
@@ -23,7 +25,7 @@
     <div class="imgcontainer">
       <img style="width: 100%; margin: 0 auto;" src="{% static 'images/logo1.png' %}" class="logo">
     </div>
-  
+
     <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
     {%csrf_token%}
     {{ form|crispy }}

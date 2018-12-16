@@ -7,6 +7,9 @@ function navBar() {
     x.className = "topnav";
   }
 }
+////
+
+
 
 $(document).ready(function() {
     $( ".datepicker" ).datepicker({
@@ -41,6 +44,25 @@ function isNumberKey(evt) {
 }
 
 /*
+
+function changeImage() {
+    //console.log(document.getElementById("imgClickAndChange").src)
+
+        if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png")
+        {
+            //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
+            document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
+            //$('#imgClickAndChange').attr('src', '');
+            console.log(document.getElementById("imgClickAndChange").src)
+
+        }
+        else
+        {
+            document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
+        }
+    }
+
+
 $(document).ready(function () {
     $('#filterByAge').click(function () {
         document.getElementById("displayContentA").classList.toggle("show");

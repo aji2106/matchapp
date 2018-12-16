@@ -1,4 +1,5 @@
 {% load static %}
+{% load django_simple_cookie_consent_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -6,6 +7,7 @@
 
 <head>
 
+    {% display_cookie_consent %}
 
     <link rel="stylesheet" href="{% static 'matchapp/style.css' %}">
     <link rel="shortcut icon" href="{% static 'matchapp.ico' %}" />
