@@ -91,27 +91,36 @@ def register(request):
 			# normalized data
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            re_password = form.cleaned_data['re_password']
+            if password and re_password:
+                if password != re_password:
+                    #raise forms.ValidationError("The two password fields must match.")
+                    #return cleaned_data
+                    error=("The two password fields do not match.")
+                    context = {
+                        'appname':appname,
+                        'form': form,
+                        'error':error
+                        }
+                    return render(request, 'matchapp/register.html', context)
 
-            user = Member(username=username)
-            user.set_password(password)
+                else:
+                    user = Member(username=username)
+                    user.set_password(password)
 
-            try:user.save()
-            except:
-            #IntegrityError:
-                #raise Http404('Username '+ str(user)+' already taken: Username must be unique')
+                    try:user.save()
+                    except:
+                        context = {
+                            'appname':appname,
+                            'form': form,
+                            'error':'Username '+ str(user) +' already taken: Usernames must be unique',
+                            }
+                    # login(request,user)
+                        return render(request, 'matchapp/register.html', context)
 
-			#return redirect('index')
-                context = {
-                    'appname':appname,
-                    'form': form,
-                    'error':'Username '+ str(user) +' already taken: Usernames must be unique',
-                    }
-            # login(request,user)
-                return render(request, 'matchapp/register.html', context)
+                    form = UserLogInForm()
 
-            form = UserLogInForm()
-
-            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+                    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
 
 
      else:
@@ -278,28 +287,45 @@ def editProfile(request, user):
 
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
-            profile.dob = form.cleaned_data.get('dob')
-            profile.gender = form.cleaned_data.get('gender')
-            profile.number = form.cleaned_data.get('number')
 
-            profile.save()
+            if Profile.objects.filter(email = form.cleaned_data['email']).exists():
+                member = Member.objects.get(id=user.id)
+                allHobbies= formM.cleaned_data.get('hobbies')
+                email=profile.email
+                context = {
+                    'appname':appname,
+                    'form': form,
+                    'formM': formM,
+                    'user': member,
+                    'hobbies': allHobbies,
+                    'error' : 'Email '+ email +' is already in use',
+                    'loggedIn': True
+                }
 
-            member = Member.objects.get(id=user.id)
-            allHobbies= formM.cleaned_data.get('hobbies')
+                return render(request, 'matchapp/displayProfile.html', context)
+            else:
+                profile.dob = form.cleaned_data.get('dob')
+                profile.gender = form.cleaned_data.get('gender')
+                profile.number = form.cleaned_data.get('number')
 
-            member.hobbies.set(allHobbies)
-            member.save()
+                profile.save()
 
-            context = {
-                'appname':appname,
-                'form': form,
-                'formM': formM,
-                'user': member,
-                'hobbies': allHobbies,
-                'loggedIn': True
-            }
+                member = Member.objects.get(id=user.id)
+                allHobbies= formM.cleaned_data.get('hobbies')
 
-            return render(request, 'matchapp/displayProfile.html', context)
+                member.hobbies.set(allHobbies)
+                member.save()
+
+                context = {
+                    'appname':appname,
+                    'form': form,
+                    'formM': formM,
+                    'user': member,
+                    'hobbies': allHobbies,
+                    'loggedIn': True
+                }
+
+                return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)

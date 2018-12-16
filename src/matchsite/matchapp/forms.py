@@ -31,6 +31,8 @@ class UserRegForm(forms.Form):
 
 
 
+
+
 class UserLogInForm(forms.Form):
         username = forms.CharField( min_length=2,max_length=15, widget=forms.TextInput(attrs={
         "placeholder":"Username"}))

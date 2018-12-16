@@ -7,7 +7,26 @@ function navBar() {
     x.className = "topnav";
   }
 }
-////
+////password ValidationError
+function checkPasswordMatch() {
+    var password = $("#id_password").val();
+    var confirmPassword = $("#id_re_password").val();
+
+    if (password && confirmPassword)
+      if (password != confirmPassword)
+          $("#message").html("Passwords do not match!").css('color', 'red');
+      else
+          $("#message").html("Passwords match.").css('color', 'green');
+    else
+      $("#message").html(" ");
+}
+
+$(document).ready(function () {
+   $("#id_password, #id_re_password").keyup(checkPasswordMatch);
+});
+////////password ValidationError ends
+
+
 
 
 

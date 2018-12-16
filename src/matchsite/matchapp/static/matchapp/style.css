@@ -88,6 +88,8 @@ body {
     }
     div.error_message{
       color:red;
+      width:400px;
+      text-align:left;
     }
     div.container_profile {
 
@@ -237,12 +239,12 @@ body {
 }
 
 .dropdownForAge{
-    border:1px 
+    border:1px
     solid black;
 }
 
 .dropdownForGender{
-    border:1px 
+    border:1px
     solid black;
 }
 
