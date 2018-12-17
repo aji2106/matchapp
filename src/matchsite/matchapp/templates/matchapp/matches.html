@@ -5,10 +5,9 @@
 {% block content %}
 
 
-<div class="bg-purple">
-    </br>
+    <br>
     <h3 class="title"> Matches <h3>
-            </br>
+            <br>
             <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
             <p id="messageValidation"></p>
 
@@ -16,28 +15,8 @@
 
                 <div class="container-fluid bg-light ">
                     <div class="row align-items-center justify-content-center">
-                        <p style=font-size:17px;"> Show me: </p>
-
-                        <div class="col-md-2 pt-3">
-                            <div class="form-group ">
-                                <nav id="topNav">
-                                    <div class="btn-group dropdown">
-                                        <button class="btn btn-success btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Filter by Age
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                            <input id="range1" class="age" type="text" name="age-min" placeholder="min"
-                                                onkeypress="return isNumberKey(event)" maxlength="3"> to
-                                            <input id="range2" class="age" type="text" name="age-max" placeholder="max"
-                                                onkeypress="return isNumberKey(event)" maxlength="3">
-                                        </div>
-                                    </div>
-
-
-                                </nav>
-                            </div>
-                        </div>
+                            <div> Show me: </div>
+                        
 
                         <div class="col-md-2 pt-3">
                             <div class="form-group">
@@ -57,30 +36,22 @@
                                                         <i class='fas fa-venus' style='font-size:24px'></i>
                                                     </label>
                                                 </div>
-
                                             </div>
-
-                                            <!--<div class="btn-group dropdown">
-                                <button class="btn btn-success btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Filter by Gender
-                                </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        
-                                             <li><input type="radio" class="gender" id="pr1" name="gender" value="M">Male <i class='fas fa-mars' style='font-size:24px'></i>   </li> 
-                                            <li><input type="radio" class="gender" id="pr2" name="gender" value="F">Female  <i class='fas fa-venus' style='font-size:24px'></i></li>  
-                                            
-                                    </div>-->
                                         </div>
-                                        <!--
-                                <ul style="list-style: none;">
-                                    <li>
-                                        <input type="button" class="dropbtn" id="agedropdown" value="Filter by Gender">
-                                        <ul id="displayContentG" style="list-style: none; display:none;">
-                                            </br>
-                                            
-                                        </ul>
-                                    </li>
-                                </ul>-->
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 pt-3">
+                            <div class="form-group ">
+                                <nav id="topNav">
+                                
+                            <p> Age: </p>
+                              <div id="slider-range"></div>
+                                <div id="custom-handle" class="ui-slider-handle"></div>
+                                    <input id="range1" name = "age-min" readonly>
+                                    &nbsp;<input id="range2" name = "age-max" readonly>
+
                                 </nav>
                             </div>
                         </div>
@@ -125,9 +96,8 @@
 
                 <div class="col-sm-4 my-4">
 
-                    <!--<div class="col-sm-4 my-4">-->
-                    <div class="col-md-2 pt-3">
-                    </div>
+                <div class="col-md-2 pt-3"> </div>
+
 
                     <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
                     <div class="card-body text-center">
@@ -152,7 +122,8 @@
                             <td> Hobbies:
                                 {%for hobbies in match.hobbies.all %}
                                 {{hobbies}}
-                                {%endfor%} </td>
+                                {%endfor%} 
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -160,7 +131,7 @@
                 {%endfor%}
 
             </div>
-</div>
+
 
 
 {% endblock %}
