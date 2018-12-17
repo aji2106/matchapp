@@ -1,15 +1,20 @@
+//slider
+
 $(function () {
     $("#slider-range").slider({
         range: true,
-        min: 0,
-        max: 500,
-        values: [75, 300],
+        min: 16,
+        max: 100,
+        values: [16, 100],
         slide: function (event, ui) {
-            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            $("#range1").val(ui.values[0]);
+            $("#range2").val(ui.values[1]);
         }
     });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-        " - $" + $("#slider-range").slider("values", 1));
+    $("#range1").val( $("#slider-range").slider("values", 0))
+    $("#range2").val( $("#slider-range").slider("values", 1))
+
+
 });
 
 ////log in and register buttons js
