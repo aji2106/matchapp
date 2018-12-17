@@ -43,11 +43,12 @@ appname = 'matchapp'
 
 def index(request):
 	# Render the index page
-    form = UserLogInForm()
+    login_form = UserLogInForm()
+    registration_form = UserRegForm()
     """if 'username' in request.session:
         return redirect('displayProfile')"""
     """else:"""
-    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+    return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
 
 
 
@@ -56,14 +57,14 @@ def index(request):
 
 def loggedin(view):
     def mod_view(request):
-        form = UserLogInForm()
+        login_form = UserLogInForm()
         if 'username' in request.session:
             username = request.session['username']
             try: user = Member.objects.get(username=username)
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user)
         else:
-            return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+            return render(request, 'matchapp/index.html', {'login_form': login_form, 'loggedIn': False})
     return mod_view
 
 # terms and conditions
@@ -84,48 +85,59 @@ def register(request):
 
      if request.method == "POST":
 		# form_class is class of form name NEED TO CHANGE
-        form = UserRegForm(request.POST)
+        registration_form = UserRegForm(request.POST)
 
-        if form.is_valid():
+        if registration_form.is_valid():
 			# user = form.save(commit=False)
 			# normalized data
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            re_password = form.cleaned_data['re_password']
+            username = registration_form.cleaned_data['username']
+            password = registration_form.cleaned_data['password']
+            re_password = registration_form.cleaned_data['re_password']
             if password and re_password:
                 if password != re_password:
-                    #raise forms.ValidationError("The two password fields must match.")
-                    #return cleaned_data
-                    error=("The two password fields do not match.")
+
+                    errorPassword=("The two password fields do not match.")
+                    login_form = UserLogInForm()
                     context = {
                         'appname':appname,
-                        'form': form,
-                        'error':error
+                        'registration_form': registration_form,
+                        'login_form': login_form,
+                        'errorPassword':errorPassword
                         }
-                    return render(request, 'matchapp/register.html', context)
+                    return render(request, 'matchapp/index.html', context)
 
                 else:
                     user = Member(username=username)
                     user.set_password(password)
 
-                    try:user.save()
+
+                    try:
+                        user.save()
+
                     except:
+                        login_form = UserLogInForm()
+                        registration_form = UserRegForm()
+
                         context = {
                             'appname':appname,
-                            'form': form,
-                            'error':'Username '+ str(user) +' already taken: Usernames must be unique',
+                            'login_form': login_form,
+                            'registration_form': registration_form,
+                            'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
-                    # login(request,user)
-                        return render(request, 'matchapp/register.html', context)
 
-                    form = UserLogInForm()
+                        return render(request, 'matchapp/index.html', context)
 
-                    return render(request, 'matchapp/index.html', {'form': form, 'loggedIn': False})
+                    login_form = UserLogInForm()
+                    registration_form = UserRegForm()
+                    return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
 
 
-     else:
-        form = UserRegForm()
-        return render(request, 'matchapp/register.html', {'form': form})
+
+     #else:
+        #form = UserRegForm()
+        #loginForm = UserLogInForm()
+
+        #return render(request, 'matchapp/index.html', {'form': form,'loginForm': loginForm})
 
 # this occurs when user presses login button from index
 
@@ -135,6 +147,7 @@ def login(request):
         return redirect('displayProfile')
     if request.method == "POST":
         form = UserLogInForm(request.POST)
+        registration_form = UserRegForm()
         if 'username' in request.POST and 'password' in request.POST:
             if form.is_valid():
 
@@ -148,20 +161,21 @@ def login(request):
                         request.session['username'] = username
                         request.session['password'] = password
                         form = UserProfile()
-                        formM = MemberProfile()
+                        member_form = MemberProfile()
                         profile = Profile.objects.get(user=user.id)
                         form = UserProfile(initial=model_to_dict(profile))
 
                         person = Member.objects.get(username=user)
 
-                        formM = MemberProfile(initial=model_to_dict(person))
+                        member_form = MemberProfile(initial=model_to_dict(person))
                         person = Member.objects.get(id=user.id)
                         #hobby = Hobby.objects.all()
 
                         context = {
                             'appname':appname,
                             'form': form,
-                            'formM': formM,
+                            'member_form': member_form,
+                            'registration_form':registration_form,
                             'user': person,
                             #'hobbies': hobby,
                             'loggedIn': True
@@ -177,7 +191,8 @@ def login(request):
                     #raise Http404('User or password is incorrect')
                     context = {
                         'appname':appname,
-                        'form': form,
+                        'login_form': form,
+                        'registration_form':registration_form,
                         'error':'User or password entered is incorrect'
                     }
                     # login(request,user)
@@ -186,9 +201,11 @@ def login(request):
     else:
         #return displayProfile(request,)
         form = UserLogInForm()
+        registration_form = UserRegForm()
         context = {
         'appname':appname,
-        'form': form,
+        'login_form': form,
+        'registration_form':registration_form,
         'loggedIn': False
         }
         return render(request, 'matchapp/index.html', context)
@@ -284,11 +301,11 @@ def displayProfile(request, user):
 
         person = Member.objects.get(username=user)
 
-        formM = MemberProfile(initial=model_to_dict(person))
+        member_form = MemberProfile(initial=model_to_dict(person))
         context = {
             'appname':appname,
             'form': form,
-            'formM': formM,
+            'member_form': member_form,
             'user': person,
             'loggedIn': True
         }
@@ -299,20 +316,20 @@ def displayProfile(request, user):
 def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST,instance=user)
-        formM = MemberProfile(request.POST,instance=user)
-        if form.is_valid() and formM.is_valid():
+        member_form = MemberProfile(request.POST,instance=user)
+        if form.is_valid() and member_form.is_valid():
 
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
 
             if Profile.objects.filter(email = form.cleaned_data['email']).exists():
                 member = Member.objects.get(id=user.id)
-                allHobbies= formM.cleaned_data.get('hobbies')
+                allHobbies= member_form.cleaned_data.get('hobbies')
                 email=profile.email
                 context = {
                     'appname':appname,
                     'form': form,
-                    'formM': formM,
+                    'member_form': member_form,
                     'user': member,
                     'hobbies': allHobbies,
                     'error' : 'Email '+ email +' is already in use',
@@ -328,7 +345,7 @@ def editProfile(request, user):
                 profile.save()
 
                 member = Member.objects.get(id=user.id)
-                allHobbies= formM.cleaned_data.get('hobbies')
+                allHobbies= member_form.cleaned_data.get('hobbies')
 
                 member.hobbies.set(allHobbies)
                 member.save()
@@ -336,7 +353,7 @@ def editProfile(request, user):
                 context = {
                     'appname':appname,
                     'form': form,
-                    'formM': formM,
+                    'member_form': member_form,
                     'user': member,
                     'hobbies': allHobbies,
                     'loggedIn': True
@@ -350,7 +367,7 @@ def editProfile(request, user):
             context = {
                 'appname':appname,
                 'form': form,
-                'formM': formM,
+                'member_form': member_form,
                 'user': member,
                 'error': errors,
                 'loggedIn': True
@@ -450,13 +467,13 @@ def liked(request, match_id):
                 from_user = from_mem,
                 to_user = to_mem
             )
-            
-            # They have never liked this user before so like them 
+
+            # They have never liked this user before so like them
             if not liked.exists():
                 liked = Like(to_user = to_mem, from_user=from_mem, liked=True)
                 like = True
                 liked.save()
-            
+
             # They have liked the user before but now unliked them so remove the like
             # Remove the like
             else:
@@ -465,7 +482,7 @@ def liked(request, match_id):
                 if numberR.exists():
                     numberR.delete()
                 liked.delete()
-        
+
         response = {
             "from_user" : from_mem.username,
             "to_user": to_mem.username,
@@ -473,4 +490,4 @@ def liked(request, match_id):
         }
         return JsonResponse(response)
     else:
-        raise Http404("PUT request was not used")    
+        raise Http404("PUT request was not used")
