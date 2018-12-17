@@ -11,8 +11,8 @@ $(function () {
             $("#range2").val(ui.values[1]);
         }
     });
-    $("#range1").val( $("#slider-range").slider("values", 0))
-    $("#range2").val( $("#slider-range").slider("values", 1))
+    $("#range1").val($("#slider-range").slider("values", 0))
+    $("#range2").val($("#slider-range").slider("values", 1))
 
 
 });
@@ -83,6 +83,7 @@ $(document).ready(function () {
 });
 ////////password ValidationError ends
 /////////terms and conditions modal
+
 
 $(document).ready(function () {
     var modal = document.getElementById('myModal');
@@ -334,7 +335,7 @@ $.ajaxSetup({
 $(document).ready(function () {
     $('.heart').click(function () {
         event.preventDefault();
-        var match = $('.card-title')[0].id
+        var match = $(this, '.card-title')[0].id
         var black = '/static/images/like_1.png'
         var red = '/static/images/like_2.png'
 
@@ -354,7 +355,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr)
+                //console.log(xhr)
             }
         })
 
