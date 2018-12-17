@@ -41,19 +41,19 @@ def display_matches(matches, user):
         html.append('<div class=col-sm-4 my-4>\
             <div class=col-md-2 pt-3>\
             </div>\
-            <img class=card-img-top src = ' + str(match.profile.image.url) + '  alt = Card image cap >\
+            <img class=card-img-top src = ' + str(match.profile.image.url) + '  alt = Card image cap>\
             <div class=card-body text-center>\
             <h5 class = card-title>' + str(match.username) + ' \
             <input type = image id='+str(match.id)+' class = heart name = submit src = ' + imgsrc+'\
-            border = 0 alt = Submit style = width:50px; border:0 none;/ >\
+            border = 0 alt = Submit style = width:50px; border:0 none;/>\
             </h5>\
-            </div >\
+            </div>\
             <table>\
             <tr>\
-            <td> Age: </b>' + str(match.profile.age) + '</td>\
+            <td> Age: ' + str(match.profile.age) + '</td>\
             </tr>\
             <tr>\
-            <td> Gender: </b>' + str(match.profile.gender) + '</td>\
+            <td> Gender: ' + str(match.profile.gender) + '</td>\
             </tr>\
             </table>\
             </div>')

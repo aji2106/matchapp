@@ -11,8 +11,8 @@ $(function () {
             $("#range2").val(ui.values[1]);
         }
     });
-    $("#range1").val( $("#slider-range").slider("values", 0))
-    $("#range2").val( $("#slider-range").slider("values", 1))
+    $("#range1").val($("#slider-range").slider("values", 0))
+    $("#range2").val($("#slider-range").slider("values", 1))
 
 
 });
@@ -46,6 +46,7 @@ $(document).ready(function () {
 });
 ////////password ValidationError ends
 /////////terms and conditions modal
+
 
 $(document).ready(function () {
     var modal = document.getElementById('myModal');
@@ -297,9 +298,12 @@ $.ajaxSetup({
 $(document).ready(function () {
     $('.heart').click(function () {
         event.preventDefault();
-        var match = $('.card-title')[0].id
+
+        var this_ = $(this)
+        var match = $(this, '.card-title')[0].id
         var black = '/static/images/like_1.png'
         var red = '/static/images/like_2.png'
+
 
         $.ajax({
             type: 'PUT',
@@ -309,15 +313,15 @@ $(document).ready(function () {
                 data = JSON.parse(data)
                 if (data.liked) {
                     // if its true then red heart
-                    $(".heart").attr('src', red);
+                    this_.attr('src', red);
                 }
                 else {
                     //empty heart
-                    $(".heart").attr('src', black);
+                    this_.attr('src', black);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr)
+                //console.log(xhr)
             }
         })
 
