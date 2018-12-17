@@ -125,7 +125,7 @@ $(document).ready(function () {
         yearRange: "-100:+100",
         dateFormat: 'yy-mm-dd',
         autoclose: true,
-        maxDate: '-18y',
+        maxDate: '-16y',
 
         // You can put more options here.
 
