@@ -11,7 +11,6 @@ from django.db import IntegrityError
 from django.shortcuts import render_to_response
 from datetime import datetime
 from django.contrib.auth import get_user_model
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from matchapp.templatetags.extras import display_matches
 
