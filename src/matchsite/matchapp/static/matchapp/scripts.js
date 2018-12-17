@@ -11,48 +11,11 @@ $(function () {
             $("#range2").val(ui.values[1]);
         }
     });
-    $("#range1").val( $("#slider-range").slider("values", 0))
-    $("#range2").val( $("#slider-range").slider("values", 1))
+    $("#range1").val($("#slider-range").slider("values", 0))
+    $("#range2").val($("#slider-range").slider("values", 1))
 
 
 });
-
-////log in and register buttons js
-
-/*$(document).ready( function myFunction() {
-var x = document.getElementById("container_login_div");
-var y = document.getElementById("container_reg_div");
-if (x.style.display === "none") {
-  x.style.display = "block";
-  y.style.display = "none";
-}
-
-else if (x.style.display === "none" && y.style.display === "block"){
-  y.style.display = "none";
-  x.style.display === "block"
-}  else {
-  x.style.display = "none";
-}
-});
-
-$(document).ready(function myFunctionReg() {
-  var x = document.getElementById("container_reg_div");
-  var y = document.getElementById("container_login_div");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    y.style.display = "none";
-  }
-  else if (x.style.display === "none" && y.style.display === "block"){
-    y.style.display = "none";
-    x.style.display === "block"
-  }
-
-  else {
-    x.style.display = "none";
-  }
-});*/
-
-///log in and register buttons js
 
 
 //navigation bar
@@ -83,6 +46,7 @@ $(document).ready(function () {
 });
 ////////password ValidationError ends
 /////////terms and conditions modal
+
 
 $(document).ready(function () {
     var modal = document.getElementById('myModal');
@@ -334,9 +298,12 @@ $.ajaxSetup({
 $(document).ready(function () {
     $('.heart').click(function () {
         event.preventDefault();
-        var match = $('.card-title')[0].id
+
+        var this_ = $(this)
+        var match = $(this, '.card-title')[0].id
         var black = '/static/images/like_1.png'
         var red = '/static/images/like_2.png'
+
 
         $.ajax({
             type: 'PUT',
@@ -346,15 +313,15 @@ $(document).ready(function () {
                 data = JSON.parse(data)
                 if (data.liked) {
                     // if its true then red heart
-                    $(".heart").attr('src', red);
+                    this_.attr('src', red);
                 }
                 else {
                     //empty heart
-                    $(".heart").attr('src', black);
+                    this_.attr('src', black);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr)
+                //console.log(xhr)
             }
         })
 
