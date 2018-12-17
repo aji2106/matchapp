@@ -17,43 +17,6 @@ $(function () {
 
 });
 
-////log in and register buttons js
-
-/*$(document).ready( function myFunction() {
-var x = document.getElementById("container_login_div");
-var y = document.getElementById("container_reg_div");
-if (x.style.display === "none") {
-  x.style.display = "block";
-  y.style.display = "none";
-}
-
-else if (x.style.display === "none" && y.style.display === "block"){
-  y.style.display = "none";
-  x.style.display === "block"
-}  else {
-  x.style.display = "none";
-}
-});
-
-$(document).ready(function myFunctionReg() {
-  var x = document.getElementById("container_reg_div");
-  var y = document.getElementById("container_login_div");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    y.style.display = "none";
-  }
-  else if (x.style.display === "none" && y.style.display === "block"){
-    y.style.display = "none";
-    x.style.display === "block"
-  }
-
-  else {
-    x.style.display = "none";
-  }
-});*/
-
-///log in and register buttons js
-
 
 //navigation bar
 function navBar() {
