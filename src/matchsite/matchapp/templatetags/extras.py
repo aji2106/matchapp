@@ -40,9 +40,9 @@ def display_matches(matches, user):
 
 
         html.append('<div class=col-sm-4 my-4>\
-            <div class = "card">\
+            <div class = card>\
             <img class=card-img-top src = ' + str(match.profile.image.url) + '  alt = Card image cap>\
-            <div class=card-body text-center>\
+            <div class=card-body>\
             <h5 class = card-title>' + str(match.username) + ': ' +  str(match.profile.age) + ' </br>\
             </h5>\
             <input type = image id='+str(match.id)+' class = heart name = submit src = ' + imgsrc+'\

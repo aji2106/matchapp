@@ -26,8 +26,8 @@
 
                 <div class="container-fluid bg-light ">
                     <div class="row align-items-center justify-content-center">
-                        <div class="col-md-2 col-md-offset-1">
-                         Show me: 
+                        <div class="col-md-2"> 
+                        <p>Filter by</p> 
                         </div>
 
                         
@@ -105,45 +105,11 @@
 
             <div id=matches>
                 {%for match in matches%}
-                <!--
-                <div class="col-sm-4 my-4">
 
-                    <div class="col-md-2 pt-3"> </div>
-
-
-                    <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                    <div class="card-body text-center">
-                        <h5 class="card-title"> {{ match.username }}
-                            {% if match|check_likes:u %}
-                            <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_2.png' %}"
-                                border="0" alt="Submit" style="width: 50px; border:0 none;" />
-                            {%else%}
-                            <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_1.png' %}"
-                                border="0" alt="Submit" style="width: 50px; border:0 none; outline:0;" />
-                            {%endif%}
-                        </h5>
-                    </div>
-                    <table>
-                        <tr>
-                            <td> Age: {{ match.profile.age }} </td>
-                        </tr>
-                        <tr>
-                            <td> Gender: {{ match.profile.gender }} </td>
-                        </tr>
-                        <tr>
-                            <td> Hobbies:
-                                {%for hobbies in match.hobbies.all %}
-                                {{hobbies}}
-                                {%endfor%}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                -->
     <div class="col-sm-4 my-4">
             <div class="card">
                 <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                    <div class="card-body text-center">
+                    <div class="card-body">
                         <h5 class="card-title">
                             {{ match.username }}: {{ match.profile.age }}</br>
                         </h5>
