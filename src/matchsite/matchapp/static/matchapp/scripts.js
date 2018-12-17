@@ -12,6 +12,43 @@ $(function () {
         " - $" + $("#slider-range").slider("values", 1));
 });
 
+////log in and register buttons js
+
+/*$(document).ready( function myFunction() {
+var x = document.getElementById("container_login_div");
+var y = document.getElementById("container_reg_div");
+if (x.style.display === "none") {
+  x.style.display = "block";
+  y.style.display = "none";
+}
+
+else if (x.style.display === "none" && y.style.display === "block"){
+  y.style.display = "none";
+  x.style.display === "block"
+}  else {
+  x.style.display = "none";
+}
+});
+
+$(document).ready(function myFunctionReg() {
+  var x = document.getElementById("container_reg_div");
+  var y = document.getElementById("container_login_div");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none";
+  }
+  else if (x.style.display === "none" && y.style.display === "block"){
+    y.style.display = "none";
+    x.style.display === "block"
+  }
+
+  else {
+    x.style.display = "none";
+  }
+});*/
+
+///log in and register buttons js
+
 
 //navigation bar
 function navBar() {
@@ -77,7 +114,7 @@ $(document).ready(function () {
 ///////terms and conditions modal
 
 $(document).ready(function () {
-    $(".datepicker").datepicker({
+    $("#id_dob").datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:+100",
@@ -292,9 +329,7 @@ $.ajaxSetup({
 $(document).ready(function () {
     $('.heart').click(function () {
         event.preventDefault();
-
-        var this_ = $(this)
-        var match = $(this)[0].id
+        var match = $('.card-title')[0].id
         var black = '/static/images/like_1.png'
         var red = '/static/images/like_2.png'
 
@@ -306,11 +341,11 @@ $(document).ready(function () {
                 data = JSON.parse(data)
                 if (data.liked) {
                     // if its true then red heart
-                    this_.attr('src', red)
+                    $(".heart").attr('src', red);
                 }
                 else {
-                    //empty heart 
-                    this_.attr('src', black)
+                    //empty heart
+                    $(".heart").attr('src', black);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {

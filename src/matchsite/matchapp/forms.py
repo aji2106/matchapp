@@ -36,9 +36,12 @@ class UserRegForm(forms.Form):
 class UserLogInForm(forms.Form):
         username = forms.CharField( min_length=2,max_length=15, widget=forms.TextInput(attrs={
         "placeholder":"Username",
-        'label':'e'}))
+        'id':'id_log_username'
+        }))
         password = forms.CharField( min_length=8,max_length=32, widget=forms.PasswordInput(attrs={
-        "placeholder":"Password"}))
+        "placeholder":"Password",
+        'id':'id_log_password'
+        }))
 
 
 class UserProfile(forms.ModelForm):
@@ -52,7 +55,9 @@ class UserProfile(forms.ModelForm):
                 'pattern':'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)',
                 }),
 
-            'dob': forms.DateInput(attrs={'placeholder': 'Date of Birth'}),
+            'dob': forms.DateInput(attrs={
+            'placeholder': 'Date of Birth'
+            }),
 
             'number': forms.TextInput(attrs={
                 'placeholder': 'Phone number',

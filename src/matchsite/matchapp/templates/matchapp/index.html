@@ -20,8 +20,68 @@
     font-weight: 300;
   }
 
+
+  #login_btn
+  {
+    position: absolute;
+    top: 200px;
+    right: 100px;
+    background:    #f1c232;
+    border:        1px solid #556699;
+    border-radius: 1000px;
+    padding:       9px 26px;
+    color:         #ffffff;
+    display:       inline-block;
+    font:          normal 700 30px/1 "Komika", cursive;
+    text-align:    center;
+    text-shadow:   0px 0px #000000;
+    }
+
+    #reg
+    {
+      position: absolute;
+      top: 200px;
+      left: 100px;
+      background:    #f1c232;
+      border:        1px solid #556699;
+      border-radius: 1000px;
+      padding:       9px 26px;
+      color:         #ffffff;
+      display:       inline-block;
+      font:          normal 700 30px/1 "Komika", cursive;
+      text-align:    center;
+      text-shadow:   0px 0px #000000;
+      }
+
+  #logo{
+
+    position: center;
+    margin-top:100px;
+
+  }
+  form{
+    position:absolute;
+    margin-left:200px;
+
+  }
+
+
 </style>
 
+  <script>
+    function myFunctionErrorShow() {
+      var x = document.getElementById("container_login_div");
+        x.style.display = "block";
+    }
+
+  </script>
+
+
+<a id='logo' href="https://es.cooltext.com"><img src="https://images.cooltext.com/5233795.png" width="1267" height="120" alt="Meet. Date. Live." /></a>
+
+<p id='login_btn' onclick="myFunction()">Login</p>
+
+<p id='reg' onclick="myFunctionReg()">Register</p>
 
 <div class = "bg-couple">
 </div>
@@ -31,26 +91,105 @@
 
 <div class="col-md-2 pt-3">
 
-  <div class=container_register>
+  <div class=container_register id='container_login_div' style="display: none;">
     <form method="POST" action="{% url 'login' %}">
       <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
 
 
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ login_form.as_p }}
 
         <div class="form-group">
-          <input id = "login_submit" class="btn btn-success" type="submit" value="Login">
+          <input id = "login_submit" class="btn btn-success" type="submit" value="Login" onclick="myFunctionErrorShow();">
           <p id='error_signin' class='error_message'> {{error}} <p>
 
+
+
           </div>
-          <p class = signupcenter> Don't have an account?  <a href="{% url 'register' %}">Sign Up</a> </p>
+          <p class = signupcenter> Don't have an account?  <a href="#" onclick="myFunctionReg();">Sign Up</a> </p>
 
           </div>
       </form>
 
-
   </div>
+
+  <!-- registration form starts////////////////////////////////////////////////////////////////////////////////////-->
+  <div class=container_register id='container_reg_div' style="display: none;">
+    <form method="POST" action="{% url 'register' %}">
+
+      <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
+        {% csrf_token %}
+        {{ registration_form|crispy }}
+        <span id='message'></span>
+        <div id='error_signup' class='error_message'> {{errorM}} </div>
+        <p id='error_signin' class='error_message'> {{errorPassword}} <p>
+
+        <!-- Trigger/Open The Modal -->
+        <div>By creating an account you agree to our <button id="myBtn"> Terms and Conditions</button>
+          <input type="checkbox" name="tc"style="margin-bottom:15px" required/></div>
+          <br>
+          <!-- The Modal -->
+          <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h1>Summary of Terms</h1>
+
+              <br>
+
+              </div>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button><br><br>
+
+            <p>Already have an account? <a href="#" onclick="myFunction();">Login</a></p>
+
+          </div>
+
+        </form>
+      </div>
+
+
+  <script>
+function myFunction() {
+  var x = document.getElementById("container_login_div");
+  var y = document.getElementById("container_reg_div");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none";
+  }
+
+  else if (x.style.display === "none" && y.style.display === "block"){
+    y.style.display = "none";
+    x.style.display === "block"
+  }  else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+<script>
+  function myFunctionReg() {
+    var x = document.getElementById("container_reg_div");
+    var y = document.getElementById("container_login_div");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.style.display = "none";
+    }
+    else if (x.style.display === "none" && y.style.display === "block"){
+      y.style.display = "none";
+      x.style.display === "block"
+    }
+
+    else {
+      x.style.display = "none";
+    }
+  }
+</script>
 
     </div>
 
