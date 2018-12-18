@@ -4,18 +4,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<!--
-    <div class="row">
-    <div class="col-md-2 col-md-offset-1"></div>
-    <div class="col-md-2"></div>
-    <div class="col-md-2"></div>
-    <div class="col-md-2"></div>
-    <div class="col-md-2"></div>
-</div>
-    -->
 
 
-<div class="bg-purple">
     <br>
     <h3 class="title"> Matches <h3>
             <br>
@@ -109,7 +99,7 @@
     <div class="col-sm-4 my-4">
             <div class="card">
                 <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title">
                             {{ match.username }}: {{ match.profile.age }}</br>
                         </h5>
@@ -128,7 +118,6 @@
                 {%endfor%}
 
             </div>
-
 
 
 {% endblock %}
