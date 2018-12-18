@@ -294,9 +294,9 @@ $.ajaxSetup({
     }
 });
 
-
 $(document).ready(function () {
-    $('.heart').click(function () {
+    $(document).on('click', '.heart', function () {
+
         event.preventDefault();
 
         var this_ = $(this)
@@ -325,9 +325,9 @@ $(document).ready(function () {
             }
         })
 
-
     });
 });
+
 
 $('#profile-image-upload').click(function () {
     $("#img_file").click();

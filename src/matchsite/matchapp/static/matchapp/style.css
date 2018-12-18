@@ -142,14 +142,7 @@ body {
       width:400px;
       text-align:left;
     }
-    div.container_profile {
 
-    width: 900px;
-    align-content: left;
-
-    margin-right: 500px;
-    margin-left: 30px;
-    }
     .profileForm {
 
     width: auto;
@@ -166,13 +159,7 @@ body {
 
     }
 
-    div.container_register {
 
-        width: 400px;
-        margin: auto;
-        margin-top: 50px;
-        border: 3px;
-    }
 
     div.tc_wrapper {
 
@@ -189,47 +176,7 @@ body {
         text-align: center;
     }
 
-    /* navigation sidebar Css starts*/
-    .sidenav {
-        height: 100%;
-        width: 200px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
-
-    .sidenav a {
-        padding: 6px 6px 6px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-    }
-
-    .sidenav a:hover {
-        color: #f1f1f1;
-    }
-
-    .main {
-        margin-left: 200px;
-        /* Same as the width of the sidenav */
-    }
-
-    @media screen and (max-height: 450px) {
-        .sidenav {
-            padding-top: 15px;
-        }
-
-        .sidenav a {
-            font-size: 18px;
-        }
-    }
-
-    /* navigation sidebar Css ends*/
+    
     /* user log in error stars*/
     .alert {
         padding: 20px;
