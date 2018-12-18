@@ -44,11 +44,13 @@
 <div class='form-group' >
     <form method="POST">
         <div class="in-form">
+
+
         {% csrf_token %}
         {{ registration_form|crispy }}
 
         <span id='message'></span>
-        <div id='error_signup' class='error_message'> {{error}} </div>
+        <div id='error_signup' class='error_message'> {{errorM}} </div>
         <div id='error_signup' class='error_message'> {{errorPassword}} </div>
 
         <!-- Trigger/Open The Modal -->
