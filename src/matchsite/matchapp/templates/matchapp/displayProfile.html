@@ -2,124 +2,84 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block title %}
+
+
+
+{% endblock %}
 {% block content %}
 <style>
 
-center{
-  padding: 2px;
-}
-  .col-md-7 {
-    width: 100%;
-    margin-left: -70px;
-  }
-  #id_user {
-    width: 100px;
-  }
-  #id_email {
-    width: 200px;
-  }
-  #id_number {
-    width: 120px;
-  }
-  #id_gender {
-    width: 70px;
-  }
-  #id_dob {
-    width: 120px;
-  }
-  #id_hobbies {
-    width: 150px;
-  }
 
-  </style>
+    #id_user {
+      width: 200px;
+    }
+    #id_email {
+      width: 200px;
+    }
+    #id_number {
+      width: 200px;
+    }
+    #id_gender {
+      width: 200px;
+    }
+    #id_dob {
+      width: 200px;
+    }
+    #id_hobbies {
+      width: 200px;
+    }
+    #profiimage{
 
-<div class = "container">
-<div class="container_register">
-  <div class="container_profile">
-    <div class="row">
-
-
-      <div class="col-md-7 ">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4>User Profile</h4>
-          </div>
-          <div class="panel-body">
-            <div class="box box-info">
-
-              <div class="box-body">
-                <div class="col-sm-6">
+      float:left;
+    }
 
 
 
-                  <div align="center">
-                    <img alt="User Pic" src="{{user.profile.image.url}}" id="profile-image" class="img-circle img-responsive">
-                    <input id="profile-image-upload" class="hidden">
-                    <progress id="progressBar" value="0" max="100" style="width:150px;display:none;">
-                    </progress>
-
-                    <div style="color:#999;">click here to change profile image</div>
-
-                  <!--Upload Image Js And Css-->
-                </div>
-
-                <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
-                  {% csrf_token %}
-                  <input type="file" id="img_file" style="display:none;">
-                </form>
-                <br>
-
-                <!-- /input-group -->
-              </div>
-              <div class="col-sm-6">
-                <h4 style="color:#00b1b1;">{{user.username}}</h4>
-                <span>
-                  <p>Welcome to {{appname}}</p>
-                </span>
-              </div>
-              <div class="clearfix"></div>
-              <hr style="margin:5px 0 5px 0;">
-
-              <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
-                {% if error %}
-                <div id='error_signup' class='error_message'> {{error}}                  </div>
-                {% endif%}
-                  {% csrf_token %}
-                  {{ form|crispy }}
-                  {{ member_form|crispy }}
+</style>
 
 
+<div class='columns is-mobile'>
+      <div class='columns is-half is-offset-one-quarter'>
+        <h1 class='title is-size3'style="color:#00b1b1;">User Profile</h1>
+        <h3 class='title is-size3'style="color:#581845;">{{user.username}}</h3>
 
-                  <!--<div class=updateBtn id=update_button><input type="submit" value="Save"></div>-->
-                  <input type="submit" value="Submit">
 
-                </form>
+        <img alt="User Pic" src="{{user.profile.image.url}}" id="profile-image" width="200" height="128" alt class="img-circle img-fluid">
+        <input id="profile-image-upload" class="hidden">
+        <progress id="progressBar" value="0" max="100" style="width:150px;display:none;">
+        </progress>
 
-          <!-- /.box-body -->
-        </div>
+        <div style="color:#999;">click here to change profile image</div>
 
-        <!-- /.box -->
 
-      </div>
+      <!--Upload Image Js And Css-->
+    <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
+      {% csrf_token %}
+      <input type="file" id="img_file" style="display:none;">
+    </form>
 
+     <!--user details form -->
+      <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'>
+
+      <div id='error_signup' class='error_message'> {{error}}                  </div>
+
+
+      {{ form|crispy }}
+      {{ member_form|crispy }}
+
+      <br>
+      <button type="submit" class='button is-primary'value="Submit">Save</button>
+
+      </form>
 
     </div>
-  </div>
+
 </div>
+
+
 
 <script src="{% static 'matchapp/scripts.js' %}"></script>
 
-<script>
 
-
-</script>
-
-
-</div>
-</div>
-
-</div>
-</form>
-</div>
 {% endblock %}
