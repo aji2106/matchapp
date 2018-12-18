@@ -51,7 +51,7 @@
     <input id = "login_submit" class="btn btn-primary" type="submit" value="Login">
 
     <p id='error_signin' class='error_message'> {{error}} <p>
-      <p class="form-control"> Don't have an account?  <a href="#" onclick="myFunctionReg();">Sign Up</a> </p>
+      <p class="form-control"> Don't have an account?  <a href="{% url 'register' %}" onclick="myFunctionReg();">Sign Up</a> </p>
 
     </form>
   </div>

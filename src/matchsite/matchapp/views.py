@@ -91,6 +91,7 @@ def register(request):
 			# user = form.save(commit=False)
 			# normalized data
             username = registration_form.cleaned_data['username']
+            username = username.lower()
             password = registration_form.cleaned_data['password']
             re_password = registration_form.cleaned_data['re_password']
             if password and re_password:
@@ -127,7 +128,7 @@ def register(request):
 
 
                     registration_form = UserRegForm()
-                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
+                    return render(request, 'matchapp/index.html', {'registration_form': registration_form, 'loggedIn': False})
 
      else:
          registration_form = UserRegForm()
@@ -153,6 +154,7 @@ def login(request):
             if form.is_valid():
 
                 username = form.cleaned_data.get("username")
+                username = username.lower()
                 password = form.cleaned_data.get("password")
 
                 user = authenticate(username=username, password=password)
