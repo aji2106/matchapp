@@ -7,9 +7,6 @@
 </br>
 <div id='matches'>
 
-
-
-
     {% if likes %}
 
     {% for like in likes %}
@@ -50,7 +47,7 @@
     {%endif%}
     {% endfor %}
     {% endif %}
-    {% if count == 0 %}
+    {% if u|countLike == 0 %}
     <br><span class='info'>No likes yet</span><br><br>
     {% endif %}
 </div>
