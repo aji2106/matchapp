@@ -263,7 +263,7 @@ def similarHobbies(request, user):
 def filter(request, user):
     if request.method == 'GET':
         exclude = Member.objects.exclude(username=user)
-        common = exclude.filter(hobbies__in=user.hobbies.all())
+        common = exclude.filter(hobbies__in=user.hobbies.all()).distinct()
         gender = request.GET.get('gender',False)
         yearMin = getYearBorn(request.GET.get('age-min', False))
         yearMax = getYearBorn(request.GET.get('age-max',False))
@@ -280,6 +280,9 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
+        print(yearMax , yearMin)
+        print(gender)
+        print(str(match))
         return HttpResponse(display_matches(match,user))
 
     else:
