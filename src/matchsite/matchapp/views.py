@@ -325,7 +325,10 @@ def editProfile(request, user):
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
 
-            if Profile.objects.filter(email = form.cleaned_data['email']).exists():
+            exclude = Profile.objects.exclude(id=user.id)
+
+
+            if exclude.filter(email = form.cleaned_data['email']).exists():
                 member = Member.objects.get(id=user.id)
                 allHobbies= member_form.cleaned_data.get('hobbies')
                 email=profile.email
