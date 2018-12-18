@@ -49,7 +49,8 @@
     </div>
     {%endif%}
     {% endfor %}
-    {% else %}
+    {% endif %}
+    {% if count == 0 %}
     <br><span class='info'>No likes yet</span><br><br>
     {% endif %}
 </div>
