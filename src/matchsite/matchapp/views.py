@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.shortcuts import render_to_response
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from matchapp.templatetags.extras import display_matches
 
@@ -113,10 +114,7 @@ def register(request):
                     try:
                         user.save()
 
-                    except:
-                        login_form = UserLogInForm()
-                        registration_form = UserRegForm()
-
+                    except IntegrityError:
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
@@ -126,8 +124,18 @@ def register(request):
                         return render(request, 'matchapp/register.html', context)
 
 
+
                     registration_form = UserRegForm()
                     return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
+            else:
+                context = {
+                'appname':appname,
+                'registration_form': registration_form,
+                'errorPassword':'Passwords do not match',
+                }
+
+            return render(request, 'matchapp/register.html', context)
+
 
      else:
          registration_form = UserRegForm()
