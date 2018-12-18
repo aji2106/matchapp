@@ -61,6 +61,7 @@ class UserProfile(forms.ModelForm):
 
             'dob': forms.DateInput(attrs={
             'placeholder': 'Date of Birth',
+            'class':'input'
 
             }),
 
