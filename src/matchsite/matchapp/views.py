@@ -263,7 +263,7 @@ def similarHobbies(request, user):
 def filter(request, user):
     if request.method == 'GET':
         exclude = Member.objects.exclude(username=user)
-        common = exclude.filter(hobbies__in=user.hobbies.all())
+        common = exclude.filter(hobbies__in=user.hobbies.all()).distinct()
         gender = request.GET.get('gender',False)
         yearMin = getYearBorn(request.GET.get('age-min', False))
         yearMax = getYearBorn(request.GET.get('age-max',False))
@@ -280,6 +280,9 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
+        print(yearMax , yearMin)
+        print(gender)
+        print(str(match))
         return HttpResponse(display_matches(match,user))
 
     else:
@@ -322,9 +325,8 @@ def editProfile(request, user):
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
 
-                    # Get all the other users exclude current logged in user
             exclude = Profile.objects.exclude(id=user.id)
-            
+
 
             if exclude.filter(email = form.cleaned_data['email']).exists():
                 member = Member.objects.get(id=user.id)
@@ -395,12 +397,14 @@ def upload_image(request, user):
 def contacts(request, user):
     # display only if both users have liked each other
     like = Like.objects.filter(from_user=user)
+    count = Like.objects.filter(to_user=user).count()
 
     friends = user.friends.all()
 
     context = {
         'u': user,
         'friends': friends,
+        'count': count,
         'likes': like,
         'loggedIn': True,
     }

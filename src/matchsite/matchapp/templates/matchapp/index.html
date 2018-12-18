@@ -5,6 +5,7 @@
 
 
 
+
 <style>
 
 
@@ -80,24 +81,15 @@
 
 </style>
 
-<script>
-  function myFunctionErrorShow() {
-    var x = document.getElementById("container_login_div");
-    x.style.display = "block";
-  }
 
-</script>
 
 
 <a><img class="img-fluid" src="https://images.cooltext.com/5233898.png" width="1300" height="128" alt="Meet. Match. Chat." /></a>
 
-<div  align="center"><a id='login_btn' class="example_d" onclick="myFunction()">Log in</a></div>
-<div  align="center"><a id='reg' class="example_d" onclick="myFunctionReg()">Register</a></div>
 
 
 
-
-<div class='form-group' id='container_login_div' style="display: none;">
+<div class='form-group' id='container_login_div'>
   <form class="form" method="POST" action="{% url 'login' %}">
 
       {% csrf_token %}
@@ -110,105 +102,6 @@
 
     </form>
   </div>
-
-  <!-- registration form starts////////////////////////////////////////////////////////////////////////////////////-->
-  <div class='form-group' id='container_reg_div' style="display: none;">
-    <form class="form" method="POST" action="{% url 'register' %}">
-
-      {% csrf_token %}
-      {{ registration_form|crispy }}
-      <span id='message'></span>
-      <div id='error_signup' class='error_message'> {{errorM}} </div>
-      <p id='error_signin' class='error_message'> {{errorPassword}} <p>
-
-        <!-- Trigger/Open The Modal -->
-        <div class='form-group'>By creating an account you agree to our <a href="#"id="myBtn"><u> Terms and Conditions</u></a>
-          <input class='form-check'type="checkbox" name="tc"style="margin-bottom:15px" required/></div>
-          <br>
-          <!-- The Modal -->
-          <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <h1>Summary of Terms</h1>
-
-              <br>
-
-              <p>You must read and agree to our Terms of Use (the “Agreement”) because it forms the binding contract between you and MatchApp. However, we’ve provided this short summary for your convenience (with capitalized terms defined in the Agreement).</p>
-
-              <br>
-
-              <b>Acceptance.</b> <p>By using the Service, you agree to this Agreement, our Privacy Policy and Safety Tips, and any terms that apply to in app purchase you make.</p>
-
-              <b>Eligibility.</b> <p>You must be at least 16 to use the Service and not prohibited by law from using the Service. You promise to follow the law and that you’re not a convicted felon or sex offender.</p>
-
-              <b>Your Account.</b> <p>If you use Facebook to access MatchApp, you must authorize us to access certain information from Facebook to use MatchApp. You agree to keep your account secure and confidential.</p>
-
-              <b>Modifying the Services.</b> <p>We may modify the Services at any time or discontinue them altogether. You can terminate your account in Settings, and we reserve the right to terminate it for you if you violate this Agreement or if we deem your use of the Service to be inappropriate.</p>
-
-              <b>Safety.</b> <p>MatchApp is not responsible for the actions of its users or your interactions with them, and we don’t conduct background checks. Be careful and be sure to read and follow our Safety Tips on interacting with people on or off of MatchApp.</p>
-
-              <b>Rights.</b> <p>MatchApp grants you the right to use our Service as authorized and permitted by this Agreement. See the Agreement for a full list of actions you agree not to take. You grant MatchApp the right to display your profile and Content for the limited purpose of MatchApp operating the Service and researching and developing new ones.</p>
-
-              <b>Rules.</b> <p>See the Agreement for a list of the rules you agree to abide by when you use MatchApp, such as not soliciting money from other users, harassing other users or using the Service for any illegal purposes.</p>
-
-              <b>Copyright.</b> <p>If you believe your work has been posted on the Service in violation of your copyright, please send a notice to our Copyright Agent following instructions in the Agreement.</p>
-
-            </div>
-
-          </div>
-
-
-          <button type="submit" class="btn btn-success">Submit</button>
-          <button type="reset" class="btn btn-primary">Reset</button><br><br>
-
-          <p>Already have an account? <a href="#" onclick="myFunction();">Login</a></p>
-
-        </div>
-
-      </form>
-    </div>
-
-
-
-
-    <script>
-      function myFunction() {
-        var x = document.getElementById("container_login_div");
-        var y = document.getElementById("container_reg_div");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-          y.style.display = "none";
-        }
-
-        else if (x.style.display === "none" && y.style.display === "block"){
-          y.style.display = "none";
-          x.style.display === "block"
-        }  else {
-          x.style.display = "none";
-        }
-      }
-    </script>
-
-    <script>
-      function myFunctionReg() {
-        var x = document.getElementById("container_reg_div");
-        var y = document.getElementById("container_login_div");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-          y.style.display = "none";
-        }
-        else if (x.style.display === "none" && y.style.display === "block"){
-          y.style.display = "none";
-          x.style.display === "block"
-        }
-
-        else {
-          x.style.display = "none";
-        }
-      }
-    </script>
 
 
 
