@@ -280,9 +280,6 @@ def filter(request, user):
         else:
             raise Http404("Please fill in the boxes")
 
-        print(yearMax , yearMin)
-        print(gender)
-        print(str(match))
         return HttpResponse(display_matches(match,user))
 
     else:

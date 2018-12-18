@@ -180,6 +180,7 @@ $(document).ready(function () {
                     elements.forEach(function (element) {
                         var val = element.replace(/['"]+/g, '')
                         $('#matches').append(val)
+                        $('.col-sm-4').addClass("my-4")
                     });
 
                     let count = matches[0].children.length
