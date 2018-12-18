@@ -394,12 +394,14 @@ def upload_image(request, user):
 def contacts(request, user):
     # display only if both users have liked each other
     like = Like.objects.filter(from_user=user)
+    count = Like.objects.filter(to_user=user).count()
 
     friends = user.friends.all()
 
     context = {
         'u': user,
         'friends': friends,
+        'count': count,
         'likes': like,
         'loggedIn': True,
     }
