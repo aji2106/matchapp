@@ -92,6 +92,7 @@ def register(request):
 			# user = form.save(commit=False)
 			# normalized data
             username = registration_form.cleaned_data['username']
+            username = username.lower()
             password = registration_form.cleaned_data['password']
             re_password = registration_form.cleaned_data['re_password']
             if password and re_password:
@@ -161,6 +162,7 @@ def login(request):
             if form.is_valid():
 
                 username = form.cleaned_data.get("username")
+                username = username.lower()
                 password = form.cleaned_data.get("password")
 
                 user = authenticate(username=username, password=password)
