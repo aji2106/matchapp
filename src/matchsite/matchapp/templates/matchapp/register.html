@@ -18,30 +18,49 @@
     font-weight: 300;
   }
 
+  .in-form{
+
+    background-color:white;
+    text-transform: uppercase;
+    padding: 20px;
+    border: 4px solid #494949;
+    border-radius: 6px;
+    display: inline-block;
+    width:40%;
+    margin-top:50px;
+  }
+
+  .in-form:hover {
+    color: #494949 !important;
+    border-radius: 50px;
+    border-color: #494949 !important;
+    transition: all 0.3s ease 0s;
+  }
+
 </style>
 
 
-<div class = "bg-couple">
-</div>
+<a><img class="img-fluid" src="https://images.cooltext.com/5233898.png" width="1300" height="128" alt="Meet. Match. Chat." /></a>
 
-<div class="col-md-2 pt-3">
-</div>
-
-<div class="col-md-2 pt-3">
-
-  <div class=container_register>
+<div class='form-group' >
     <form method="POST">
-
-      <div style="margin: 0 auto; width: 100%; border-radius: 10px; padding-top: 40px; padding-bottom: 40px; padding-left: 60px; padding-right: 60px; background-color: white;">
+        <div class="in-form">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ registration_form|crispy }}
+
         <span id='message'></span>
         <div id='error_signup' class='error_message'> {{error}} </div>
         <div id='error_signup' class='error_message'> {{errorPassword}} </div>
+
         <!-- Trigger/Open The Modal -->
-        <div>By creating an account you agree to our <button id="myBtn"> Terms and Conditions</button>
+        <div>By creating an account you agree to our <a id="myBtn"><u style="color:blue;"> Terms and Conditions</u></a>
+
+
           <input type="checkbox" name="tc"style="margin-bottom:15px" required/></div>
+
           <br>
+
+
           <!-- The Modal -->
           <div id="myModal" class="modal">
 
@@ -84,10 +103,8 @@
 
             <p>Already have an account? <a href="{% url 'index' %}">Click here</a>.</p>
 
-          </div>
+</div>
 
         </form>
-      </div>
-    </div>
-  </div>
+</div>
   {% endblock %}

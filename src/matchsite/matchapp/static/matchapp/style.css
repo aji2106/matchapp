@@ -33,6 +33,7 @@ background-image: linear-gradient(315deg, #db7f8e 0%, #7b0d1e 74%);*/
     padding: 20px;
     border: 1px solid #888;
     width: 40%; /* Could be more or less, depending on screen size */
+    
 }
 
 /* The Close Button */
@@ -176,7 +177,7 @@ body {
         text-align: center;
     }
 
-    
+
     /* user log in error stars*/
     .alert {
         padding: 20px;

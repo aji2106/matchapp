@@ -101,10 +101,9 @@ def register(request):
                     context = {
                         'appname':appname,
                         'registration_form': registration_form,
-                        'login_form': login_form,
                         'errorPassword':errorPassword
                         }
-                    return render(request, 'matchapp/index.html', context)
+                    return render(request, 'matchapp/register.html', context)
 
                 else:
                     user = Member(username=username)
@@ -120,17 +119,19 @@ def register(request):
 
                         context = {
                             'appname':appname,
-                            'login_form': login_form,
                             'registration_form': registration_form,
                             'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
 
-                        return render(request, 'matchapp/index.html', context)
+                        return render(request, 'matchapp/register.html', context)
 
-                    login_form = UserLogInForm()
+
                     registration_form = UserRegForm()
-                    return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
+                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
 
+     else:
+         registration_form = UserRegForm()
+         return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
 
 
      #else:

@@ -4,14 +4,11 @@
 {% block content %}
 
 
-
-
 <style>
-
 
   body
   {
-    background: url("/static/images/backgroundWP.png") no-repeat;
+    background: url("/static/images/backgroundWC.jpg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -21,48 +18,7 @@
     font-weight: 300;
   }
 
-
-  #login_btn
-  {
-    position: absolute;
-    top: 240px;
-    right: 200px;
-
-  }
-
-  #reg
-  {
-    position: absolute;
-    top: 240px;
-    left: 200px;
-
-
-  }
-
-  .example_d {
-    color: #20bf6b;
-    text-transform: uppercase;
-    padding: 20px;
-    border: 4px solid #494949 !important;
-    border-radius: 6px;
-    display: inline-block;
-  }
-
-  .example_d:hover {
-    color: #494949 !important;
-    background-color:white;
-    border-radius: 50px;
-    border-color: #494949 !important;
-    transition: all 0.3s ease 0s;
-  }
-
-
-  .form-group{
-    float:none;
-
-    }
-
-  .form {
+  .in-form{
 
     background-color:white;
     text-transform: uppercase;
@@ -70,9 +26,11 @@
     border: 4px solid #494949;
     border-radius: 6px;
     display: inline-block;
+    width:40%;
+    margin-top:50px;
   }
 
-  .form:hover {
+  .in-form:hover {
     color: #494949 !important;
     border-radius: 50px;
     border-color: #494949 !important;
@@ -82,27 +40,26 @@
 </style>
 
 
-
-
 <a><img class="img-fluid" src="https://images.cooltext.com/5233898.png" width="1300" height="128" alt="Meet. Match. Chat." /></a>
 
+<div class='form-group' >
+    <form method="POST">
+        <div class="in-form">
+        {% csrf_token %}
+        {{ login_form|crispy }}
+
+        <span id='message'></span>
+
+      <p id='error_signin' class='error_message'> {{error}} <p>
+
+      <input id = "login_submit" class="btn btn-primary" type="submit" value="Login">
 
 
 
-<div class='form-group' id='container_login_div'>
-  <form class="form" method="POST" action="{% url 'login' %}">
+              <p class="form-control"> Don't have an account?  <a href="{% url 'register' %}">Sign Up</a> </p>
 
-      {% csrf_token %}
-      {{ login_form|crispy }}
+</div>
 
-    <input id = "login_submit" class="btn btn-primary" type="submit" value="Login">
-
-    <p id='error_signin' class='error_message'> {{error}} <p>
-      <p class="form-control"> Don't have an account?  <a href="#" onclick="myFunctionReg();">Sign Up</a> </p>
-
-    </form>
-  </div>
-
-
-
-    {% endblock %}
+        </form>
+</div>
+  {% endblock %}
