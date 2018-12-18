@@ -7,7 +7,7 @@
 
 
     <br>
-    <h3 class="title"> Matches <h3>
+    <h3 class="title"> Matches </h3>
             <br>
             <h4 class="subtitle">You have {{numberOfhobbies}} match(es) </h4>
             <p id="messageValidation"></p>
@@ -95,14 +95,11 @@
 
             <div id=matches>
                 {%for match in matches%}
-
     <div class="col-sm-4 my-4">
             <div class="card">
-                <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card image cap">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">
-                            {{ match.username }}: {{ match.profile.age }}</br>
-                        </h5>
+                <img class="card-img-top" src="{{match.profile.image.url}}" alt="Card_image_cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ match.username }}: {{ match.profile.age }}</br></h5>
                         {% if match|check_likes:u %}
                             <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_2.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none;" />
@@ -110,13 +107,13 @@
                             <input type="image" id={{match.id}} class='heart' name="submit" src="{% static '/images/like_1.png' %}"
                                 border="0" alt="Submit" style="width: 50px; border:0 none; outline:0;" />
                         {%endif%}
+
                     </div> 
 
+                     <div class = "card-footer"> You have <b> {{match|similarHobbiesCount:u}} </b> hobbies in common </div>
             </div>
     </div>
-
                 {%endfor%}
-
             </div>
 
 
