@@ -145,6 +145,10 @@ body {
     }
 
     .profileForm{
+        
+ max-width:910px;
+ width:30%;/* As per your preference */
+ 
     }
 
     div.updateBtn {
