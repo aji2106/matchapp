@@ -119,7 +119,7 @@ def register(request):
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
-                            'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
+                            'error':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
 
                         return render(request, 'matchapp/register.html', context)
@@ -127,7 +127,9 @@ def register(request):
 
 
                     registration_form = UserRegForm()
-                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
+
+                    login_form = UserLogInForm()
+                    return render(request, 'matchapp/index.html', {'registration_form': registration_form, 'login_form': login_form, 'loggedIn': False})
             else:
                 context = {
                 'appname':appname,
@@ -136,7 +138,6 @@ def register(request):
                 }
 
             return render(request, 'matchapp/register.html', context)
-
 
      else:
          registration_form = UserRegForm()
@@ -347,6 +348,8 @@ def editProfile(request, user):
                     'loggedIn': True
                 }
 
+                #return HttpResponseRedirect('/displayProfile')
+
                 return render(request, 'matchapp/displayProfile.html', context)
             else:
                 profile.dob = form.cleaned_data.get('dob')
@@ -369,8 +372,8 @@ def editProfile(request, user):
                     'hobbies': allHobbies,
                     'loggedIn': True
                 }
-
-                return render(request, 'matchapp/displayProfile.html', context)
+                return HttpResponseRedirect('/displayProfile')
+                #return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)
@@ -383,8 +386,10 @@ def editProfile(request, user):
                 'error': errors,
                 'loggedIn': True
             }
-
-            return render(request, 'matchapp/displayProfile.html', context)
+            return HttpResponseRedirect('/displayProfile')
+            #return render(request, 'matchapp/displayProfile.html', context)
+    else:
+        return HttpResponseRedirect('/displayProfile')
 
 @loggedin
 def upload_image(request, user):
