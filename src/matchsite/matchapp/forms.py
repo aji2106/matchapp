@@ -52,7 +52,7 @@ class UserProfile(forms.ModelForm):
         model = Profile
         fields = ['email','dob','number','gender']
 
-    
+
 
         widgets = {
             'email': forms.TextInput(attrs={
@@ -72,6 +72,8 @@ class UserProfile(forms.ModelForm):
             'number': forms.TextInput(attrs={
                 'placeholder': 'Phone number',
                 'class':'input',
+                'required':'true',
+                'label':'Number*',
                 'pattern':'^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$',
                 'title':'UK mobile phone number, with optional +44 national code. Allows optional brackets and spaces at appropriate positions.'
                 }),
