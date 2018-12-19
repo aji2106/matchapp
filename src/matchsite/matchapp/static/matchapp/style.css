@@ -1,17 +1,8 @@
-/* start of navbar */
 
-div.bg-couple{
-    background: url("/static/images/bg.png");
-    /*background-color: #db7f8e;
-background-image: linear-gradient(315deg, #db7f8e 0%, #7b0d1e 74%);*/
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;background=>
-    font-family: 'Source Sans Pro', sans-serif;
-    color: black;
-    font-weight: 300;
+#mainBody{
+    background-color: #fafafa;
 }
+
 /*modal css*/
 
 .modal {
@@ -65,6 +56,7 @@ input[type=password]:focus {
  background-color: lightblue;
 }
 
+/* start of navbar */
 
 .floatLeftNav a{
     float: left;
@@ -79,17 +71,20 @@ input[type=password]:focus {
 
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color: white;
+  border-bottom: 1px solid grey;
+  border-top: 0.5px grey;
 }
 
 .topnav a {
-
   display: block;
-  color: #f2f2f2;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  border-left: 0.5px solid;
+  border-color: grey;
 }
 
 .topnav a:hover {
@@ -134,20 +129,19 @@ body {
 
         font-family: Arial, Helvetica, sans-serif;
         /*background: linear-gradient(to bottom, #FFA69E 0%, #861657 100%);*/
-        background: white;
-        padding-top: 10px;
+        background-color: #fafafa;
 
     }
     .error_message{
       color:red;
       max-width:910px;
- width:50%;
+      width:50%;
     }
 
     .profileForm{
         
- max-width:910px;
- width:30%;/* As per your preference */
+     max-width:910px;
+     width:30%;/* As per your preference */
  
     }
 
@@ -230,6 +224,10 @@ body {
 
 /*css for matches and contact*/
 
+.ui-slider-range.ui-corner-all.ui-widget-header{
+    background-color: #428bca;
+}
+
 #slider-range
 {
     width: 70%;
@@ -240,6 +238,7 @@ body {
     float: left;
     width: 25px;
     border:0;
+    background-color: #fafafa;
 }
 
 #range2
@@ -247,6 +246,7 @@ body {
     float: right;
     width: 25px;
     border:0;
+    background-color: #fafafa;
 }
 
 
@@ -326,7 +326,7 @@ body {
 }
 
 .row.align-items-center.justify-content-center {
-    background-color: white;
+    background-color: #fafafa;
 }
 
 .center-button {

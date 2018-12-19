@@ -22,7 +22,9 @@ width:80%;
 }
 
 
+
 </style>
+
 <div class = "card">
 <!--<div  class='columns is-mobile'>
       <div class='columns is-half is-offset-one-quarter'>-->
@@ -60,9 +62,8 @@ width:80%;
       {% csrf_token %}
       {{ form|crispy }}
       {{ member_form|crispy }}
-
       <br>
-      <button type="submit" class='button is-primary'value="Submit">Save</button>
+      <button type="submit" class='btn btn-primary'value="Submit">Save</button>
 
       </form>
     </div>

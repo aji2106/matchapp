@@ -1,6 +1,5 @@
 
 
-
 //slider
 
 $(function () {
