@@ -140,6 +140,7 @@ def register(request):
 
 
 
+
                     registration_form = UserRegForm()
 
                     login_form = UserLogInForm()
