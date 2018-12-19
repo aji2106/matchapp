@@ -10,6 +10,12 @@
 {% block content %}
 <style>
 
+input{
+border-radius: 50px;
+color: aliceblue;
+background-color: #34495e;
+width:80%;
+}
 
 .card{
   width: 50%;
@@ -43,12 +49,13 @@
     <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
       {% csrf_token %}
       <input type="file" id="img_file" style="display:none;">
+       <div id='error_signup' class='error_message'> {{error}} </div> </br>
     </form>
 
      <!--user details form -->
       <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'> {% csrf_token %}
 
-      <div id='error_signup' class='error_message'> {{error}} </div>
+     
 
       {% csrf_token %}
       {{ form|crispy }}

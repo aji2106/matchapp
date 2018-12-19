@@ -140,8 +140,8 @@ body {
     }
     .error_message{
       color:red;
-      width:400px;
-      text-align:left;
+      max-width:910px;
+ width:50%;
     }
 
     .profileForm{
