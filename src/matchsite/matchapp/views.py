@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.shortcuts import render_to_response
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from matchapp.templatetags.extras import display_matches
 
@@ -91,6 +92,7 @@ def register(request):
 			# user = form.save(commit=False)
 			# normalized data
             username = registration_form.cleaned_data['username']
+            username = username.lower()
             password = registration_form.cleaned_data['password']
             re_password = registration_form.cleaned_data['re_password']
             if password and re_password:
@@ -114,6 +116,7 @@ def register(request):
                         password = registration_form.cleaned_data['password']
 
 
+<<<<<<< HEAD
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
@@ -125,17 +128,31 @@ def register(request):
                         login_form = UserLogInForm()
                         registration_form = UserRegForm()
 
+=======
+                    except IntegrityError:
+>>>>>>> 19956d982bae960e7b7563b49b271de5b374ee3f
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
-                            'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
+                            'error':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
 
                         return render(request, 'matchapp/register.html', context)
 
 
+
                     registration_form = UserRegForm()
-                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
+
+                    login_form = UserLogInForm()
+                    return render(request, 'matchapp/index.html', {'registration_form': registration_form, 'login_form': login_form, 'loggedIn': False})
+            else:
+                context = {
+                'appname':appname,
+                'registration_form': registration_form,
+                'errorPassword':'Passwords do not match',
+                }
+
+            return render(request, 'matchapp/register.html', context)
 
      else:
          registration_form = UserRegForm()
@@ -161,6 +178,7 @@ def login(request):
             if form.is_valid():
 
                 username = form.cleaned_data.get("username")
+                username = username.lower()
                 password = form.cleaned_data.get("password")
 
                 user = authenticate(username=username, password=password)
@@ -331,10 +349,7 @@ def editProfile(request, user):
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
 
-            exclude = Profile.objects.exclude(id=user.id)
-
-
-            if exclude.filter(email = form.cleaned_data['email']).exists():
+            if Profile.objects.filter(email=profile.email).exclude(id=request.user.id):
                 member = Member.objects.get(id=user.id)
                 allHobbies= member_form.cleaned_data.get('hobbies')
                 email=profile.email
@@ -347,6 +362,8 @@ def editProfile(request, user):
                     'error' : 'Email '+ email +' is already in use',
                     'loggedIn': True
                 }
+
+                #return HttpResponseRedirect('/displayProfile')
 
                 return render(request, 'matchapp/displayProfile.html', context)
             else:
@@ -370,8 +387,8 @@ def editProfile(request, user):
                     'hobbies': allHobbies,
                     'loggedIn': True
                 }
-
-                return render(request, 'matchapp/displayProfile.html', context)
+                return HttpResponseRedirect('/displayProfile')
+                #return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)
@@ -384,8 +401,10 @@ def editProfile(request, user):
                 'error': errors,
                 'loggedIn': True
             }
-
-            return render(request, 'matchapp/displayProfile.html', context)
+            return HttpResponseRedirect('/displayProfile')
+            #return render(request, 'matchapp/displayProfile.html', context)
+    else:
+        return HttpResponseRedirect('/displayProfile')
 
 @loggedin
 def upload_image(request, user):

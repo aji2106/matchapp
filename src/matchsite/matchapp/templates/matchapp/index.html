@@ -34,13 +34,13 @@
     border-radius: 50px;
     border-color: #494949 !important;
     transition: all 0.3s ease 0s;
-    
+
   }
 
 </style>
 
 
-<a><img class="img-fluid" src="https://images.cooltext.com/5233898.png" width="1300" height="128" alt="Meet. Match. Chat." /></a>
+<a><img class="img-fluid" src="{% static 'images/mmc.png'%}" width="1300" height="128" alt="Meet. Match. Chat." /></a>
 
 <div class='in-form'>
   <form class="form" method="POST" action="{% url 'login' %}">
@@ -51,7 +51,7 @@
     <input id = "login_submit" class="btn btn-primary" type="submit" value="Login">
 
     <p id='error_signin' class='error_message'> {{error}} <p>
-      <p class="form-control"> Don't have an account?  <a href="#" onclick="myFunctionReg();">Sign Up</a> </p>
+      <p class="form-control"> Don't have an account?  <a href="{% url 'register' %}">Sign Up</a> </p>
 
     </form>
   </div>
