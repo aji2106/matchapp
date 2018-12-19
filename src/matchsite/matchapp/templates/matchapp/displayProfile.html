@@ -11,15 +11,17 @@
 <style>
 
 
-
-
+.card{
+  width: 50%;
+}
 
 
 </style>
+<div class = "card">
+<!--<div  class='columns is-mobile'>
+      <div class='columns is-half is-offset-one-quarter'>-->
+        <div class="form-group col-md-12">                                
 
-
-<div  class='columns is-mobile'>
-      <div class='columns is-half is-offset-one-quarter'>
         <h1 class='title is-size3'style="color:#00b1b1;">User Profile</h1>
         <h3 class='title is-size3'style="color:#581845;">{{user.username}}</h3>
 
@@ -31,8 +33,13 @@
 
         <div style="color:#999;">click here to change profile image</div>
 
+        </div>
 
       <!--Upload Image Js And Css-->
+
+      <div class="card-body">
+      <div class="form-group col-md-12">                                
+
     <form id='upload_form' method='POST' action="{% url 'displayProfile' %}" enctype='multipart/form-data'>
       {% csrf_token %}
       <input type="file" id="img_file" style="display:none;">
@@ -41,7 +48,7 @@
      <!--user details form -->
       <form  method='POST' class=profileForm action="{% url 'editProfile' %}" enctype='multipart/form-data'> {% csrf_token %}
 
-      <div id='error_signup' class='error_message'> {{error}}                  </div>
+      <div id='error_signup' class='error_message'> {{error}} </div>
 
       {% csrf_token %}
       {{ form|crispy }}
@@ -51,11 +58,13 @@
       <button type="submit" class='button is-primary'value="Submit">Save</button>
 
       </form>
-
+    </div>
     </div>
 
-</div>
+    
 
+
+</div>
 
 
 <script src="{% static 'matchapp/scripts.js' %}"></script>

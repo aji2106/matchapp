@@ -30,7 +30,7 @@ def check_sent(match, user):
 @register.filter
 def countLike(user):
     count = 0
-    likes = Like.objects.filter(to_user=user)
+    likes = Like.objects.filter(from_user=user)
     for like in likes:
         if check_relationship(user, like.to_user):
             count += 1
