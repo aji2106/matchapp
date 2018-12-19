@@ -39,23 +39,15 @@ class MemberViewSet(viewsets.ModelViewSet):
 
 appname = 'matchapp'
 
-# should render login page but also include a signup button
-
 
 def index(request):
 	# Render the index page
     login_form = UserLogInForm()
     registration_form = UserRegForm()
-    """if 'username' in request.session:
-        return redirect('displayProfile')"""
-    """else:"""
     return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
 
 
-
 # user logged in
-
-
 def loggedin(view):
     def mod_view(request):
         login_form = UserLogInForm()
@@ -69,16 +61,12 @@ def loggedin(view):
     return mod_view
 
 # terms and conditions
-
-
 def tc(request):
 	return render(request, 'matchapp/tc.html')
-
 
 # once user clicks register button
 # should render user registered page if unique user is entered
 # need validation for email, user, dob, profile image
-
 
 def register(request):
 
@@ -159,15 +147,6 @@ def register(request):
          return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
 
 
-     #else:
-        #form = UserRegForm()
-        #loginForm = UserLogInForm()
-
-        #return render(request, 'matchapp/index.html', {'form': form,'loginForm': loginForm})
-
-# this occurs when user presses login button from index
-
-
 def login(request):
     if "username" in request.session:
         return redirect('displayProfile')
@@ -196,7 +175,6 @@ def login(request):
 
                         member_form = MemberProfile(initial=model_to_dict(person))
                         person = Member.objects.get(id=user.id)
-                        #hobby = Hobby.objects.all()
 
                         context = {
                             'appname':appname,
@@ -204,29 +182,21 @@ def login(request):
                             'member_form': member_form,
                             'registration_form':registration_form,
                             'user': person,
-                            #'hobbies': hobby,
                             'loggedIn': True
                         }
-						# login(request,user)
-
-                        #where should it go after user logged in?
+		
                         return render(request, 'matchapp/displayProfile.html', context)
 
-                # return HttpResponse("<span> User or password is wrong </span")
-
                 else:
-                    #raise Http404('User or password is incorrect')
                     context = {
                         'appname':appname,
                         'login_form': form,
                         'registration_form':registration_form,
                         'error':'User or password entered is incorrect'
                     }
-                    # login(request,user)
                     return render(request, 'matchapp/index.html', context)
 
     else:
-        #return displayProfile(request,)
         form = UserLogInForm()
         registration_form = UserRegForm()
         context = {
@@ -237,19 +207,11 @@ def login(request):
         }
         return render(request, 'matchapp/index.html', context)
 
-# render logout page
-
 
 @loggedin
 def logout(request, user):
 	request.session.flush()
 	return redirect("/")
-
-# shows another page with users that have similar interests
-# order of most common hobbies first
-
-# Might have to get all users that have liked by the current logged in user
-# So if they refresh the page the likes would be there
 
 @loggedin
 def similarHobbies(request, user):
@@ -259,17 +221,9 @@ def similarHobbies(request, user):
     common = exclude.filter(hobbies__in=user.hobbies.all())
     # Get the number of hobbies of other users
     hobbies = common.annotate(hob_count=Count('hobbies'))
-    # Process the matches in decending
-    # Note to self do not need the gt thing check first
     match = hobbies.order_by('-hob_count')
 
-    # For the EXTRA FEATURE (get all the user that liked this user)
-    # It will be the to_user field
-    #print(str(user))
-
     like = Like.objects.filter(from_user=user)
-
-    #print(str(like))
 
     context = {
         'appname': appname,
@@ -364,9 +318,6 @@ def editProfile(request, user):
                     'error' : 'Email '+ email +' is already in use',
                     'loggedIn': True
                 }
-
-                #return HttpResponseRedirect('/displayProfile')
-
                 return render(request, 'matchapp/displayProfile.html', context)
             else:
                 profile.dob = form.cleaned_data.get('dob')
@@ -390,7 +341,6 @@ def editProfile(request, user):
                     'loggedIn': True
                 }
                 return HttpResponseRedirect('/displayProfile')
-                #return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)
@@ -404,7 +354,6 @@ def editProfile(request, user):
                 'loggedIn': True
             }
             return HttpResponseRedirect('/displayProfile')
-            #return render(request, 'matchapp/displayProfile.html', context)
     else:
         return HttpResponseRedirect('/displayProfile')
 
