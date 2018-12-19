@@ -116,26 +116,25 @@ def register(request):
                         password = registration_form.cleaned_data['password']
 
 
-<<<<<<< HEAD
+
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
                             'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
 
-                        return render(request,'matchapp/register.html', context)                        
+                        return render(request,'matchapp/register.html', context)
 
                         login_form = UserLogInForm()
                         registration_form = UserRegForm()
 
-=======
+
                     except IntegrityError:
->>>>>>> 19956d982bae960e7b7563b49b271de5b374ee3f
                         context = {
-                            'appname':appname,
-                            'registration_form': registration_form,
-                            'error':'Username '+ str(user) +' is already taken. Usernames must be unique',
-                            }
+                        'appname':appname,
+                        'registration_form': registration_form,
+                        'error':'Username '+ str(user) +' is already taken. Usernames must be unique',
+                        }
 
                         return render(request, 'matchapp/register.html', context)
 
