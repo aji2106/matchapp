@@ -39,23 +39,15 @@ class MemberViewSet(viewsets.ModelViewSet):
 
 appname = 'matchapp'
 
-# should render login page but also include a signup button
-
 
 def index(request):
 	# Render the index page
     login_form = UserLogInForm()
     registration_form = UserRegForm()
-    """if 'username' in request.session:
-        return redirect('displayProfile')"""
-    """else:"""
     return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
 
 
-
 # user logged in
-
-
 def loggedin(view):
     def mod_view(request):
         login_form = UserLogInForm()
@@ -69,16 +61,12 @@ def loggedin(view):
     return mod_view
 
 # terms and conditions
-
-
 def tc(request):
 	return render(request, 'matchapp/tc.html')
-
 
 # once user clicks register button
 # should render user registered page if unique user is entered
 # need validation for email, user, dob, profile image
-
 
 def register(request):
 
@@ -105,46 +93,29 @@ def register(request):
                         'registration_form': registration_form,
                         'errorPassword':errorPassword
                         }
-                    return HttpResponseRedirect("/register")
+                    return render(request, 'matchapp/register.html', context)
+
                 else:
                     user = Member(username=username)
                     user.set_password(password)
 
-                    try:user.save()
+
+                    try:
+                        user.save()
+
                     except IntegrityError:
-                        username = registration_form.cleaned_data['username']
-                        password = registration_form.cleaned_data['password']
-
-
-
                         context = {
                             'appname':appname,
                             'registration_form': registration_form,
                             'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
                             }
 
-                        return render(request,'matchapp/register.html', context)
-
-                        login_form = UserLogInForm()
-                        registration_form = UserRegForm()
-
-
-                    except IntegrityError:
-                        context = {
-                        'appname':appname,
-                        'registration_form': registration_form,
-                        'error':'Username '+ str(user) +' is already taken. Usernames must be unique',
-                        }
-
                         return render(request, 'matchapp/register.html', context)
 
 
 
-
                     registration_form = UserRegForm()
-
-                    login_form = UserLogInForm()
-                    return render(request, 'matchapp/index.html', {'registration_form': registration_form, 'login_form': login_form, 'loggedIn': False})
+                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
             else:
                 context = {
                 'appname':appname,
@@ -154,18 +125,10 @@ def register(request):
 
             return render(request, 'matchapp/register.html', context)
 
+
      else:
          registration_form = UserRegForm()
          return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
-
-
-     #else:
-        #form = UserRegForm()
-        #loginForm = UserLogInForm()
-
-        #return render(request, 'matchapp/index.html', {'form': form,'loginForm': loginForm})
-
-# this occurs when user presses login button from index
 
 
 def login(request):
@@ -196,7 +159,6 @@ def login(request):
 
                         member_form = MemberProfile(initial=model_to_dict(person))
                         person = Member.objects.get(id=user.id)
-                        #hobby = Hobby.objects.all()
 
                         context = {
                             'appname':appname,
@@ -204,29 +166,21 @@ def login(request):
                             'member_form': member_form,
                             'registration_form':registration_form,
                             'user': person,
-                            #'hobbies': hobby,
                             'loggedIn': True
                         }
-						# login(request,user)
-
-                        #where should it go after user logged in?
+		
                         return render(request, 'matchapp/displayProfile.html', context)
 
-                # return HttpResponse("<span> User or password is wrong </span")
-
                 else:
-                    #raise Http404('User or password is incorrect')
                     context = {
                         'appname':appname,
                         'login_form': form,
                         'registration_form':registration_form,
                         'error':'User or password entered is incorrect'
                     }
-                    # login(request,user)
                     return render(request, 'matchapp/index.html', context)
 
     else:
-        #return displayProfile(request,)
         form = UserLogInForm()
         registration_form = UserRegForm()
         context = {
@@ -237,19 +191,11 @@ def login(request):
         }
         return render(request, 'matchapp/index.html', context)
 
-# render logout page
-
 
 @loggedin
 def logout(request, user):
 	request.session.flush()
 	return redirect("/")
-
-# shows another page with users that have similar interests
-# order of most common hobbies first
-
-# Might have to get all users that have liked by the current logged in user
-# So if they refresh the page the likes would be there
 
 @loggedin
 def similarHobbies(request, user):
@@ -259,17 +205,9 @@ def similarHobbies(request, user):
     common = exclude.filter(hobbies__in=user.hobbies.all())
     # Get the number of hobbies of other users
     hobbies = common.annotate(hob_count=Count('hobbies'))
-    # Process the matches in decending
-    # Note to self do not need the gt thing check first
     match = hobbies.order_by('-hob_count')
 
-    # For the EXTRA FEATURE (get all the user that liked this user)
-    # It will be the to_user field
-    #print(str(user))
-
     like = Like.objects.filter(from_user=user)
-
-    #print(str(like))
 
     context = {
         'appname': appname,
@@ -344,31 +282,15 @@ def displayProfile(request, user):
 @loggedin
 def editProfile(request, user):
     if request.method == 'POST':
-        form = UserProfile(request.POST,instance=user)
-        member_form = MemberProfile(request.POST,instance=user)
+        form = UserProfile(request.POST)
+        member_form = MemberProfile(request.POST)
         if form.is_valid() and member_form.is_valid():
 
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
 
-            if Profile.objects.filter(email=profile.email).exclude(id=request.user.id):
-                member = Member.objects.get(id=user.id)
-                allHobbies= member_form.cleaned_data.get('hobbies')
-                email=profile.email
-                context = {
-                    'appname':appname,
-                    'form': form,
-                    'member_form': member_form,
-                    'user': member,
-                    'hobbies': allHobbies,
-                    'error' : 'Email '+ email +' is already in use',
-                    'loggedIn': True
-                }
-
-                #return HttpResponseRedirect('/displayProfile')
-
-                return render(request, 'matchapp/displayProfile.html', context)
-            else:
+            if user.profile.email==form.cleaned_data.get('email'):
+                print('email updated matches')
                 profile.dob = form.cleaned_data.get('dob')
                 profile.gender = form.cleaned_data.get('gender')
                 profile.number = form.cleaned_data.get('number')
@@ -389,8 +311,50 @@ def editProfile(request, user):
                     'hobbies': allHobbies,
                     'loggedIn': True
                 }
-                return HttpResponseRedirect('/displayProfile')
-                #return render(request, 'matchapp/displayProfile.html', context)
+
+                return render(request, 'matchapp/displayProfile.html', context)
+
+            else:
+
+                if Profile.objects.filter(email=profile.email).exists():
+
+                    member = Member.objects.get(id=user.id)
+                    allHobbies= member_form.cleaned_data.get('hobbies')
+                    email=profile.email
+                    context = {
+                        'appname':appname,
+                        'form': form,
+                        'member_form': member_form,
+                        'user': member,
+                        'hobbies': allHobbies,
+                        'error' : 'Email '+ email +' is already in use',
+                        'loggedIn': True
+                    }
+
+                    return render(request, 'matchapp/displayProfile.html', context)
+                else:
+                    profile.dob = form.cleaned_data.get('dob')
+                    profile.gender = form.cleaned_data.get('gender')
+                    profile.number = form.cleaned_data.get('number')
+
+                    profile.save()
+
+                    member = Member.objects.get(id=user.id)
+                    allHobbies= member_form.cleaned_data.get('hobbies')
+
+                    member.hobbies.set(allHobbies)
+                    member.save()
+
+                    context = {
+                        'appname':appname,
+                        'form': form,
+                        'member_form': member_form,
+                        'user': member,
+                        'hobbies': allHobbies,
+                        'loggedIn': True
+                    }
+
+                    return render(request, 'matchapp/displayProfile.html', context)
         else:
 
             member = Member.objects.get(id=user.id)
@@ -403,10 +367,24 @@ def editProfile(request, user):
                 'error': errors,
                 'loggedIn': True
             }
-            return HttpResponseRedirect('/displayProfile')
-            #return render(request, 'matchapp/displayProfile.html', context)
+
+            return render(request, 'matchapp/displayProfile.html', context)
     else:
-        return HttpResponseRedirect('/displayProfile')
+        member = Member.objects.get(id=user.id)
+        form = UserProfile(request.POST,instance=user)
+        form = UserProfile(request.POST,instance=user)
+        errors=form.errors
+        context = {
+                    'appname':appname,
+                    'form': form,
+                    'member_form': member_form,
+                    'user': member,
+                    'error': errors,
+                    'loggedIn': True
+                }
+
+        return render(request, 'matchapp/displayProfile.html', context)
+
 
 @loggedin
 def upload_image(request, user):
@@ -424,11 +402,14 @@ def upload_image(request, user):
 def contacts(request, user):
     # display only if both users have liked each other
     like = Like.objects.filter(from_user=user)
+    count = Like.objects.filter(to_user=user).count()
+
     friends = user.friends.all()
 
     context = {
         'u': user,
         'friends': friends,
+        'count': count,
         'likes': like,
         'loggedIn': True,
     }

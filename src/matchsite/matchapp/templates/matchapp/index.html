@@ -27,6 +27,7 @@
     display: inline-block;
     width:40%;
     margin-top:50px;
+
   }
 
   .in-form:hover {
@@ -51,7 +52,8 @@
     <input id = "login_submit" class="btn btn-primary" type="submit" value="Login">
 
     <p id='error_signin' class='error_message'> {{error}} <p>
-      <p class="form-control"> Don't have an account?  <a href="{% url 'register' %}">Sign Up</a> </p>
+
+      <p>Don't have an account? <a href="{% url 'register' %}">Click here</a>.</p>
 
     </form>
   </div>
