@@ -103,17 +103,25 @@ def register(request):
                         'registration_form': registration_form,
                         'errorPassword':errorPassword
                         }
-                    return render(request, 'matchapp/register.html', context)
-
+                    return HttpResponseRedirect("/register")
                 else:
                     user = Member(username=username)
                     user.set_password(password)
 
+                    try:user.save()
+                    except IntegrityError:
+                        username = registration_form.cleaned_data['username']
+                        password = registration_form.cleaned_data['password']
 
-                    try:
-                        user.save()
 
-                    except:
+                        context = {
+                            'appname':appname,
+                            'registration_form': registration_form,
+                            'errorM':'Username '+ str(user) +' is already taken. Usernames must be unique',
+                            }
+
+                        return render(request,'matchapp/register.html', context)                        
+
                         login_form = UserLogInForm()
                         registration_form = UserRegForm()
 
@@ -395,14 +403,11 @@ def upload_image(request, user):
 def contacts(request, user):
     # display only if both users have liked each other
     like = Like.objects.filter(from_user=user)
-    count = Like.objects.filter(to_user=user).count()
-
     friends = user.friends.all()
 
     context = {
         'u': user,
         'friends': friends,
-        'count': count,
         'likes': like,
         'loggedIn': True,
     }
