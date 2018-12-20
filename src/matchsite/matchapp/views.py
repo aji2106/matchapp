@@ -63,7 +63,7 @@ def loggedin(view):
 def tc(request):
 	return render(request, 'matchapp/tc.html')
 
- 
+
 # Register view displays login when successful details have been passed
 def register(request):
 
@@ -80,7 +80,7 @@ def register(request):
             # password validation
             if password and re_password:
                 if password != re_password:
-
+                    #return error if passwords do not match
                     errorPassword=("The two password fields do not match.")
                     login_form = UserLogInForm()
                     context = {
@@ -89,7 +89,7 @@ def register(request):
                         'errorPassword':errorPassword
                         }
                     return render(request, 'matchapp/register.html', context)
-
+                    #sets the user's username and passwords if re_password and password fields match
                 else:
                     user = Member(username=username)
                     user.set_password(password)
@@ -97,7 +97,7 @@ def register(request):
 
                     try:
                         user.save()
-
+                    #validation of username uniqueness. Returns an error if user.save fails
                     except IntegrityError:
                         context = {
                             'appname':appname,
@@ -113,10 +113,11 @@ def register(request):
                     login_form = UserLogInForm()
                     return render(request, 'matchapp/index.html', {'login_form': login_form, 'registration_form': registration_form, 'loggedIn': False})
             else:
+                #returns an error if either of both password fields have not being populated
                 context = {
                 'appname':appname,
                 'registration_form': registration_form,
-                'errorPassword':'Passwords do not match',
+                'errorPassword':'Enter a value in both password fields',
                 }
 
             return render(request, 'matchapp/register.html', context)
@@ -135,11 +136,11 @@ def login(request):
         registration_form = UserRegForm()
         if 'username' in request.POST and 'password' in request.POST:
             if form.is_valid():
-
+                # normalized data
                 username = form.cleaned_data.get("username")
                 username = username.lower()
                 password = form.cleaned_data.get("password")
-
+                #user credentials validation
                 user = authenticate(username=username, password=password)
 
                 if user is not None:
@@ -148,11 +149,12 @@ def login(request):
                         request.session['password'] = password
                         form = UserProfile()
                         member_form = MemberProfile()
+                        #populates User Profile form with database values
                         profile = Profile.objects.get(user=user.id)
                         form = UserProfile(initial=model_to_dict(profile))
 
                         person = Member.objects.get(username=user)
-
+                        #populates Member Profile form with database values
                         member_form = MemberProfile(initial=model_to_dict(person))
                         person = Member.objects.get(id=user.id)
 
@@ -164,9 +166,9 @@ def login(request):
                             'user': person,
                             'loggedIn': True
                         }
-		
-                        return render(request, 'matchapp/displayProfile.html', context)
 
+                        return render(request, 'matchapp/displayProfile.html', context)
+                #returns errors if credentials are invalid
                 else:
                     context = {
                         'appname':appname,
@@ -261,11 +263,13 @@ def getYearBorn(age):
 def displayProfile(request, user):
 	# query users login
     if request.method == "GET":
+
+        #populate User Profile form fiels with corresponding values from database
         profile = Profile.objects.get(user=user.id)
         form = UserProfile(initial=model_to_dict(profile))
 
         person = Member.objects.get(username=user)
-
+        #populate Member Profile form fiels with corresponding values from database
         member_form = MemberProfile(initial=model_to_dict(person))
         context = {
             'appname':appname,
@@ -283,22 +287,26 @@ def editProfile(request, user):
     if request.method == 'POST':
         form = UserProfile(request.POST)
         member_form = MemberProfile(request.POST)
+        #checks both forms passed are valid
         if form.is_valid() and member_form.is_valid():
 
+            #normalises data
             profile = Profile.objects.get(user=user.id)
             profile.email = form.cleaned_data.get('email')
-
+            #checks if the email the user is trying to save from the form matches with the current on the database.
+            #If true, allows the saves the form details using the email passed by the user
+            #The purpose is that when checking if the email from the form exists in the datase, excludes the email of the current user and passes that check.
             if user.profile.email==form.cleaned_data.get('email'):
-                print('email updated matches')
+
                 profile.dob = form.cleaned_data.get('dob')
                 profile.gender = form.cleaned_data.get('gender')
                 profile.number = form.cleaned_data.get('number')
-
+                #saves user form details
                 profile.save()
 
                 member = Member.objects.get(id=user.id)
                 allHobbies= member_form.cleaned_data.get('hobbies')
-
+                #saves member form details
                 member.hobbies.set(allHobbies)
                 member.save()
 
@@ -314,7 +322,8 @@ def editProfile(request, user):
                 return render(request, 'matchapp/displayProfile.html', context)
 
             else:
-
+                #checks if the email that the user passed exists in the database
+                #returns and error if the statement is true since email should be unique
                 if Profile.objects.filter(email=profile.email).exists():
 
                     member = Member.objects.get(id=user.id)
@@ -331,6 +340,7 @@ def editProfile(request, user):
                     }
 
                     return render(request, 'matchapp/displayProfile.html', context)
+                #if the email does not exists saves all the user and member forms data in the database
                 else:
                     profile.dob = form.cleaned_data.get('dob')
                     profile.gender = form.cleaned_data.get('gender')
@@ -355,7 +365,7 @@ def editProfile(request, user):
 
                     return render(request, 'matchapp/displayProfile.html', context)
         else:
-
+            #returns and renders form errors if applicable
             member = Member.objects.get(id=user.id)
             errors=form.errors
             context = {
@@ -369,6 +379,7 @@ def editProfile(request, user):
 
             return render(request, 'matchapp/displayProfile.html', context)
     else:
+        #returns display profile page with the forms rendered if the request is type POST
         member = Member.objects.get(id=user.id)
         form = UserProfile(request.POST,instance=user)
         form = UserProfile(request.POST,instance=user)
@@ -397,7 +408,7 @@ def upload_image(request, user):
     else:
         return HttpResponse("Image not in request")
 
-# Extra feauter mutual likes page
+# Extra feature mutual likes page
 @loggedin
 def contacts(request, user):
     # display only if both users have liked each other
