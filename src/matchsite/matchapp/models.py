@@ -21,6 +21,8 @@ class Hobby(models.Model):
 
 
 class Member(User):
+    # ManytoMany relationship, members can select many
+    # hobbies
     hobbies = models.ManyToManyField(
         blank=True,
         to=Hobby,
@@ -28,12 +30,15 @@ class Member(User):
         related_name='related_to'
     )
 
+    # Users are able to request numbers from other users
+    # which they will then become friends
     friends = models.ManyToManyField(
         to='self',
         blank=True,
         related_name="related_nums"
     )
 
+    # Users are able to like each other
     like = models.ManyToManyField(
         to='self',
         blank=True,
@@ -52,6 +57,7 @@ class Member(User):
 
 
 class Profile(models.Model):
+    # One profile for one user
     user = models.OneToOneField(
         to=Member,
         blank=True,
@@ -73,6 +79,7 @@ class Profile(models.Model):
     number = models.CharField(
         validators=[phone_regex], max_length=11, blank=True)  # validators should be a list
 
+    # Convert the DOB into an age number
     @property
     def age(self):
         if self.dob is not None:
@@ -82,6 +89,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+# Users are able to like each other
 
 
 class Like(models.Model):
@@ -100,6 +109,8 @@ class Like(models.Model):
 
     def __str__(self):
         return 'From ' + self.from_user.username + ' likes ' + self.to_user.username
+
+# Users can request numbers from each other
 
 
 class Number(models.Model):
