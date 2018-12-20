@@ -80,8 +80,6 @@ $(document).ready(function () {
 });
 
 
-
-
 ///////terms and conditions modal
 
 $(document).ready(function () {
@@ -116,52 +114,9 @@ function isNumberKey(evt) {
 
 }
 
-/*
-
-function changeImage() {
-    //console.log(document.getElementById("imgClickAndChange").src)
-
-    if (document.getElementById("imgClickAndChange").src = "../static/images/like_1.png") {
-        //document.getElementById("imgClickAndChange").src = "static/images/like_2.png";
-        document.getElementById("imgClickAndChange").src = "../static/images/like_2.png"
-        //$('#imgClickAndChange').attr('src', '');
-        console.log(document.getElementById("imgClickAndChange").src)
-
-    }
-    else {
-        document.getElementById("imgClickAndChange").src = "static/images/like_1.png";
-    }
-}
-
-
-$(document).ready(function () {
-    $('#filterByAge').click(function () {
-        document.getElementById("displayContentA").classList.toggle("show");
-
-    });
-});
-
-$(document).ready(function () {
-    $('#agedropdown').click(function () {
-        document.getElementById("displayContentG").classList.toggle("show");
-
-    });
-});*/
-
 
 $(document).ready(function () {
     $("#filter-form").submit(function (event) {
-
-        //validation for age
-        if (parseInt($("#range1").val()) > parseInt($("#range2").val())) {
-            document.getElementById("range1").className += " decoratedErrorField ";
-            $("#messageValidation").html("Please ensure the first age is lower than the second");
-        }
-
-        else {
-            //remove the validation
-            $("#range1").removeClass("decoratedErrorField");
-            $("#messageValidation").empty();
 
             $.ajax({
                 type: $(this).attr('method'),
@@ -193,31 +148,10 @@ $(document).ready(function () {
                 }
 
             });
-        }
+        
         event.preventDefault();
     });
 })
-
-
-$(".drop-down .selected a").click(function () {
-    $(".drop-down .options ul").toggle();
-});
-
-//SELECT OPTIONS AND HIDE OPTION AFTER SELECTION
-$(".drop-down .options ul li a").click(function () {
-    var text = $(this).html();
-    $(".drop-down .selected a span").html(text);
-    $(".drop-down .options ul").hide();
-});
-
-
-//HIDE OPTIONS IF CLICKED ANYWHERE ELSE ON PAGE
-$(document).bind('click', function (e) {
-    var $clicked = $(e.target);
-    if (!$clicked.parents().hasClass("drop-down"))
-        $(".drop-down .options ul").hide();
-});
-
 
 
 //edit profile
