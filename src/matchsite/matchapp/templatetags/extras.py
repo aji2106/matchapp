@@ -64,7 +64,7 @@ def display_matches(matches, user):
             <div class = card>\
             <img class=card-img-top src = ' + str(match.profile.image.url) + '  alt = Card_image_cap>\
             <div class=card-body>\
-            <h5 class = card-title>' + str(match.username) + ': ' + str(match.profile.age) + ' </br></h5>\
+            <h5 class = card-title>' + str(match.username) + ': ' + str(match.profile.age) + ' ' + str(match.profile.gender) + ' </br></h5>\
             <input type = image id='+str(match.id)+' class = heart name = submit src = ' + imgsrc+'\
             border = 0 alt = Submit style = width:50px; border:0 none;/>\
             </div>\
