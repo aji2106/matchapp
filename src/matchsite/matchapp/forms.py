@@ -51,15 +51,15 @@ class UserProfile(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['email','dob','number','gender']
-
-
+        labels = {
+                "number": "Number*"
+            }
 
         widgets = {
             'email': forms.TextInput(attrs={
                 'placeholder': 'Email',
                 'pattern':'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)',
                 'class':'input',
-                'label':'Email'
                 }),
 
             'dob': forms.DateInput(attrs={
@@ -73,10 +73,13 @@ class UserProfile(forms.ModelForm):
                 'placeholder': 'Phone number',
                 'class':'input',
                 'required':'true',
-                'label':'Number*',
                 'pattern':'^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$',
                 'title':'UK mobile phone number, with optional +44 national code. Allows optional brackets and spaces at appropriate positions.'
                 }),
+
+            
+
+
 
 
 
