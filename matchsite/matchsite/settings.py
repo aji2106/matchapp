@@ -20,9 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&7-mdj*sk9g+st=3^p1oovuhgpcsb5z1k8aj@rk*l6eo^rtec6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['matchsite.herokuapp.com']
+ALLOWED_HOSTS = ['matchsite.pythonanywhere.com']
 
 
 # Application definition
@@ -131,6 +131,7 @@ WHITENOISE_USE_FINDERS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+STATIC_ROOT = '/home/matchsite/matchapp/matchsite/matchapp/static'
 STATIC_URL = '/static/'
 
 # Extra steps for dealing with profile images
