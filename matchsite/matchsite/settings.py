@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_simple_cookie_consent',
+    'whitenoise.runserver_nostatic',
     'rest_framework',
     'crispy_forms',
     'matchapp',
@@ -129,7 +130,7 @@ WHITENOISE_USE_FINDERS = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 
