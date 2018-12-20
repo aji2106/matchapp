@@ -115,7 +115,8 @@ def register(request):
 
 
                     registration_form = UserRegForm()
-                    return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
+                    login_form = UserLogInForm()
+                    return render(request, 'matchapp/index.html', {'login_form': login_form, 'registration_form': registration_form, 'loggedIn': False})
             else:
                 context = {
                 'appname':appname,
