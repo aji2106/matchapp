@@ -39,15 +39,14 @@ class MemberViewSet(viewsets.ModelViewSet):
 
 appname = 'matchapp'
 
-
+# Render the index page
 def index(request):
-	# Render the index page
     login_form = UserLogInForm()
     registration_form = UserRegForm()
     return render(request, 'matchapp/index.html', {'login_form': login_form,'registration_form': registration_form, 'loggedIn': False})
 
 
-# user logged in
+# User logged in
 def loggedin(view):
     def mod_view(request):
         login_form = UserLogInForm()
@@ -60,29 +59,25 @@ def loggedin(view):
             return render(request, 'matchapp/index.html', {'login_form': login_form, 'loggedIn': False})
     return mod_view
 
-# terms and conditions
+# Terms and conditions
 def tc(request):
 	return render(request, 'matchapp/tc.html')
 
-# once user clicks register button
-# should render user registered page if unique user is entered
-# need validation for email, user, dob, profile image
-
+ 
+# Register view displays login when successful details have been passed
 def register(request):
 
-	# form = UserRegForm()
 
      if request.method == "POST":
-		# form_class is class of form name NEED TO CHANGE
         registration_form = UserRegForm(request.POST)
 
         if registration_form.is_valid():
-			# user = form.save(commit=False)
 			# normalized data
             username = registration_form.cleaned_data['username']
             username = username.lower()
             password = registration_form.cleaned_data['password']
             re_password = registration_form.cleaned_data['re_password']
+            # password validation
             if password and re_password:
                 if password != re_password:
 
@@ -131,7 +126,7 @@ def register(request):
          registration_form = UserRegForm()
          return render(request, 'matchapp/register.html', {'registration_form': registration_form, 'loggedIn': False})
 
-
+# Login view directs to user profile
 def login(request):
     if "username" in request.session:
         return redirect('displayProfile')
@@ -192,12 +187,13 @@ def login(request):
         }
         return render(request, 'matchapp/index.html', context)
 
-
+# Logout view directs back to index
 @loggedin
 def logout(request, user):
 	request.session.flush()
 	return redirect("/")
 
+# Matches view
 @loggedin
 def similarHobbies(request, user):
     # Get all the other users exclude current logged in user
@@ -260,6 +256,7 @@ def getYearBorn(age):
     else:
         return age
 
+# Display profile page
 @loggedin
 def displayProfile(request, user):
 	# query users login
@@ -280,6 +277,7 @@ def displayProfile(request, user):
 
         return render(request, 'matchapp/displayProfile.html', context)
 
+# Edit profile page view
 @loggedin
 def editProfile(request, user):
     if request.method == 'POST':
@@ -386,7 +384,7 @@ def editProfile(request, user):
 
         return render(request, 'matchapp/displayProfile.html', context)
 
-
+# Upload Image
 @loggedin
 def upload_image(request, user):
     member = Member.objects.get(id=user.id)
@@ -399,6 +397,7 @@ def upload_image(request, user):
     else:
         return HttpResponse("Image not in request")
 
+# Extra feauter mutual likes page
 @loggedin
 def contacts(request, user):
     # display only if both users have liked each other
@@ -417,6 +416,7 @@ def contacts(request, user):
 
     return render(request, 'matchapp/contact.html', context)
 
+# When theres a mutual like, user can send a request
 def send_request(request, id):
     if 'username' in request.session:
         username = request.session['username']
@@ -428,12 +428,12 @@ def send_request(request, id):
         request.session['created'] = "created"
         return HttpResponseRedirect("/contact")
 
+# When a request has been sent to the user, user can cancel request
 def cancel_request(request, id):
      if 'username' in request.session:
         username = request.session['username']
         to_member = Member.objects.get(username = username)
         from_member  = Member.objects.get(id=id)
-
         NRequest = Number.objects.filter(
         from_user=from_member,
         to_user=to_member).first()
@@ -451,6 +451,7 @@ def delete_request(request, id):
         NRequest.delete()
         return HttpResponseRedirect("/contact")
 
+# When a request has been sent to the user, user can accept request
 def accept_request(request, id):
      if 'username' in request.session:
         username = request.session['username']
