@@ -4,6 +4,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<!-- Matches page that shows similar hobbies -->
 
 
     <br>
@@ -13,7 +14,7 @@
             <p id="messageValidation"></p>
 
             <form method="GET" action="{% url 'filter' %}" id=filter-form>
-
+                <!-- Filter panel starts -->
                 <div id='grad' class="container-fluid bg-light ">
                     <div  class="row align-items-center justify-content-center">
                         <div class="col-md-2">
@@ -91,7 +92,9 @@
                     </div>
                 </div>
             </form>
+            <!-- Filter pannel ends -->
 
+            <!-- Results of filter -->
             <div id=matches>
                 {%for match in matches%}
     <div class="col-sm-4 my-4">
