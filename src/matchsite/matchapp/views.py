@@ -218,9 +218,7 @@ def similarHobbies(request, user):
     return render(request, 'matchapp/matches.html', context)
 
 
-# filter button on similarHobbies page which generates
-# By gender or age or both !
-
+# Allows user to filter via age or gender or both
 @loggedin
 def filter(request, user):
     if request.method == 'GET':
