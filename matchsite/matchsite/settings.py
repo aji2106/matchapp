@@ -22,7 +22,7 @@ SECRET_KEY = '&7-mdj*sk9g+st=3^p1oovuhgpcsb5z1k8aj@rk*l6eo^rtec6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['matchsite.herokuapp.com']
+ALLOWED_HOSTS = ['matchsite.pythonanywhere.com']
 
 
 # Application definition
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_simple_cookie_consent',
+    'whitenoise.runserver_nostatic',
     'rest_framework',
     'crispy_forms',
     'matchapp',
@@ -124,15 +125,13 @@ WHITENOISE_USE_FINDERS = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = '/home/matchsite/matchapp/matchsite/matchapp/static'
 STATIC_URL = '/static/'
 
 # Extra steps for dealing with profile images
