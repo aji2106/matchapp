@@ -23,7 +23,7 @@ SECRET_KEY = '&7-mdj*sk9g+st=3^p1oovuhgpcsb5z1k8aj@rk*l6eo^rtec6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [‘0.0.0.0’, ‘localhost’,'desolate-spire-80415.herokuapp.com/']
 
 
 # Application definition
