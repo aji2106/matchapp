@@ -1,7 +1,6 @@
-# 
-Web Programming CW Project 
+# Web Programming CW Project 
 
-###Team members:
+Team members:
 - Anas 
 - Amair
 - Sergio
