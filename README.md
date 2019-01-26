@@ -4,7 +4,7 @@ Team members:
 - Anas 
 - Amair
 - Sergio
-- Ajiri Owuasu
+- Ajiri
 
 ###How to run locally?:
 
